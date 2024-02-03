@@ -1,0 +1,63 @@
+/.gradle/8.0/checksums/checksums.lock
+/.gradle/8.0/checksums/md5-checksums.bin
+/.gradle/8.0/checksums/sha1-checksums.bin
+/.gradle/8.0/dependencies-accessors/*
+/.gradle/8.0/executionHistory/executionHistory.bin
+/.gradle/8.0/executionHistory/executionHistory.lock
+/.gradle/8.0/fileChanges/last-build.bin
+/.gradle/8.0/fileHashes/fileHashes.bin
+/.gradle/8.0/fileHashes/fileHashes.lock
+/.gradle/8.0/fileHashes/resourceHashesCache.bin
+/.gradle/8.0/gc.properties
+/.gradle/8.1/checksums/checksums.lock
+/.gradle/8.1/checksums/md5-checksums.bin
+/.gradle/8.1/checksums/sha1-checksums.bin
+/.gradle/8.1/dependencies-accessors/*
+/.gradle/8.1/executionHistory/executionHistory.lock
+/.gradle/8.1/fileChanges/last-build.bin
+/.gradle/8.1/fileHashes/fileHashes.bin
+/.gradle/8.1/fileHashes/fileHashes.lock
+/.gradle/8.1/fileHashes/resourceHashesCache.bin
+/.gradle/8.1/gc.properties
+/.gradle/buildOutputCleanup/buildOutputCleanup.lock
+/.gradle/buildOutputCleanup/cache.properties
+/.gradle/buildOutputCleanup/outputFiles.bin
+/.gradle/vcs-1/gc.properties
+/.gradle/file-system.probe
+/gradle/wrapper/gradle-wrapper.jar
+/gradle/wrapper/gradle-wrapper.properties
+
+# Gradle files
+.gradle/
+build/
+.gradle
+
+# Local configuration file (sdk path, etc)
+local.properties
+
+# Log/OS Files
+*.log
+
+# Android Studio generated files and folders
+captures/
+.externalNativeBuild/
+.cxx/
+*.apk
+output.json
+
+# IntelliJ
+*.iml
+.idea/
+misc.xml
+deploymentTargetDropDown.xml
+render.experimental.xml
+
+# Keystore files
+*.jks
+*.keystore
+
+# Google Services (e.g. APIs or Firebase)
+google-services.json
+
+# Android Profiling
+*.hprof
