@@ -23,6 +23,7 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
@@ -80,11 +81,11 @@ fun SplashScreen() {
                     )
             )
             CustomText(
-                text = "topLAN",
+                text = stringResource(id = R.string.toplan),
                 color = Color.White,
                 fontSize = 48,
                 fontStyle = TextStyle(
-                    fontWeight = FontWeight.SemiBold,
+                    fontWeight = FontWeight.Medium,
                     fontFamily = khandFamily
                 )
             )
