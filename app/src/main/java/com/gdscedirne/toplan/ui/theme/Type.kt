@@ -16,6 +16,14 @@ val khandFamily = FontFamily(
     Font(R.font.khand_semibold, FontWeight.SemiBold),
 )
 
+val robatoFamily = FontFamily(
+    Font(R.font.roboto_bold, FontWeight.Bold),
+    Font(R.font.roboto_regular, FontWeight.Normal),
+    Font(R.font.roboto_medium, FontWeight.Medium),
+    Font(R.font.roboto_light, FontWeight.Light),
+    Font(R.font.roboto_italic, FontWeight.Normal),
+)
+
 // Set of Material typography styles to start with
 val Typography = Typography(
     bodyLarge = TextStyle(

@@ -9,15 +9,15 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
-import com.gdscedirne.toplan.ui.theme.khandFamily
+import com.gdscedirne.toplan.ui.theme.robatoFamily
 
 @Composable
 fun CustomText(
     text: String,
     fontSize: Int = 16,
-    color: Color = Color.White,
+    color: Color = Color.Black,
     fontStyle: TextStyle = TextStyle(
-        fontFamily = khandFamily,
+        fontFamily = robatoFamily,
         fontWeight = FontWeight.Normal,
         fontStyle = FontStyle.Normal,
         textAlign = TextAlign.Start
