@@ -13,10 +13,11 @@
     <string name="phone_number">Phone Number</string>
     <string name="e_mail_address">E-Mail Address</string>
     <string name="password">Password</string>
-    <string name="_1_2">1/2</string>
+    <string name="_1_2">½</string>
     <string name="log_in_by_entering_your_account_information">Log in by entering your account information</string>
     <string name="forgot_password">Forgot Password?</string>
     <string name="you_don_t_have_an_account">You don\'t have an account?</string>
     <string name="you_can_change_your_password">You can change your password by clicking on the link we will send to the e-mail address you are registered with.</string>
     <string name="send">Send</string>
+    <string name="infinitetransition">infiniteTransition</string>
 </resources>

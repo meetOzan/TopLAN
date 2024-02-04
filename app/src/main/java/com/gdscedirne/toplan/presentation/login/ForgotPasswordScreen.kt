@@ -38,13 +38,14 @@ import com.gdscedirne.toplan.components.CustomTextField
 import com.gdscedirne.toplan.ui.theme.Black
 import com.gdscedirne.toplan.ui.theme.DarkGrey
 import com.gdscedirne.toplan.ui.theme.DarkRed
-import com.gdscedirne.toplan.ui.theme.MainRed
+import com.gdscedirne.toplan.ui.theme.DarkRed20
 import com.gdscedirne.toplan.ui.theme.khandFamily
 import com.gdscedirne.toplan.ui.theme.robatoFamily
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun ForgotPasswordScreen(
+    onSignInNavigate: () -> Unit,
     loginUiState: LoginUiState,
     onAction: (LoginOnAction) -> Unit
 ) {
@@ -98,7 +99,9 @@ fun ForgotPasswordScreen(
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     IconButton(
-                        onClick = { },
+                        onClick = {
+                            onSignInNavigate()
+                        },
                         modifier = Modifier.size(24.dp)
                     ) {
                         Image(
@@ -148,7 +151,7 @@ fun ForgotPasswordScreen(
                 onClick = { },
                 modifier = Modifier.padding(top = 16.dp),
                 color = ButtonDefaults.elevatedButtonColors(
-                    containerColor = MainRed
+                    containerColor = DarkRed20
                 ),
                 text = {
                     CustomText(
@@ -162,32 +165,6 @@ fun ForgotPasswordScreen(
                 },
             )
         }
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center
-        ) {
-            CustomText(
-                text = stringResource(R.string.you_don_t_have_an_account),
-                color = DarkGrey,
-                modifier = Modifier.padding(top = 16.dp),
-                fontStyle = TextStyle(
-                    fontWeight = FontWeight.Normal,
-                    fontFamily = robatoFamily
-                )
-            )
-            CustomText(
-                text = stringResource(id = R.string.sign_up),
-                color = MainRed,
-                modifier = Modifier
-                    .padding(top = 16.dp, start = 8.dp)
-                    .clickable { },
-                fontStyle = TextStyle(
-                    fontWeight = FontWeight.Bold,
-                    fontFamily = robatoFamily
-                )
-            )
-        }
     }
 }
 
@@ -195,6 +172,7 @@ fun ForgotPasswordScreen(
 @Composable
 fun PreviewForgotPassword() {
     ForgotPasswordScreen(
+        onSignInNavigate = {},
         loginUiState = LoginUiState(),
         onAction = {}
     )

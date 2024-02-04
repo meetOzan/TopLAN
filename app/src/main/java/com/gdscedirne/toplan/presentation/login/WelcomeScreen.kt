@@ -28,7 +28,11 @@ import com.gdscedirne.toplan.ui.theme.MainRed
 import com.gdscedirne.toplan.ui.theme.robatoFamily
 
 @Composable
-fun WelcomeScreen() {
+fun WelcomeScreen(
+    onSignUpNavigate: () -> Unit,
+    onSignInNavigate: () -> Unit,
+    onContinueAsGuestNavigate: () -> Unit
+) {
     Column(
         modifier = Modifier
             .padding(vertical = 48.dp, horizontal = 16.dp)
@@ -54,13 +58,18 @@ fun WelcomeScreen() {
                 ),
                 modifier = Modifier.padding(bottom = 6.dp)
             )
-            CustomText(text = stringResource(R.string.it_s_great_to_have_you_with_us), fontSize = 16)
+            CustomText(
+                text = stringResource(R.string.it_s_great_to_have_you_with_us),
+                fontSize = 16
+            )
         }
         Column(
             modifier = Modifier.fillMaxWidth()
         ) {
             CustomElevatedButton(
-                onClick = { },
+                onClick = {
+                    onSignUpNavigate()
+                },
                 modifier = Modifier,
                 color = ButtonDefaults.elevatedButtonColors(
                     containerColor = MainRed
@@ -76,7 +85,9 @@ fun WelcomeScreen() {
                 },
             )
             CustomElevatedButton(
-                onClick = { },
+                onClick = {
+                    onSignInNavigate()
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(),
@@ -94,7 +105,9 @@ fun WelcomeScreen() {
                 },
             )
             CustomElevatedButton(
-                onClick = { },
+                onClick = {
+                    onContinueAsGuestNavigate()
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(),
@@ -119,5 +132,9 @@ fun WelcomeScreen() {
 @Preview(showBackground = true)
 @Composable
 fun PrevWelcomeScreen() {
-    WelcomeScreen()
+    WelcomeScreen(
+        onSignUpNavigate = {},
+        onSignInNavigate = {},
+        onContinueAsGuestNavigate = {}
+    )
 }

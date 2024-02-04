@@ -34,10 +34,11 @@ import com.gdscedirne.toplan.ui.theme.khandFamily
 import kotlinx.coroutines.delay
 
 @Composable
-fun SplashScreen() {
+fun SplashScreen(
+    onWelcomeScreen: () -> Unit
+) {
 
     var rotationState by remember { mutableFloatStateOf(0f) }
-    val infiniteTransition = rememberInfiniteTransition(label = "")
 
     var initialVal by remember { mutableFloatStateOf(0f) }
     var targetVal by remember { mutableFloatStateOf(90f) }
@@ -50,7 +51,14 @@ fun SplashScreen() {
         }
     }
 
-    val rotationValue by infiniteTransition.animateFloat(
+    // Currently, the splash screen is set to 4 seconds for the demo.
+    LaunchedEffect(key1 = true) {
+        delay(4000)
+        onWelcomeScreen()
+    }
+
+    val rotationValue by rememberInfiniteTransition(label = stringResource(R.string.infinitetransition))
+        .animateFloat(
         initialValue = initialVal,
         targetValue = targetVal,
         animationSpec = infiniteRepeatable(
@@ -96,5 +104,7 @@ fun SplashScreen() {
 @Preview
 @Composable
 fun PrevSplash() {
-    SplashScreen()
+    SplashScreen(
+        onWelcomeScreen = {}
+    )
 }

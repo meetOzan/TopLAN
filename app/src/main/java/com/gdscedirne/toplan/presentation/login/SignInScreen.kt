@@ -45,6 +45,7 @@ import com.gdscedirne.toplan.components.CustomTextField
 import com.gdscedirne.toplan.ui.theme.Black
 import com.gdscedirne.toplan.ui.theme.DarkGrey
 import com.gdscedirne.toplan.ui.theme.DarkRed
+import com.gdscedirne.toplan.ui.theme.DarkRed20
 import com.gdscedirne.toplan.ui.theme.MainRed
 import com.gdscedirne.toplan.ui.theme.khandFamily
 import com.gdscedirne.toplan.ui.theme.robatoFamily
@@ -52,6 +53,10 @@ import com.gdscedirne.toplan.ui.theme.robatoFamily
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun SignInScreen(
+    onWelcomeNavigate: () -> Unit,
+    onHomeNavigate: () -> Unit,
+    onSignUpNavigate: () -> Unit,
+    onForgotPasswordNavigate: () -> Unit,
     loginUiState: LoginUiState,
     onAction: (LoginOnAction) -> Unit
 ) {
@@ -105,7 +110,9 @@ fun SignInScreen(
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     IconButton(
-                        onClick = { },
+                        onClick = {
+                            onWelcomeNavigate()
+                        },
                         modifier = Modifier.size(24.dp)
                     ) {
                         Image(
@@ -180,7 +187,7 @@ fun SignInScreen(
                             ),
                             modifier = Modifier.size(24.dp),
                             contentDescription = null,
-                            tint = DarkRed
+                            tint = DarkRed20
                         )
                     }
                 },
@@ -188,10 +195,16 @@ fun SignInScreen(
             )
             CustomText(
                 text = stringResource(R.string.forgot_password),
-                color = MainRed,
+                color = DarkRed20,
                 modifier = Modifier
                     .padding(top = 6.dp)
-                    .fillMaxWidth(),
+                    .fillMaxWidth()
+                    .clickable(
+                        interactionSource = remember { MutableInteractionSource() },
+                        indication = null
+                    ) {
+                        onForgotPasswordNavigate()
+                    },
                 fontStyle = TextStyle(
                     textAlign = TextAlign.End,
                     fontWeight = FontWeight.Normal,
@@ -199,10 +212,12 @@ fun SignInScreen(
                 )
             )
             CustomElevatedButton(
-                onClick = { },
+                onClick = {
+                    onHomeNavigate()
+                },
                 modifier = Modifier.padding(top = 16.dp),
                 color = ButtonDefaults.elevatedButtonColors(
-                    containerColor = MainRed
+                    containerColor = DarkRed20
                 ),
                 text = {
                     CustomText(
@@ -235,7 +250,9 @@ fun SignInScreen(
                 color = MainRed,
                 modifier = Modifier
                     .padding(top = 16.dp, start = 8.dp)
-                    .clickable { },
+                    .clickable {
+                        onSignUpNavigate()
+                    },
                 fontStyle = TextStyle(
                     fontWeight = FontWeight.Bold,
                     fontFamily = robatoFamily
@@ -249,6 +266,10 @@ fun SignInScreen(
 @Composable
 fun PreviewSignIn() {
     SignInScreen(
+        onWelcomeNavigate = {},
+        onHomeNavigate = {},
+        onSignUpNavigate = {},
+        onForgotPasswordNavigate = {},
         loginUiState = LoginUiState(),
         onAction = {}
     )

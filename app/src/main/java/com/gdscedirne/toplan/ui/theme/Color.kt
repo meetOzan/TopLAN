@@ -13,6 +13,9 @@ val Pink40 = Color(0xFF7D5260)
 // #DF091A
 val MainRed = Color(0xFFDF091A)
 
+// #DF091A
+val DarkRed20 = Color(0xFFDF091A)
+
 // #D83142
 val DarkRed = Color(0xFFD83142)
 
