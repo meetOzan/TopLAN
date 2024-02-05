@@ -1,5 +1,6 @@
 package com.gdscedirne.toplan.components
 
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -30,14 +31,14 @@ fun BottomNav(navController: NavController) {
     val currentRoute = navBackStackEntry?.destination
     BottomNavigation(
         modifier = Modifier
-            .padding(12.dp, 12.dp, 12.dp, 12.dp)
-            .height(100.dp),
+            .height(120.dp)
+            .fillMaxWidth(),
         backgroundColor = Color.White,
-        elevation = 0.dp
     ) {
         bottomNavItems.forEach { screen ->
             BottomNavigationItem(
-                currentRoute?.hierarchy?.any { screen.route == it.route } == true, {
+                currentRoute?.hierarchy?.any { screen.route == it.route } == true,
+                onClick = {
                     screen.route?.let {
                         navController.navigate(it) {
                             popUpTo(navController.graph.findStartDestination().id) {
@@ -47,15 +48,20 @@ fun BottomNav(navController: NavController) {
                             restoreState = true
                         }
                     }
-                }, {
+                },
+                // Kullanılabilirlik özelliğini kontrol etmek için interactionSource ve indication'ı null olarak ayarla
+                icon = {
                     screen.icon?.let {
                         Icon(
                             painter = painterResource(id = it),
                             contentDescription = "",
-                            modifier = Modifier.size(24.dp)
+                            modifier = Modifier
+                                .size(24.dp)
+                                .padding(bottom = 4.dp)
                         )
                     }
-                }, label = {
+                },
+                label = {
                     screen.title?.let {
                         CustomText(
                             text = screen.title,
@@ -68,9 +74,8 @@ fun BottomNav(navController: NavController) {
                         )
                     }
                 },
-
                 selectedContentColor = Black,
-                unselectedContentColor = Color.White.copy(alpha = 0.4f)
+                unselectedContentColor = Color.Black.copy(alpha = 0.4f),
             )
         }
     }

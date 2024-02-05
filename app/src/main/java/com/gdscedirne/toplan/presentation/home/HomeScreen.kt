@@ -104,7 +104,7 @@ fun HomeScreen() {
             painter = painterResource(id = R.drawable.hub_maps), contentDescription = null,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(vertical = 16.dp)
+                .padding(top = 16.dp)
                 .height(200.dp)
                 .clip(
                     RoundedCornerShape(16.dp)
@@ -113,7 +113,7 @@ fun HomeScreen() {
         )
         LazyVerticalGrid(
             columns = GridCells.Fixed(2),
-            modifier = Modifier.padding(horizontal = 36.dp, vertical = 8.dp)
+            modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 24.dp, top = 8.dp)
         ) {
             items(gridItems.size) {
                 Column(

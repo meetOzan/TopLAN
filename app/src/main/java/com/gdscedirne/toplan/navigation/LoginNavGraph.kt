@@ -1,12 +1,15 @@
 package com.gdscedirne.toplan.navigation
 
+import android.content.Intent
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.gdscedirne.toplan.HomeActivity
 import com.gdscedirne.toplan.presentation.login.ForgotPasswordScreen
 import com.gdscedirne.toplan.presentation.login.LoginViewModel
 import com.gdscedirne.toplan.presentation.login.SignInScreen
@@ -17,14 +20,17 @@ import com.gdscedirne.toplan.presentation.splash.SplashScreen
 @Composable
 fun LoginNavGraph(
     navController: NavHostController,
-)  {
+) {
+
+    val context = LocalContext.current
+
     NavHost(
         navController = navController, startDestination = Destinations.SplashDestination.route
     ) {
         splashScreen(
             onWelcomeNavigate = {
-                navController.navigate(Destinations.WelcomeDestination.route){
-                    popUpTo(Destinations.SplashDestination.route){
+                navController.navigate(Destinations.WelcomeDestination.route) {
+                    popUpTo(Destinations.SplashDestination.route) {
                         inclusive = true
                     }
                 }
@@ -36,6 +42,11 @@ fun LoginNavGraph(
             },
             onSignUpNavigate = {
                 navController.navigate(Destinations.SignUpDestination.route)
+            },
+            onHomeNavigate = {
+                val intent = Intent(context, HomeActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                context.startActivity(intent)
             }
         )
         signInScreen(
@@ -46,11 +57,16 @@ fun LoginNavGraph(
                 navController.navigate(Destinations.ForgotPasswordDestination.route)
             },
             onWelcomeNavigate = {
-                navController.navigate(Destinations.WelcomeDestination.route){
-                    popUpTo(Destinations.WelcomeDestination.route){
+                navController.navigate(Destinations.WelcomeDestination.route) {
+                    popUpTo(Destinations.WelcomeDestination.route) {
                         inclusive = true
                     }
                 }
+            },
+            onHomeNavigate = {
+                val intent = Intent(context, HomeActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                context.startActivity(intent)
             }
         )
         signUpScreen(
@@ -58,17 +74,22 @@ fun LoginNavGraph(
                 navController.navigate(Destinations.SignInDestination.route)
             },
             onWelcomeNavigate = {
-                navController.navigate(Destinations.WelcomeDestination.route){
-                    popUpTo(Destinations.WelcomeDestination.route){
+                navController.navigate(Destinations.WelcomeDestination.route) {
+                    popUpTo(Destinations.WelcomeDestination.route) {
                         inclusive = true
                     }
                 }
+            },
+            onHomeNavigate = {
+                val intent = Intent(context, HomeActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                context.startActivity(intent)
             }
         )
         forgotPasswordScreen(
             onSignInNavigate = {
-                navController.navigate(Destinations.SignInDestination.route){
-                    popUpTo(Destinations.ForgotPasswordDestination.route){
+                navController.navigate(Destinations.SignInDestination.route) {
+                    popUpTo(Destinations.ForgotPasswordDestination.route) {
                         inclusive = true
                     }
                 }
@@ -88,12 +109,13 @@ fun NavGraphBuilder.splashScreen(
 fun NavGraphBuilder.welcomeScreen(
     onSignUpNavigate: () -> Unit,
     onSignInNavigate: () -> Unit,
+    onHomeNavigate: () -> Unit
 ) {
     composable(Destinations.WelcomeDestination.route) {
         WelcomeScreen(
-            onSignUpNavigate =  onSignUpNavigate,
+            onSignUpNavigate = onSignUpNavigate,
             onSignInNavigate = onSignInNavigate,
-            onContinueAsGuestNavigate =  {}
+            onContinueAsGuestNavigate = onHomeNavigate
         )
     }
 }
@@ -101,7 +123,8 @@ fun NavGraphBuilder.welcomeScreen(
 fun NavGraphBuilder.signInScreen(
     onSignUpNavigate: () -> Unit,
     onForgotPasswordNavigate: () -> Unit,
-    onWelcomeNavigate: () -> Unit
+    onWelcomeNavigate: () -> Unit,
+    onHomeNavigate: () -> Unit
 ) {
     composable(Destinations.SignInDestination.route) {
 
@@ -110,7 +133,7 @@ fun NavGraphBuilder.signInScreen(
 
         SignInScreen(
             onWelcomeNavigate = onWelcomeNavigate,
-            onHomeNavigate = {},
+            onHomeNavigate = onHomeNavigate,
             onSignUpNavigate = onSignUpNavigate,
             onForgotPasswordNavigate = onForgotPasswordNavigate,
             loginUiState = loginState,
@@ -121,7 +144,8 @@ fun NavGraphBuilder.signInScreen(
 
 fun NavGraphBuilder.signUpScreen(
     onSignInNavigate: () -> Unit,
-    onWelcomeNavigate: () -> Unit
+    onWelcomeNavigate: () -> Unit,
+    onHomeNavigate: () -> Unit
 ) {
     composable(Destinations.SignUpDestination.route) {
 
@@ -131,7 +155,7 @@ fun NavGraphBuilder.signUpScreen(
         SignUpScreen(
             onWelcomeNavigate = onWelcomeNavigate,
             onSignInNavigate = onSignInNavigate,
-            onHomeNavigate = {},
+            onHomeNavigate = onHomeNavigate,
             loginUiState = loginState,
             onAction = viewModel::onAction
         )

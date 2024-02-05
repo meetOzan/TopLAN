@@ -33,3 +33,6 @@ val DarkGrey = Color(0xFF525252)
 
 // #1B0404
 val Black = Color(0xFF1B0404)
+
+// #E0E0E0
+val LightGrey20 = Color(0xFFE0E0E0)
