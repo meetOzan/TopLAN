@@ -16,6 +16,12 @@ val khandFamily = FontFamily(
     Font(R.font.khand_semibold, FontWeight.SemiBold),
 )
 
+val interFamily = FontFamily(
+    Font(R.font.inter_bold, FontWeight.Bold),
+    Font(R.font.inter_regular, FontWeight.Normal),
+    Font(R.font.inter_medium, FontWeight.Medium)
+)
+
 val robatoFamily = FontFamily(
     Font(R.font.roboto_bold, FontWeight.Bold),
     Font(R.font.roboto_regular, FontWeight.Normal),

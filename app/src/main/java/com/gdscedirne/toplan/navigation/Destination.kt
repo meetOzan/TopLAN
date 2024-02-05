@@ -24,4 +24,8 @@ object Destinations {
     object ForgotPasswordDestination : Destination {
         override val route = "forgot_password"
     }
+
+    object HomeDestination : Destination {
+        override val route = "home"
+    }
 }

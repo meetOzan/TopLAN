@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     kotlin("kapt")
     id("com.google.dagger.hilt.android")
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
 android {
@@ -40,6 +41,7 @@ android {
     }
     buildFeatures {
         compose = true
+        viewBinding = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
@@ -51,6 +53,20 @@ android {
     }
 }
 
+secrets {
+    propertiesFileName = "secrets.properties"
+
+    // A properties file containing default secret values. This file can be
+    // checked in version control.
+    defaultPropertiesFileName = "local.defaults.properties"
+
+    // Configure which keys should be ignored by the plugin by providing regular expressions.
+    // "sdk.dir" is ignored by default.
+    ignoreList.add("keyToIgnore") // Ignore the key "keyToIgnore"
+    ignoreList.add("sdk.*")       // Ignore all keys matching the regexp "sdk.*"
+}
+
+
 dependencies {
 
     implementation("androidx.core:core-ktx:1.12.0")
@@ -61,6 +77,12 @@ dependencies {
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
+    implementation("com.google.android.gms:play-services-maps:18.2.0")
+    implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    implementation("com.google.android.material:material:1.11.0")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.7.6")
+    implementation("androidx.navigation:navigation-ui-ktx:2.7.6")
 
     // Test
     testImplementation("junit:junit:4.13.2")
@@ -70,6 +92,9 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+
+    // Google Maps API
+    implementation("com.google.android.gms:play-services-maps:18.2.0")
 
 
     // Dependency Injection
@@ -82,6 +107,10 @@ dependencies {
 
     // Navigation
     implementation("androidx.navigation:navigation-compose:2.7.6")
+
+    // Material Design
+    implementation("androidx.compose.material:material:1.6.0")
+
 
     // Lifecycle
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")

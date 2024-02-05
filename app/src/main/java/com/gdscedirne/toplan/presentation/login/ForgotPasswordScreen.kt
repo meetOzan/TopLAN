@@ -7,13 +7,14 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
@@ -54,7 +55,7 @@ fun ForgotPasswordScreen(
 
     Column(
         modifier = Modifier
-            .fillMaxSize()
+            .verticalScroll(rememberScrollState())
             .background(Color.White)
             .clickable(
                 interactionSource = remember { MutableInteractionSource() },
@@ -64,7 +65,7 @@ fun ForgotPasswordScreen(
             }
             .padding(top = 24.dp, start = 16.dp, end = 16.dp, bottom = 16.dp),
         horizontalAlignment = Alignment.Start,
-        verticalArrangement = Arrangement.SpaceBetween
+        verticalArrangement = Arrangement.Top
     ) {
         Column(
             verticalArrangement = Arrangement.Top
@@ -105,8 +106,8 @@ fun ForgotPasswordScreen(
                         modifier = Modifier.size(24.dp)
                     ) {
                         Image(
-                            imageVector = Icons.Filled.ArrowBack,
                             contentDescription = null,
+                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                             colorFilter = ColorFilter.tint(Black),
                         )
                     }
