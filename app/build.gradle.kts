@@ -4,6 +4,8 @@ plugins {
     kotlin("kapt")
     id("com.google.dagger.hilt.android")
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
+    id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
 }
 
 android {
@@ -56,14 +58,10 @@ android {
 secrets {
     propertiesFileName = "secrets.properties"
 
-    // A properties file containing default secret values. This file can be
-    // checked in version control.
     defaultPropertiesFileName = "local.defaults.properties"
 
-    // Configure which keys should be ignored by the plugin by providing regular expressions.
-    // "sdk.dir" is ignored by default.
-    ignoreList.add("keyToIgnore") // Ignore the key "keyToIgnore"
-    ignoreList.add("sdk.*")       // Ignore all keys matching the regexp "sdk.*"
+    ignoreList.add("keyToIgnore")
+    ignoreList.add("sdk.*")
 }
 
 
@@ -96,14 +94,13 @@ dependencies {
     // Google Maps API
     implementation("com.google.android.gms:play-services-maps:18.2.0")
 
-
     // Dependency Injection
-    implementation("com.google.dagger:hilt-android:2.44")
-    kapt("com.google.dagger:hilt-android-compiler:2.44")
-    implementation("androidx.hilt:hilt-work:1.0.0")
-    kapt("androidx.hilt:hilt-compiler:1.0.0")
-    implementation("androidx.work:work-runtime-ktx:2.8.0")
-    implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
+    implementation("com.google.dagger:hilt-android:2.48")
+    kapt("com.google.dagger:hilt-android-compiler:2.48")
+    implementation("androidx.hilt:hilt-work:1.1.0")
+    kapt("androidx.hilt:hilt-compiler:1.1.0")
+    implementation("androidx.work:work-runtime-ktx:2.9.0")
+    implementation("androidx.hilt:hilt-navigation-compose:1.1.0")
 
     // Navigation
     implementation("androidx.navigation:navigation-compose:2.7.6")
@@ -111,9 +108,25 @@ dependencies {
     // Material Design
     implementation("androidx.compose.material:material:1.6.0")
 
-
     // Lifecycle
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.7.0")
+
+    // Firebase Auth
+    implementation("com.google.firebase:firebase-auth:22.3.1")
+
+    // Firebase Firestore
+    implementation("com.google.firebase:firebase-firestore:24.10.1")
+
+    // Firebase Crashlytics
+    implementation("com.google.firebase:firebase-crashlytics:18.6.1")
+
+    // Firebase Analytics
+    implementation("com.google.firebase:firebase-analytics:21.5.0")
+
+    // Firebase Storage
+    implementation("com.google.firebase:firebase-storage:20.3.0")
+
+
 }
