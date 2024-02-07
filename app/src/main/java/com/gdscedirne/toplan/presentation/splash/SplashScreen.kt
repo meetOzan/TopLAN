@@ -45,14 +45,6 @@ fun SplashScreen(
     var initialVal by remember { mutableFloatStateOf(0f) }
     var targetVal by remember { mutableFloatStateOf(90f) }
 
-    LaunchedEffect(splashUiState.isLoading) {
-        while (true) {
-            initialVal += 90f
-            targetVal += 90f
-            delay(2000)
-        }
-    }
-
     val rotationValue by rememberInfiniteTransition(label = stringResource(R.string.infinitetransition))
         .animateFloat(
             initialValue = initialVal,
@@ -65,12 +57,18 @@ fun SplashScreen(
 
     rotationState = rotationValue
 
-    LaunchedEffect(!splashUiState.isLoading) {
-        delay(2000)
-        if (splashUiState.isUserSignedIn) {
-            onHomeNavigate()
-        } else {
-            onWelcomeNavigate()
+    LaunchedEffect(splashUiState.isLoading) {
+        while (splashUiState.isLoading) {
+            initialVal += 90f
+            targetVal += 90f
+            delay(1500)
+        }
+        if (!splashUiState.isLoading){
+            if (splashUiState.isUserSignedIn) {
+                onHomeNavigate()
+            } else {
+                onWelcomeNavigate()
+            }
         }
     }
 
