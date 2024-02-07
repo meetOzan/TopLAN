@@ -180,9 +180,9 @@ fun SignUpScreen(
                 keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Phone)
             )
             CustomTextField(
-                textTitle = loginUiState.email,
+                textTitle = loginUiState.signUpEmail,
                 onValueChange = { newEmail ->
-                    onAction(LoginOnAction.EmailChanged(newEmail))
+                    onAction(LoginOnAction.SignInEmailChanged(newEmail))
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -196,9 +196,9 @@ fun SignUpScreen(
                 keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Email)
             )
             CustomTextField(
-                textTitle = loginUiState.password,
+                textTitle = loginUiState.signUpPassword,
                 onValueChange = { newPassword ->
-                    onAction(LoginOnAction.PasswordChanged(newPassword))
+                    onAction(LoginOnAction.SignInPasswordChanged(newPassword))
                 },
                 modifier = Modifier
                     .fillMaxWidth()

@@ -133,9 +133,9 @@ fun ForgotPasswordScreen(
                 )
             )
             CustomTextField(
-                textTitle = loginUiState.email,
+                textTitle = loginUiState.signInEmail,
                 onValueChange = { newEmail ->
-                    onAction(LoginOnAction.EmailChanged(newEmail))
+                    onAction(LoginOnAction.SignInEmailChanged(newEmail))
                 },
                 modifier = Modifier
                     .fillMaxWidth()

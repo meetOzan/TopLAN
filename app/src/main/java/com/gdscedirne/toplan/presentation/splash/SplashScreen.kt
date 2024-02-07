@@ -35,7 +35,8 @@ import kotlinx.coroutines.delay
 
 @Composable
 fun SplashScreen(
-    onWelcomeScreen: () -> Unit
+    onWelcomeScreen: () -> Unit,
+    onHomeScreen: () -> Unit
 ) {
 
     var rotationState by remember { mutableFloatStateOf(0f) }
@@ -59,13 +60,13 @@ fun SplashScreen(
 
     val rotationValue by rememberInfiniteTransition(label = stringResource(R.string.infinitetransition))
         .animateFloat(
-        initialValue = initialVal,
-        targetValue = targetVal,
-        animationSpec = infiniteRepeatable(
-            animation = tween(1500),
-            repeatMode = RepeatMode.Reverse
-        ), label = ""
-    )
+            initialValue = initialVal,
+            targetValue = targetVal,
+            animationSpec = infiniteRepeatable(
+                animation = tween(1500),
+                repeatMode = RepeatMode.Reverse
+            ), label = ""
+        )
 
     rotationState = rotationValue
 
@@ -105,6 +106,7 @@ fun SplashScreen(
 @Composable
 fun PrevSplash() {
     SplashScreen(
-        onWelcomeScreen = {}
+        onWelcomeScreen = {},
+        onHomeScreen = {}
     )
 }
