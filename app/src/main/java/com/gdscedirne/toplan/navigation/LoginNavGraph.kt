@@ -2,6 +2,7 @@ package com.gdscedirne.toplan.navigation
 
 import android.content.Intent
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -15,7 +16,9 @@ import com.gdscedirne.toplan.presentation.login.LoginViewModel
 import com.gdscedirne.toplan.presentation.login.SignInScreen
 import com.gdscedirne.toplan.presentation.login.SignUpScreen
 import com.gdscedirne.toplan.presentation.login.WelcomeScreen
+import com.gdscedirne.toplan.presentation.splash.SplashAction
 import com.gdscedirne.toplan.presentation.splash.SplashScreen
+import com.gdscedirne.toplan.presentation.splash.SplashViewModel
 
 @Composable
 fun LoginNavGraph(
@@ -108,7 +111,15 @@ fun NavGraphBuilder.splashScreen(
     onHomeNavigate: () -> Unit
 ) {
     composable(Destinations.SplashDestination.route) {
-        SplashScreen(onWelcomeNavigate, onHomeNavigate)
+
+        val splashViewModel = hiltViewModel<SplashViewModel>()
+        val splashUiState = splashViewModel.splashUiState.collectAsState().value
+
+        LaunchedEffect(true) {
+            splashViewModel.onAction(SplashAction.CheckUserSession)
+        }
+
+        SplashScreen(onWelcomeNavigate, onHomeNavigate, splashUiState)
     }
 }
 

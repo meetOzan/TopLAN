@@ -35,8 +35,9 @@ import kotlinx.coroutines.delay
 
 @Composable
 fun SplashScreen(
-    onWelcomeScreen: () -> Unit,
-    onHomeScreen: () -> Unit
+    onWelcomeNavigate: () -> Unit,
+    onHomeNavigate: () -> Unit,
+    splashUiState: SplashUiState
 ) {
 
     var rotationState by remember { mutableFloatStateOf(0f) }
@@ -44,18 +45,12 @@ fun SplashScreen(
     var initialVal by remember { mutableFloatStateOf(0f) }
     var targetVal by remember { mutableFloatStateOf(90f) }
 
-    LaunchedEffect(true) {
+    LaunchedEffect(splashUiState.isLoading) {
         while (true) {
             initialVal += 90f
             targetVal += 90f
             delay(2000)
         }
-    }
-
-    // Currently, the splash screen is set to 4 seconds for the demo.
-    LaunchedEffect(key1 = true) {
-        delay(4000)
-        onWelcomeScreen()
     }
 
     val rotationValue by rememberInfiniteTransition(label = stringResource(R.string.infinitetransition))
@@ -69,6 +64,15 @@ fun SplashScreen(
         )
 
     rotationState = rotationValue
+
+    LaunchedEffect(!splashUiState.isLoading) {
+        delay(2000)
+        if (splashUiState.isUserSignedIn) {
+            onHomeNavigate()
+        } else {
+            onWelcomeNavigate()
+        }
+    }
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -106,7 +110,8 @@ fun SplashScreen(
 @Composable
 fun PrevSplash() {
     SplashScreen(
-        onWelcomeScreen = {},
-        onHomeScreen = {}
+        onWelcomeNavigate = {},
+        onHomeNavigate = {},
+        splashUiState = SplashUiState(isLoading = true, isUserSignedIn = false)
     )
 }

@@ -16,7 +16,7 @@ class LoginViewModel @Inject constructor(
     private val repository: TopLanRepository
 ) : ViewModel() {
 
-    private val _loginState = MutableStateFlow(LoginUiState())
+    private val _loginState = MutableStateFlow(LoginUiState.initial())
     val loginState = _loginState.asStateFlow()
 
     fun onAction(action: LoginOnAction) {
@@ -116,4 +116,8 @@ data class LoginUiState(
     val signUpEmail: String = "",
     var signUpPassword: String = "",
     val number: String = ""
-)
+) {
+    companion object {
+        fun initial() = LoginUiState(isLoading = true)
+    }
+}
