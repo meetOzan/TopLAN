@@ -216,7 +216,7 @@ fun SignInScreen(
                 onClick = {
                     onHomeNavigate()
                 },
-                modifier = Modifier.padding(top = 16.dp),
+                modifier = Modifier.padding(top = 16.dp).fillMaxWidth(),
                 color = ButtonDefaults.elevatedButtonColors(
                     containerColor = DarkRed20
                 ),

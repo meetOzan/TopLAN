@@ -75,7 +75,7 @@ fun WelcomeScreen(
                     onClick = {
                         onSignUpNavigate()
                     },
-                    modifier = Modifier,
+                    modifier = Modifier.fillMaxWidth(),
                     color = ButtonDefaults.elevatedButtonColors(
                         containerColor = MainRed
                     ),

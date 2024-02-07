@@ -35,6 +35,12 @@ class LoginViewModel @Inject constructor(
                 action.user,
                 action.onNavigate
             )
+
+            is LoginOnAction.PagerChanged -> onPagerStateChanged(action.position)
+            is LoginOnAction.NameChanged -> onSignUpNameChanged(action.name)
+            is LoginOnAction.SurnameChanged -> onSignUpSurnameChanged(action.surname)
+            is LoginOnAction.RelativeNameChanged -> onSignUpRelativeNameChanged(action.relation)
+            is LoginOnAction.AddressChanged -> onSignUpAddressChanged(action.address)
         }
     }
 
@@ -86,24 +92,44 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    private fun onSignUpEmailChanged(email: String) {
-        _loginState.value = _loginState.value.copy(signUpEmail = email)
-    }
-
     private fun onSignInEmailChanged(email: String) {
         _loginState.value = _loginState.value.copy(signInEmail = email)
-    }
-
-    private fun onSignUpPasswordChanged(password: String) {
-        _loginState.value = _loginState.value.copy(signUpPassword = password)
     }
 
     private fun onSignInPasswordChanged(password: String) {
         _loginState.value = _loginState.value.copy(signInPassword = password)
     }
 
+    private fun onSignUpEmailChanged(email: String) {
+        _loginState.value = _loginState.value.copy(signUpEmail = email)
+    }
+
+    private fun onSignUpPasswordChanged(password: String) {
+        _loginState.value = _loginState.value.copy(signUpPassword = password)
+    }
+
+    private fun onSignUpNameChanged(name: String) {
+        _loginState.value = _loginState.value.copy(signUpName = name)
+    }
+
+    private fun onSignUpSurnameChanged(surname: String) {
+        _loginState.value = _loginState.value.copy(signUpSurname = surname)
+    }
+
+    private fun onSignUpRelativeNameChanged(relativeName: String) {
+        _loginState.value = _loginState.value.copy(signUpRelativeName = relativeName)
+    }
+
+    private fun onSignUpAddressChanged(address: String) {
+        _loginState.value = _loginState.value.copy(signUpAddress = address)
+    }
+
     private fun onNumberChanged(number: String) {
         _loginState.value = _loginState.value.copy(number = number)
+    }
+
+    private fun onPagerStateChanged(pagerState: Int) {
+        _loginState.value = _loginState.value.copy(pagerState = pagerState)
     }
 }
 
@@ -114,8 +140,13 @@ data class LoginUiState(
     val signInEmail: String = "",
     var signInPassword: String = "",
     val signUpEmail: String = "",
-    var signUpPassword: String = "",
-    val number: String = ""
+    val signUpPassword: String = "",
+    val signUpName: String = "",
+    val signUpSurname: String = "",
+    val signUpRelativeName: String = "",
+    val signUpAddress: String = "",
+    val number: String = "",
+    val pagerState: Int = 1
 ) {
     companion object {
         fun initial() = LoginUiState(isLoading = true)

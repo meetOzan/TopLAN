@@ -23,4 +23,13 @@
     <string name="title_activity_maps">MapsActivity</string>
     <string name="title_activity_home">HomeActivity</string>
     <string name="alert_icon">Alert icon</string>
+    <string name="back">Back</string>
+    <string name="next">Next</string>
+    <string name="surname">Surname</string>
+    <string name="name">Name</string>
+    <string name="_3">3</string>
+    <string name="optional">Optional</string>
+    <string name="address">Address</string>
+    <string name="slash">/</string>
+    <string name="one_relative_s_full_name">One Relative\'s Full Name</string>
 </resources>

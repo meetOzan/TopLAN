@@ -158,7 +158,7 @@ fun ForgotPasswordScreen(
                     CustomText(
                         text = stringResource(R.string.send),
                         color = Color.White,
-                        modifier = Modifier.padding(vertical = 8.dp),
+                        modifier = Modifier.padding(vertical = 8.dp).fillMaxWidth(),
                         fontStyle = TextStyle(
                             fontFamily = robatoFamily
                         )

@@ -1,7 +1,6 @@
 package com.gdscedirne.toplan.components
 
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ButtonColors
@@ -29,7 +28,6 @@ fun CustomElevatedButton(
     ElevatedButton(
         onClick = { onClick() },
         modifier = Modifier
-            .fillMaxWidth()
             .padding(vertical = 8.dp)
             .then(modifier),
         elevation = elevation,
