@@ -7,7 +7,8 @@ import kotlinx.coroutines.flow.Flow
 interface TopLanRepository {
 
     fun signInUserWithEmailAndPassword(
-        user: User,
+        email: String,
+        password: String,
         onNavigate: () -> Unit,
     ): Flow<ResponseState<Unit>>
 

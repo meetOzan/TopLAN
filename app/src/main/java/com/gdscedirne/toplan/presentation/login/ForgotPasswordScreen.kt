@@ -30,10 +30,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.gdscedirne.toplan.R
 import com.gdscedirne.toplan.components.CustomElevatedButton
+import com.gdscedirne.toplan.components.CustomErrorDialog
+import com.gdscedirne.toplan.components.CustomLoading
 import com.gdscedirne.toplan.components.CustomText
 import com.gdscedirne.toplan.components.CustomTextField
 import com.gdscedirne.toplan.ui.theme.Black
@@ -52,6 +55,26 @@ fun ForgotPasswordScreen(
 ) {
 
     val keyboardController = LocalSoftwareKeyboardController.current
+
+    if (loginUiState.isLoading) {
+        CustomLoading()
+    }
+
+    if (loginUiState.isLoading) {
+        CustomLoading()
+    }
+
+    if (loginUiState.isError) {
+        CustomErrorDialog(
+            errorMessage = loginUiState.errorMessage,
+            onDismissClick = {
+                onAction(LoginOnAction.ChangeErrorState(errorState = false, isLoading = false))
+            },
+            onPositiveAction = {
+                onAction(LoginOnAction.ChangeErrorState(errorState = false, isLoading = false))
+            }
+        )
+    }
 
     Column(
         modifier = Modifier
@@ -160,7 +183,8 @@ fun ForgotPasswordScreen(
                         color = Color.White,
                         modifier = Modifier.padding(vertical = 8.dp).fillMaxWidth(),
                         fontStyle = TextStyle(
-                            fontFamily = robatoFamily
+                            fontFamily = robatoFamily,
+                            textAlign = TextAlign.Center
                         )
                     )
                 },

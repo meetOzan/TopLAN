@@ -16,7 +16,7 @@ class LoginViewModel @Inject constructor(
     private val repository: TopLanRepository
 ) : ViewModel() {
 
-    private val _loginState = MutableStateFlow(LoginUiState.initial())
+    private val _loginState = MutableStateFlow(LoginUiState())
     val loginState = _loginState.asStateFlow()
 
     fun onAction(action: LoginOnAction) {
@@ -27,7 +27,8 @@ class LoginViewModel @Inject constructor(
             is LoginOnAction.SignUpPasswordChanged -> onSignUpPasswordChanged(action.password)
             is LoginOnAction.NumberChanged -> onNumberChanged(action.number)
             is LoginOnAction.SignInUser -> signInUserWithEmailAndPassword(
-                action.user,
+                action.email,
+                action.password,
                 action.onNavigate
             )
 
@@ -41,6 +42,13 @@ class LoginViewModel @Inject constructor(
             is LoginOnAction.SurnameChanged -> onSignUpSurnameChanged(action.surname)
             is LoginOnAction.RelativeNameChanged -> onSignUpRelativeNameChanged(action.relation)
             is LoginOnAction.AddressChanged -> onSignUpAddressChanged(action.address)
+            is LoginOnAction.ChangeLoadingState -> isLoadingChanged(action.isLoading)
+            is LoginOnAction.ChangeErrorState -> isErrorChanged(action.isLoading, action.errorState)
+            is LoginOnAction.ChangeErrorStateWithMessage -> errorStateChangedWithMessage(
+                action.errorState,
+                action.isLoading,
+                action.message
+            )
         }
     }
 
@@ -68,27 +76,35 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    private fun signInUserWithEmailAndPassword(user: User, onNavigate: () -> Unit) {
+    private fun signInUserWithEmailAndPassword(
+        email: String,
+        password: String,
+        onNavigate: () -> Unit
+    ) {
         viewModelScope.launch {
-            repository.signInUserWithEmailAndPassword(user, onNavigate).collect { response ->
-                when (response) {
-                    is ResponseState.Loading -> {
-                        _loginState.value = _loginState.value.copy(isLoading = true)
-                    }
+            repository.signInUserWithEmailAndPassword(email, password, onNavigate)
+                .collect { response ->
+                    when (response) {
+                        is ResponseState.Loading -> {
+                            _loginState.value = _loginState.value.copy(isLoading = true)
+                        }
 
-                    is ResponseState.Success -> {
-                        _loginState.value = _loginState.value.copy(isLoading = false)
-                    }
+                        is ResponseState.Success -> {
+                            _loginState.value = _loginState.value.copy(
+                                isLoading = false,
+                                isSuccess = true
+                            )
+                        }
 
-                    is ResponseState.Error -> {
-                        _loginState.value = _loginState.value.copy(
-                            isLoading = false,
-                            isError = true,
-                            errorMessage = response.message
-                        )
+                        is ResponseState.Error -> {
+                            _loginState.value = _loginState.value.copy(
+                                isLoading = false,
+                                isError = true,
+                                errorMessage = response.message
+                            )
+                        }
                     }
                 }
-            }
         }
     }
 
@@ -131,11 +147,31 @@ class LoginViewModel @Inject constructor(
     private fun onPagerStateChanged(pagerState: Int) {
         _loginState.value = _loginState.value.copy(pagerState = pagerState)
     }
+
+    private fun isLoadingChanged(isLoading: Boolean) {
+        _loginState.value = _loginState.value.copy(isLoading = isLoading)
+    }
+
+    private fun isErrorChanged(isError: Boolean, isLoading: Boolean) {
+        _loginState.value = _loginState.value.copy(
+            isError = isError,
+            isLoading = isLoading
+        )
+    }
+
+    private fun errorStateChangedWithMessage(isError: Boolean, isLoading: Boolean, errorMessage: String) {
+        _loginState.value = _loginState.value.copy(
+            isError = isError,
+            errorMessage = errorMessage,
+            isLoading = isLoading
+        )
+    }
 }
 
 data class LoginUiState(
     val isLoading: Boolean = false,
     val isError: Boolean = false,
+    val isSuccess: Boolean = false,
     val errorMessage: String = "",
     val signInEmail: String = "",
     var signInPassword: String = "",
@@ -147,8 +183,5 @@ data class LoginUiState(
     val signUpAddress: String = "",
     val number: String = "",
     val pagerState: Int = 1
-) {
-    companion object {
-        fun initial() = LoginUiState(isLoading = true)
-    }
+){
 }

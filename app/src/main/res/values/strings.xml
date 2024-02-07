@@ -32,4 +32,6 @@
     <string name="address">Address</string>
     <string name="slash">/</string>
     <string name="one_relative_s_full_name">One Relative\'s Full Name</string>
+    <string name="error">Error</string>
+    <string name="ok">OK</string>
 </resources>

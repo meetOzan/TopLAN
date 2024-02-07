@@ -40,8 +40,12 @@ class FirebaseSourceImpl @Inject constructor(
             }
     }
 
-    override fun signInWithEmailAndPassword(user: User, onNavigate: () -> Unit) {
-        firebaseAuth.signInWithEmailAndPassword(user.email, user.password)
+    override fun signInWithEmailAndPassword(
+        email: String,
+        password: String,
+        onNavigate: () -> Unit
+    ) {
+        firebaseAuth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     onNavigate()

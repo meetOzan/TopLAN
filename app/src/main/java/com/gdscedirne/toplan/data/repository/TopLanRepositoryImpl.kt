@@ -14,12 +14,13 @@ class TopLanRepositoryImpl @Inject constructor(
 ) : TopLanRepository {
 
     override fun signInUserWithEmailAndPassword(
-        user: User,
+        email: String,
+        password: String,
         onNavigate: () -> Unit
     ): Flow<ResponseState<Unit>> {
         return flow {
             emit(ResponseState.Loading)
-            firebaseSource.signInWithEmailAndPassword(user, onNavigate)
+            firebaseSource.signInWithEmailAndPassword(email, password, onNavigate)
             emit(ResponseState.Success(Unit))
         }.catch {
             emit(ResponseState.Error(it.message.orEmpty()))

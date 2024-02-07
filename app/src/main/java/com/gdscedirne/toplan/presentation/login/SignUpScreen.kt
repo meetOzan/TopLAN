@@ -23,6 +23,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -45,6 +46,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.gdscedirne.toplan.R
 import com.gdscedirne.toplan.components.CustomElevatedButton
+import com.gdscedirne.toplan.components.CustomErrorDialog
+import com.gdscedirne.toplan.components.CustomLoading
 import com.gdscedirne.toplan.components.CustomText
 import com.gdscedirne.toplan.components.CustomTextField
 import com.gdscedirne.toplan.data.User
@@ -72,13 +75,29 @@ fun SignUpScreen(
     var isPasswordVisible by remember { mutableStateOf(false) }
     val keyboardController = LocalSoftwareKeyboardController.current
 
-    val currentPage = rememberPagerState(
-        pageCount = {
-            3
-        }
-    )
+    val currentPage = rememberPagerState(pageCount = { 3 })
 
     val coroutineScope = rememberCoroutineScope()
+
+    LaunchedEffect(loginUiState.isSuccess && loginUiState.isError) {
+        onAction(LoginOnAction.ChangeLoadingState(false))
+    }
+
+    if (loginUiState.isLoading) {
+        CustomLoading()
+    }
+
+    if (loginUiState.isError) {
+        CustomErrorDialog(
+            errorMessage = loginUiState.errorMessage,
+            onDismissClick = {
+                onAction(LoginOnAction.ChangeErrorState(errorState = false, isLoading = false))
+            },
+            onPositiveAction = {
+                onAction(LoginOnAction.ChangeErrorState(errorState = false, isLoading = false))
+            }
+        )
+    }
 
     Column(
         modifier = Modifier
@@ -236,7 +255,7 @@ fun SignUpScreen(
                             CustomTextField(
                                 textTitle = loginUiState.signUpEmail,
                                 onValueChange = { newEmail ->
-                                    onAction(LoginOnAction.SignInEmailChanged(newEmail))
+                                    onAction(LoginOnAction.SignUpEmailChanged(newEmail))
                                 },
                                 modifier = Modifier
                                     .fillMaxWidth()
@@ -247,12 +266,13 @@ fun SignUpScreen(
                                         color = DarkGrey
                                     )
                                 },
+                                maxLines = 10,
                                 keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Email)
                             )
                             CustomTextField(
                                 textTitle = loginUiState.signUpPassword,
                                 onValueChange = { newPassword ->
-                                    onAction(LoginOnAction.SignInPasswordChanged(newPassword))
+                                    onAction(LoginOnAction.SignUpPasswordChanged(newPassword))
                                 },
                                 modifier = Modifier
                                     .fillMaxWidth()
@@ -286,9 +306,19 @@ fun SignUpScreen(
                             )
                             CustomElevatedButton(
                                 onClick = {
-                                    coroutineScope.launch {
-                                        currentPage.animateScrollToPage(1)
-                                        onAction(LoginOnAction.PagerChanged(2))
+                                    if (loginUiState.number.isEmpty() || loginUiState.signUpEmail.isEmpty() || loginUiState.signUpPassword.isEmpty()) {
+                                        onAction(
+                                            LoginOnAction.ChangeErrorStateWithMessage(
+                                                errorState = true,
+                                                isLoading = false,
+                                                message = "Please fill all the fields"
+                                            )
+                                        )
+                                    } else {
+                                        coroutineScope.launch {
+                                            currentPage.animateScrollToPage(1)
+                                            onAction(LoginOnAction.PagerChanged(2))
+                                        }
                                     }
                                 },
                                 modifier = Modifier
@@ -397,9 +427,19 @@ fun SignUpScreen(
                                 )
                                 CustomElevatedButton(
                                     onClick = {
-                                        coroutineScope.launch {
-                                            currentPage.animateScrollToPage(2)
-                                            onAction(LoginOnAction.PagerChanged(3))
+                                        if (loginUiState.signUpName.isEmpty() || loginUiState.signUpSurname.isEmpty() || loginUiState.signUpRelativeName.isEmpty()) {
+                                            onAction(
+                                                LoginOnAction.ChangeErrorStateWithMessage(
+                                                    errorState = true,
+                                                    isLoading = false,
+                                                    message = "Please fill all the fields"
+                                                )
+                                            )
+                                        } else {
+                                            coroutineScope.launch {
+                                                currentPage.animateScrollToPage(2)
+                                                onAction(LoginOnAction.PagerChanged(3))
+                                            }
                                         }
                                     },
                                     modifier = Modifier
@@ -502,6 +542,7 @@ fun SignUpScreen(
                                                 onHomeNavigate
                                             )
                                         )
+                                        onAction(LoginOnAction.ChangeLoadingState(true))
                                     },
                                     modifier = Modifier
                                         .weight(1f)

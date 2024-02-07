@@ -19,12 +19,12 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
@@ -41,6 +41,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.gdscedirne.toplan.R
 import com.gdscedirne.toplan.components.CustomElevatedButton
+import com.gdscedirne.toplan.components.CustomErrorDialog
+import com.gdscedirne.toplan.components.CustomLoading
 import com.gdscedirne.toplan.components.CustomText
 import com.gdscedirne.toplan.components.CustomTextField
 import com.gdscedirne.toplan.ui.theme.Black
@@ -51,7 +53,6 @@ import com.gdscedirne.toplan.ui.theme.MainRed
 import com.gdscedirne.toplan.ui.theme.khandFamily
 import com.gdscedirne.toplan.ui.theme.robatoFamily
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun SignInScreen(
     onWelcomeNavigate: () -> Unit,
@@ -61,8 +62,29 @@ fun SignInScreen(
     loginUiState: LoginUiState,
     onAction: (LoginOnAction) -> Unit
 ) {
+
     var isPasswordVisible by remember { mutableStateOf(false) }
     val keyboardController = LocalSoftwareKeyboardController.current
+
+    LaunchedEffect(loginUiState.isSuccess && loginUiState.isError) {
+        onAction(LoginOnAction.ChangeLoadingState(false))
+    }
+
+    if (loginUiState.isLoading) {
+        CustomLoading()
+    }
+
+    if (loginUiState.isError) {
+        CustomErrorDialog(
+            errorMessage = loginUiState.errorMessage,
+            onDismissClick = {
+                onAction(LoginOnAction.ChangeErrorState(errorState = false, isLoading = false))
+            },
+            onPositiveAction = {
+                onAction(LoginOnAction.ChangeErrorState(errorState = false, isLoading = false))
+            }
+        )
+    }
 
     Column(
         modifier = Modifier
@@ -214,9 +236,18 @@ fun SignInScreen(
             )
             CustomElevatedButton(
                 onClick = {
-                    onHomeNavigate()
+                    onAction(
+                        LoginOnAction.SignInUser(
+                            loginUiState.signInEmail,
+                            loginUiState.signInPassword,
+                            onHomeNavigate
+                        )
+                    )
+                    onAction(LoginOnAction.ChangeLoadingState(true))
                 },
-                modifier = Modifier.padding(top = 16.dp).fillMaxWidth(),
+                modifier = Modifier
+                    .padding(top = 16.dp)
+                    .fillMaxWidth(),
                 color = ButtonDefaults.elevatedButtonColors(
                     containerColor = DarkRed20
                 ),
