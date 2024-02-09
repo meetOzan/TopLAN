@@ -12,6 +12,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.gdscedirne.toplan.HomeActivity
 import com.gdscedirne.toplan.presentation.login.ForgotPasswordScreen
+import com.gdscedirne.toplan.presentation.login.LoginOnAction
 import com.gdscedirne.toplan.presentation.login.LoginViewModel
 import com.gdscedirne.toplan.presentation.login.SignInScreen
 import com.gdscedirne.toplan.presentation.login.SignUpScreen
@@ -147,6 +148,10 @@ fun NavGraphBuilder.signInScreen(
 
         val viewModel = hiltViewModel<LoginViewModel>()
         val loginState = viewModel.loginState.collectAsState().value
+        
+        LaunchedEffect(loginState.isSuccess && loginState.isError) {
+            viewModel.onAction(LoginOnAction.ChangeLoadingState(false))
+        }
 
         SignInScreen(
             onWelcomeNavigate = onWelcomeNavigate,
@@ -168,6 +173,10 @@ fun NavGraphBuilder.signUpScreen(
 
         val viewModel = hiltViewModel<LoginViewModel>()
         val loginState = viewModel.loginState.collectAsState().value
+
+        LaunchedEffect(loginState.isSuccess && loginState.isError) {
+            viewModel.onAction(LoginOnAction.ChangeLoadingState(false))
+        }
 
         SignUpScreen(
             onWelcomeNavigate = onWelcomeNavigate,

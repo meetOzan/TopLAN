@@ -24,4 +24,5 @@ sealed class LoginOnAction {
         val isLoading: Boolean,
         val message: String
     ) : LoginOnAction()
+    data object PasswordVisibilityChanged : LoginOnAction()
 }

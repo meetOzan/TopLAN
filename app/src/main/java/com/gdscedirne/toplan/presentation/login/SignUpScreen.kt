@@ -79,10 +79,6 @@ fun SignUpScreen(
 
     val coroutineScope = rememberCoroutineScope()
 
-    LaunchedEffect(loginUiState.isSuccess && loginUiState.isError) {
-        onAction(LoginOnAction.ChangeLoadingState(false))
-    }
-
     if (loginUiState.isLoading) {
         CustomLoading()
     }

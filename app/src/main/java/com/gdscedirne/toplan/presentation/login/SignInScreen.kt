@@ -19,7 +19,6 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -63,12 +62,7 @@ fun SignInScreen(
     onAction: (LoginOnAction) -> Unit
 ) {
 
-    var isPasswordVisible by remember { mutableStateOf(false) }
     val keyboardController = LocalSoftwareKeyboardController.current
-
-    LaunchedEffect(loginUiState.isSuccess && loginUiState.isError) {
-        onAction(LoginOnAction.ChangeLoadingState(false))
-    }
 
     if (loginUiState.isLoading) {
         CustomLoading()
@@ -199,11 +193,11 @@ fun SignInScreen(
                 trailingIcon = {
                     IconButton(
                         onClick = {
-                            isPasswordVisible = !isPasswordVisible
+                            onAction(LoginOnAction.PasswordVisibilityChanged)
                         }
                     ) {
                         Icon(
-                            painter = if (isPasswordVisible)
+                            painter = if (loginUiState.isPasswordVisible)
                                 painterResource(id = R.drawable.opened_eye)
                             else painterResource(
                                 R.drawable.closed_eye
@@ -214,7 +208,7 @@ fun SignInScreen(
                         )
                     }
                 },
-                visualTransformation = if (isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+                visualTransformation = if (loginUiState.isPasswordVisible) VisualTransformation.None else PasswordVisualTransformation(),
             )
             CustomText(
                 text = stringResource(R.string.forgot_password),

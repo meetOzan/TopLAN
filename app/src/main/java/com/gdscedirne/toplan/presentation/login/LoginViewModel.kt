@@ -49,6 +49,8 @@ class LoginViewModel @Inject constructor(
                 action.isLoading,
                 action.message
             )
+
+            LoginOnAction.PasswordVisibilityChanged -> onPasswordVisibilityChanged()
         }
     }
 
@@ -159,12 +161,21 @@ class LoginViewModel @Inject constructor(
         )
     }
 
-    private fun errorStateChangedWithMessage(isError: Boolean, isLoading: Boolean, errorMessage: String) {
+    private fun errorStateChangedWithMessage(
+        isError: Boolean,
+        isLoading: Boolean,
+        errorMessage: String
+    ) {
         _loginState.value = _loginState.value.copy(
             isError = isError,
             errorMessage = errorMessage,
             isLoading = isLoading
         )
+    }
+
+    private fun onPasswordVisibilityChanged() {
+        _loginState.value =
+            _loginState.value.copy(isPasswordVisible = !_loginState.value.isPasswordVisible)
     }
 }
 
@@ -182,6 +193,7 @@ data class LoginUiState(
     val signUpRelativeName: String = "",
     val signUpAddress: String = "",
     val number: String = "",
-    val pagerState: Int = 1
-){
+    val pagerState: Int = 1,
+    var isPasswordVisible: Boolean = false,
+) {
 }

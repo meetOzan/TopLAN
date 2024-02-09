@@ -34,4 +34,8 @@
     <string name="one_relative_s_full_name">One Relative\'s Full Name</string>
     <string name="error">Error</string>
     <string name="ok">OK</string>
+    <string name="sos_call">SOS Call</string>
+    <string name="are_you_sure_you_want_to_make_an_emergency_call">Are you sure you want to make an emergency call?</string>
+    <string name="yes">Yes</string>
+    <string name="cancel">Cancel</string>
 </resources>
