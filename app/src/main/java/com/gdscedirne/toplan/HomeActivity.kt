@@ -5,24 +5,42 @@ import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.BottomAppBar
 import androidx.compose.material.FabPosition
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Scaffold
+import androidx.compose.material3.IconButton
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.rememberNavController
 import com.gdscedirne.toplan.components.BottomNav
+import com.gdscedirne.toplan.components.CustomText
 import com.gdscedirne.toplan.components.Screen
 import com.gdscedirne.toplan.navigation.TopLanNavGraph
+import com.gdscedirne.toplan.presentation.home.HomeAction
+import com.gdscedirne.toplan.presentation.home.HomeViewModel
 import com.gdscedirne.toplan.ui.theme.DarkRed
 import com.gdscedirne.toplan.ui.theme.LightGrey20
+import com.gdscedirne.toplan.ui.theme.MainRed
 import com.gdscedirne.toplan.ui.theme.TopLANTheme
+import com.gdscedirne.toplan.ui.theme.khandFamily
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -32,7 +50,65 @@ class HomeActivity : AppCompatActivity() {
         setContent {
             TopLANTheme {
                 val navController = rememberNavController()
+
+                val homeViewModel = hiltViewModel<HomeViewModel>()
+
                 Scaffold(
+                    topBar = {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp, vertical = 16.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            IconButton(
+                                onClick = { },
+                                modifier = Modifier.size(32.dp)
+                            ) {
+                                Image(
+                                    painter = painterResource(id = R.drawable.menu_image),
+                                    contentDescription = null,
+                                )
+                            }
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(4.dp)
+                            ) {
+                                Image(
+                                    painter = painterResource(id = R.drawable.toplan_icon),
+                                    contentDescription = null,
+                                    modifier = Modifier.size(32.dp),
+                                    colorFilter = ColorFilter.tint(MainRed)
+                                )
+                                CustomText(
+                                    text = stringResource(id = R.string.toplan),
+                                    fontSize = 32,
+                                    color = MainRed,
+                                    fontStyle = TextStyle(
+                                        fontWeight = FontWeight.Medium,
+                                        fontFamily = khandFamily
+                                    )
+                                )
+                            }
+                            IconButton(
+                                onClick = {
+                                    homeViewModel.onAction(HomeAction.ChangeSosDialogState(true))
+                                },
+                                modifier = Modifier
+                                    .size(30.dp, 30.dp)
+                                    .clip(
+                                        RoundedCornerShape(0.dp)
+                                    )
+                            ) {
+                                Image(
+                                    painter = painterResource(id = R.drawable.sos_image),
+                                    contentDescription = null,
+                                    modifier = Modifier.padding(4.dp)
+                                )
+                            }
+                        }
+                    },
                     bottomBar = {
                         BottomAppBar(
                             modifier = Modifier

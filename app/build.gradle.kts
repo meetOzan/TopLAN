@@ -94,6 +94,11 @@ dependencies {
 
     // Google Maps API
     implementation("com.google.android.gms:play-services-maps:18.2.0")
+    implementation("com.google.maps.android:maps-compose:4.3.0")
+    implementation("com.google.android.gms:play-services-location:21.1.0")
+
+    //Accompanist (Permission)
+    implementation("com.google.accompanist:accompanist-permissions:0.31.3-beta")
 
     // Dependency Injection
     implementation("com.google.dagger:hilt-android:2.48")
@@ -129,5 +134,8 @@ dependencies {
     // Firebase Storage
     implementation("com.google.firebase:firebase-storage:20.3.0")
 
+}
 
+secrets {
+    defaultPropertiesFileName = "local.defaults.properties"
 }

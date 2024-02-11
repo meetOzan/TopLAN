@@ -38,4 +38,8 @@
     <string name="are_you_sure_you_want_to_make_an_emergency_call">Are you sure you want to make an emergency call?</string>
     <string name="yes">Yes</string>
     <string name="cancel">Cancel</string>
+    <string name="earthquake">Earthquake</string>
+    <string name="fire">Fire</string>
+    <string name="flood">Flood</string>
+    <string name="snow_avalanche">Snow Avalanche</string>
 </resources>
