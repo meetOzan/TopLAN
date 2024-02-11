@@ -53,62 +53,61 @@ class HomeActivity : AppCompatActivity() {
 
                 val homeViewModel = hiltViewModel<HomeViewModel>()
 
-                Scaffold(
-                    topBar = {
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 16.dp, vertical = 16.dp),
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                            verticalAlignment = Alignment.CenterVertically
+                Scaffold(topBar = {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp, vertical = 16.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        IconButton(
+                            onClick = { },
+                            modifier = Modifier.size(32.dp)
                         ) {
-                            IconButton(
-                                onClick = { },
-                                modifier = Modifier.size(32.dp)
-                            ) {
-                                Image(
-                                    painter = painterResource(id = R.drawable.menu_image),
-                                    contentDescription = null,
-                                )
-                            }
-                            Row(
-                                verticalAlignment = Alignment.CenterVertically,
-                                horizontalArrangement = Arrangement.spacedBy(4.dp)
-                            ) {
-                                Image(
-                                    painter = painterResource(id = R.drawable.toplan_icon),
-                                    contentDescription = null,
-                                    modifier = Modifier.size(32.dp),
-                                    colorFilter = ColorFilter.tint(MainRed)
-                                )
-                                CustomText(
-                                    text = stringResource(id = R.string.toplan),
-                                    fontSize = 32,
-                                    color = MainRed,
-                                    fontStyle = TextStyle(
-                                        fontWeight = FontWeight.Medium,
-                                        fontFamily = khandFamily
-                                    )
-                                )
-                            }
-                            IconButton(
-                                onClick = {
-                                    homeViewModel.onAction(HomeAction.ChangeSosDialogState(true))
-                                },
-                                modifier = Modifier
-                                    .size(30.dp, 30.dp)
-                                    .clip(
-                                        RoundedCornerShape(0.dp)
-                                    )
-                            ) {
-                                Image(
-                                    painter = painterResource(id = R.drawable.sos_image),
-                                    contentDescription = null,
-                                    modifier = Modifier.padding(4.dp)
-                                )
-                            }
+                            Image(
+                                painter = painterResource(id = R.drawable.menu_image),
+                                contentDescription = null,
+                            )
                         }
-                    },
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(4.dp)
+                        ) {
+                            Image(
+                                painter = painterResource(id = R.drawable.toplan_icon),
+                                contentDescription = null,
+                                modifier = Modifier.size(32.dp),
+                                colorFilter = ColorFilter.tint(MainRed)
+                            )
+                            CustomText(
+                                text = stringResource(id = R.string.toplan),
+                                fontSize = 32,
+                                color = MainRed,
+                                fontStyle = TextStyle(
+                                    fontWeight = FontWeight.Medium,
+                                    fontFamily = khandFamily
+                                )
+                            )
+                        }
+                        IconButton(
+                            onClick = {
+                                homeViewModel.onAction(HomeAction.ChangeSosDialogState(true))
+                            },
+                            modifier = Modifier
+                                .size(30.dp, 30.dp)
+                                .clip(
+                                    RoundedCornerShape(0.dp)
+                                )
+                        ) {
+                            Image(
+                                painter = painterResource(id = R.drawable.sos_image),
+                                contentDescription = null,
+                                modifier = Modifier.padding(4.dp)
+                            )
+                        }
+                    }
+                },
                     bottomBar = {
                         BottomAppBar(
                             modifier = Modifier

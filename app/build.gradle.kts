@@ -134,6 +134,9 @@ dependencies {
     // Firebase Storage
     implementation("com.google.firebase:firebase-storage:20.3.0")
 
+    // Location
+    implementation("com.google.android.gms:play-services-location:19.0.1")
+
 }
 
 secrets {

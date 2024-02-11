@@ -8,6 +8,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.gdscedirne.toplan.presentation.earthquake.EarthQuakeScreen
+import com.gdscedirne.toplan.presentation.earthquake.EarthquakeViewModel
 import com.gdscedirne.toplan.presentation.home.HomeScreen
 import com.gdscedirne.toplan.presentation.home.HomeViewModel
 
@@ -23,7 +24,15 @@ fun TopLanNavGraph(
                 navController.navigate(Destinations.EarthQuakeDestination.route)
             }
         )
-        earthquakeScreen()
+        earthquakeScreen(
+            onHomeNavigate = {
+                navController.navigate(Destinations.HomeDestination.route){
+                    popUpTo(Destinations.HomeDestination.route){
+                        inclusive = true
+                    }
+                }
+            }
+        )
     }
 }
 
@@ -44,8 +53,17 @@ fun NavGraphBuilder.homeScreen(
 }
 
 fun NavGraphBuilder.earthquakeScreen(
+    onHomeNavigate : () -> Unit
 ) {
     composable(Destinations.EarthQuakeDestination.route) {
-        EarthQuakeScreen()
+
+        val earthquakeViewModel = hiltViewModel<EarthquakeViewModel>()
+        val uiState = earthquakeViewModel.earthquakeUiState.collectAsState().value
+
+        EarthQuakeScreen(
+            onHomeNavigate = onHomeNavigate,
+            onAction = earthquakeViewModel::onAction,
+            earthquakeUiState = uiState
+        )
     }
 }

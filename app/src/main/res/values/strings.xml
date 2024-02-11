@@ -42,4 +42,9 @@
     <string name="fire">Fire</string>
     <string name="flood">Flood</string>
     <string name="snow_avalanche">Snow Avalanche</string>
+    <string name="no_location_permission">No Location Permission</string>
+    <string name="you_need_to_give_location_permission_to_use_this_feature_please_give_location_permission_from_settings">You need to give location permission to use this feature. Please give location permission from settings.</string>
+    <string name="go_to_settings">Go to Settings</string>
+    <string name="intent_package">package</string>
+    <string name="settings">Settings</string>
 </resources>
