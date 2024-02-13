@@ -24,17 +24,17 @@ import androidx.core.content.ContextCompat.startActivity
 import com.gdscedirne.toplan.R
 import com.gdscedirne.toplan.components.CustomAlertDialog
 import com.gdscedirne.toplan.components.CustomErrorDialog
+import com.gdscedirne.toplan.components.MapMarker
+import com.gdscedirne.toplan.ui.theme.MainRed
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionStatus
 import com.google.accompanist.permissions.rememberPermissionState
 import com.google.accompanist.permissions.shouldShowRationale
 import com.google.android.gms.location.LocationServices
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.google.android.gms.maps.GoogleMapOptions
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.GoogleMap
-import com.google.maps.android.compose.Marker
-import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
 
 
@@ -109,7 +109,6 @@ fun EarthQuakeScreen(
                 }
 
             }
-
             is PermissionStatus.Denied -> {
                 onAction(EarthquakeAction.ChangeIsNoLocationRequestDialog)
             }
@@ -124,15 +123,20 @@ fun EarthQuakeScreen(
         GoogleMap(
             modifier = Modifier.fillMaxSize(),
             cameraPositionState = cameraPositionState,
+            googleMapOptionsFactory = {
+                GoogleMapOptions()
+                    .mapType(com.google.android.gms.maps.GoogleMap.MAP_TYPE_NORMAL)
+                    .compassEnabled(true)
+                    .rotateGesturesEnabled(true)
+                    .tiltGesturesEnabled(true)
+                    .zoomControlsEnabled(true)
+            }
         ) {
-            Marker(
-                state = MarkerState(
-                    position = userLatLng,
-                ),
-                icon = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE),
-                title = "Current Location",
-                snippet = "You are here",
-                draggable = false
+            MapMarker(
+                position = userLatLng,
+                title = stringResource(R.string.toplan),
+                iconResourceId = R.drawable.areas,
+                markerColor = MainRed
             )
         }
     }
@@ -145,6 +149,7 @@ fun EarthQuakeScreen(
             },
             onPositiveAction = {
                 onHomeNavigate()
+                onAction(EarthquakeAction.ChangeIsErrorDialog)
             }
         )
     }
@@ -164,8 +169,12 @@ fun EarthQuakeScreen(
                     null
                 )
                 startActivity(context, intent, null)
+                onAction(EarthquakeAction.ChangeIsNoLocationRequestDialog)
             },
-            onNegativeAction = { onHomeNavigate() }
+            onNegativeAction = {
+                onHomeNavigate()
+                onAction(EarthquakeAction.ChangeIsNoLocationRequestDialog)
+            }
         )
     }
 

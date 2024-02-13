@@ -1,0 +1,111 @@
+package com.gdscedirne.toplan.components
+
+import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.LightingColorFilter
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.size
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat
+import com.gdscedirne.toplan.R
+import com.gdscedirne.toplan.ui.theme.MediumGrey20
+import com.google.android.gms.maps.model.BitmapDescriptor
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.google.android.gms.maps.model.LatLng
+import com.google.maps.android.compose.MarkerInfoWindowContent
+import com.google.maps.android.compose.MarkerState
+import kotlin.math.max
+import kotlin.math.roundToInt
+
+@Composable
+fun MapMarker(
+    position: LatLng,
+    title: String,
+    iconResourceId: Int,
+    markerColor: androidx.compose.ui.graphics.Color
+) {
+
+    var isClicked by remember {
+        mutableStateOf(false)
+    }
+    val context = LocalContext.current
+    MarkerInfoWindowContent(
+        state = MarkerState(position = position),
+        title = title,
+        icon = bitmapDescriptorFromVector(
+            context,
+            R.drawable.custom_marker,
+            iconResourceId,
+            markerColor,
+            isClicked
+        ),
+        onClick = {
+            isClicked = !isClicked
+            false
+        }
+    ) {
+        if (isClicked) {
+            Box(
+                modifier = Modifier.size(50.dp)
+            ) {
+                Image(
+                    painter = painterResource(id = R.drawable.areas),
+                    contentDescription = null,
+                    modifier = Modifier.size(50.dp),
+                    colorFilter = ColorFilter.tint(markerColor)
+                )
+            }
+        } else {
+            it.hideInfoWindow()
+        }
+    }
+}
+
+fun bitmapDescriptorFromVector(
+    context: Context,
+    vectorResId: Int,
+    vectorResIdIcon: Int,
+    markerColor: androidx.compose.ui.graphics.Color,
+    isSelected: Boolean = false
+): BitmapDescriptor? {
+
+    val drawable = ContextCompat.getDrawable(context, vectorResId) ?: return null
+    val drawableIcon = ContextCompat.getDrawable(context, vectorResIdIcon) ?: return null
+
+    val width = max(drawable.intrinsicWidth, drawableIcon.intrinsicWidth)
+    val height = max(drawable.intrinsicHeight, drawableIcon.intrinsicHeight)
+
+    val combinedBm = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+    val canvas = Canvas(combinedBm)
+
+    val colorFilter = LightingColorFilter(
+        if (isSelected) markerColor.toArgb() else MediumGrey20.toArgb(),
+        1.0f.roundToInt()
+    )
+
+    drawable.colorFilter = colorFilter
+
+    drawable.setBounds(0, 0, width, height)
+    drawable.draw(canvas)
+    drawableIcon.setBounds(
+        (width - drawableIcon.intrinsicWidth) / 2,
+        (height - drawableIcon.intrinsicHeight) / 2 - 20,
+        (width + drawableIcon.intrinsicWidth) / 2,
+        (height + drawableIcon.intrinsicHeight) / 2 - 20
+    )
+    drawableIcon.draw(canvas)
+
+    return BitmapDescriptorFactory.fromBitmap(combinedBm)
+}
