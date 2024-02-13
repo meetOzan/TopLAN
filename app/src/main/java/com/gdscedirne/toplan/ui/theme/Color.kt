@@ -44,3 +44,10 @@ val MediumGrey40 = Color(0xFF5E5E5E)
 
 // #9E9E9E
 val MediumGrey20 = Color(0xFF9E9E9E)
+
+// #F5F5F5
+val LightGrey10 = Color(0xFFF5F5F5)
+
+// #737373
+val MediumGrey10 = Color(0xFF737373)
+

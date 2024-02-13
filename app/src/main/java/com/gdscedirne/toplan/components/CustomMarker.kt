@@ -4,20 +4,13 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.LightingColorFilter
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import com.gdscedirne.toplan.R
 import com.gdscedirne.toplan.ui.theme.MediumGrey20
@@ -57,16 +50,7 @@ fun MapMarker(
         }
     ) {
         if (isClicked) {
-            Box(
-                modifier = Modifier.size(50.dp)
-            ) {
-                Image(
-                    painter = painterResource(id = R.drawable.areas),
-                    contentDescription = null,
-                    modifier = Modifier.size(50.dp),
-                    colorFilter = ColorFilter.tint(markerColor)
-                )
-            }
+            MarkerWindow(markerIcon = iconResourceId)
         } else {
             it.hideInfoWindow()
         }
