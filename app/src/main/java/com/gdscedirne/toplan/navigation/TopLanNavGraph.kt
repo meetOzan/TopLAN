@@ -45,9 +45,7 @@ fun NavGraphBuilder.homeScreen(
         val uiState = homeViewModel.homeState.collectAsState().value
 
         HomeScreen(
-            onEarthQuakeNavigate = onEarthQuakeNavigate,
-            uiState = uiState,
-            onAction = homeViewModel::onAction
+            onEarthQuakeNavigate = onEarthQuakeNavigate
         )
     }
 }

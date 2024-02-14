@@ -20,8 +20,13 @@ import androidx.compose.material.BottomAppBar
 import androidx.compose.material.FabPosition
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Scaffold
+import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.ModalDrawerSheet
+import androidx.compose.material3.ModalNavigationDrawer
+import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -38,6 +43,7 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.rememberNavController
 import com.gdscedirne.toplan.components.BottomNav
 import com.gdscedirne.toplan.components.CustomAlertDialog
+import com.gdscedirne.toplan.components.CustomDrawer
 import com.gdscedirne.toplan.components.CustomText
 import com.gdscedirne.toplan.components.Screen
 import com.gdscedirne.toplan.navigation.TopLanNavGraph
@@ -52,6 +58,7 @@ import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalPermissionsApi::class)
 @AndroidEntryPoint
@@ -74,122 +81,164 @@ class HomeActivity : AppCompatActivity() {
 
                 val hasPermission = permissionState.status.isGranted
 
+                val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
+                val scope = rememberCoroutineScope()
+
                 if (homeUiState.sosCallDialog) {
                     CustomAlertDialog(
                         title = stringResource(R.string.sos_call),
                         body = stringResource(R.string.are_you_sure_you_want_to_make_an_emergency_call),
                         positiveButtonName = stringResource(R.string.yes),
                         negativeButtonName = stringResource(R.string.cancel),
-                        onDismissClick = { homeViewModel.onAction(HomeAction.ChangeSosDialogState(false)) },
+                        onDismissClick = {
+                            homeViewModel.onAction(
+                                HomeAction.ChangeSosDialogState(
+                                    false
+                                )
+                            )
+                        },
                         onPositiveAction = {
                             makeEmergencyCall(context)
                         },
-                        onNegativeAction = { homeViewModel.onAction(HomeAction.ChangeSosDialogState(false)) }
+                        onNegativeAction = {
+                            homeViewModel.onAction(
+                                HomeAction.ChangeSosDialogState(
+                                    false
+                                )
+                            )
+                        }
                     )
                 }
 
-                Scaffold(topBar = {
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 16.dp, vertical = 16.dp),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        IconButton(
-                            onClick = { },
-                            modifier = Modifier.size(32.dp)
-                        ) {
-                            Image(
-                                painter = painterResource(id = R.drawable.menu_image),
-                                contentDescription = null,
-                            )
-                        }
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.spacedBy(4.dp)
-                        ) {
-                            Image(
-                                painter = painterResource(id = R.drawable.toplan_icon),
-                                contentDescription = null,
-                                modifier = Modifier.size(32.dp),
-                                colorFilter = ColorFilter.tint(MainRed)
-                            )
-                            CustomText(
-                                text = stringResource(id = R.string.toplan),
-                                fontSize = 32,
-                                color = MainRed,
-                                fontStyle = TextStyle(
-                                    fontWeight = FontWeight.Medium,
-                                    fontFamily = khandFamily
-                                )
-                            )
-                        }
-                        IconButton(
-                            onClick = {
-                                if (hasPermission) {
-                                    homeViewModel.onAction(HomeAction.ChangeSosDialogState(true))
-                                } else {
-                                    permissionState.launchPermissionRequest()
-                                }
-                            },
-                            modifier = Modifier
-                                .size(30.dp, 30.dp)
-                                .clip(
-                                    RoundedCornerShape(0.dp)
-                                )
-                        ) {
-                            Image(
-                                painter = painterResource(id = R.drawable.sos_image),
-                                contentDescription = null,
-                                modifier = Modifier.padding(4.dp)
-                            )
-                        }
-                    }
-                },
-                    bottomBar = {
-                        BottomAppBar(
-                            modifier = Modifier
-                                .border(
-                                    width = 1.dp,
-                                    color = LightGrey20
-                                )
-                                .fillMaxWidth(),
-                            cutoutShape = CircleShape,
-                            backgroundColor = Color.White,
-                        ) {
-                            BottomNav(navController = navController)
+                ModalNavigationDrawer(
+                    drawerContent = {
+                        ModalDrawerSheet {
+                            CustomDrawer(onClickList = listOf())
                         }
                     },
-                    floatingActionButtonPosition = FabPosition.Center,
-                    isFloatingActionButtonDocked = true,
-                    floatingActionButton = {
-                        FloatingActionButton(
-                            shape = CircleShape,
-                            onClick = {
-                                Screen.Alert.route?.let {
-                                    navController.navigate(it) {
-                                        popUpTo(navController.graph.findStartDestination().id) {
-                                            saveState = true
-                                        }
-                                        launchSingleTop = true
-                                        restoreState = true
-                                    }
-                                }
-                                Screen.Alert.route?.let { navController.navigate(it) }
-                            },
-                            backgroundColor = DarkRed
-                        ) {
-                            Image(
-                                painter = painterResource(id = Screen.Alert.icon!!),
-                                contentDescription = getString(R.string.alert_icon)
-                            )
-                        }
-                    }
+                    drawerState = drawerState,
+                    gesturesEnabled = drawerState.isOpen,
                 ) {
-                    it
-                    TopLanNavGraph(navController = navController)
+                    Scaffold(
+                        topBar = {
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(horizontal = 16.dp, vertical = 16.dp),
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                IconButton(
+                                    onClick = {
+                                        scope.launch {
+                                            if (drawerState.isOpen) {
+                                                drawerState.close()
+                                            } else {
+                                                drawerState.open()
+                                            }
+                                        }
+                                    },
+                                    modifier = Modifier.size(32.dp)
+                                ) {
+                                    Image(
+                                        painter = painterResource(id = R.drawable.menu_image),
+                                        contentDescription = null,
+                                    )
+                                }
+                                Row(
+                                    verticalAlignment = Alignment.CenterVertically,
+                                    horizontalArrangement = Arrangement.spacedBy(4.dp)
+                                ) {
+                                    Image(
+                                        painter = painterResource(id = R.drawable.toplan_icon),
+                                        contentDescription = null,
+                                        modifier = Modifier.size(32.dp),
+                                        colorFilter = ColorFilter.tint(MainRed)
+                                    )
+                                    CustomText(
+                                        text = stringResource(id = R.string.toplan),
+                                        fontSize = 32,
+                                        color = MainRed,
+                                        fontStyle = TextStyle(
+                                            fontWeight = FontWeight.Medium,
+                                            fontFamily = khandFamily
+                                        )
+                                    )
+                                }
+                                IconButton(
+                                    onClick = {
+                                        if (hasPermission) {
+                                            homeViewModel.onAction(
+                                                HomeAction.ChangeSosDialogState(
+                                                    true
+                                                )
+                                            )
+                                        } else {
+                                            permissionState.launchPermissionRequest()
+                                        }
+                                    },
+                                    modifier = Modifier
+                                        .size(30.dp, 30.dp)
+                                        .clip(
+                                            RoundedCornerShape(0.dp)
+                                        )
+                                ) {
+                                    Image(
+                                        painter = painterResource(id = R.drawable.sos_image),
+                                        contentDescription = null,
+                                        modifier = Modifier.padding(4.dp)
+                                    )
+                                }
+                            }
+                        },
+                        drawerContent = {
+                            CustomDrawer(onClickList = listOf())
+                        },
+                        bottomBar = {
+                            BottomAppBar(
+                                modifier = Modifier
+                                    .border(
+                                        width = 1.dp,
+                                        color = LightGrey20
+                                    )
+                                    .fillMaxWidth(),
+                                cutoutShape = CircleShape,
+                                backgroundColor = Color.White,
+                            ) {
+                                BottomNav(navController = navController)
+                            }
+                        },
+                        floatingActionButtonPosition = FabPosition.Center,
+                        isFloatingActionButtonDocked = true,
+                        floatingActionButton = {
+                            FloatingActionButton(
+                                shape = CircleShape,
+                                onClick = {
+                                    Screen.Alert.route?.let {
+                                        navController.navigate(it) {
+                                            popUpTo(navController.graph.findStartDestination().id) {
+                                                saveState = true
+                                            }
+                                            launchSingleTop = true
+                                            restoreState = true
+                                        }
+                                    }
+                                    Screen.Alert.route?.let { navController.navigate(it) }
+                                },
+                                backgroundColor = DarkRed
+                            ) {
+                                Image(
+                                    painter = painterResource(id = Screen.Alert.icon!!),
+                                    contentDescription = getString(R.string.alert_icon)
+                                )
+                            }
+                        }
+                    ) {
+                        it
+                        TopLanNavGraph(navController = navController)
+                    }
                 }
+
             }
         }
     }
