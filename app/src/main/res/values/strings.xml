@@ -48,4 +48,8 @@
     <string name="intent_package">package</string>
     <string name="settings">Settings</string>
     <string name="view_details">View Details</string>
+    <string name="allow">Allow</string>
+    <string name="deny">Deny</string>
+    <string name="please_allow_the_app_to_make_calls">Please allow the app to make calls</string>
+    <string name="no_permission_for_calling">No permission for calling</string>
 </resources>

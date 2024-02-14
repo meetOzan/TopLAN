@@ -1,8 +1,5 @@
 package com.gdscedirne.toplan.presentation.home
 
-import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -23,7 +20,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
@@ -31,7 +27,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.gdscedirne.toplan.R
-import com.gdscedirne.toplan.components.CustomAlertDialog
 import com.gdscedirne.toplan.components.CustomText
 import com.gdscedirne.toplan.ui.theme.DarkRed
 import com.gdscedirne.toplan.ui.theme.robatoFamily
@@ -39,17 +34,13 @@ import com.gdscedirne.toplan.ui.theme.robatoFamily
 @Composable
 fun HomeScreen(
     onEarthQuakeNavigate: () -> Unit,
-    onAction: (HomeAction) -> Unit,
-    uiState: HomeUiState
 ) {
 
     val (selected, setSelected) = remember {
         mutableIntStateOf(0)
     }
 
-    val context = LocalContext.current
-
-    val gridItems = listOf<HomeGridItem>(
+    val gridItems = listOf(
         HomeGridItem(
             stringResource(R.string.earthquake),
             R.drawable.earthquake_hub,
@@ -114,26 +105,6 @@ fun HomeScreen(
             }
         }
     }
-
-    if (uiState.sosCallDialog) {
-        CustomAlertDialog(
-            title = stringResource(R.string.sos_call),
-            body = stringResource(R.string.are_you_sure_you_want_to_make_an_emergency_call),
-            positiveButtonName = stringResource(R.string.yes),
-            negativeButtonName = stringResource(R.string.cancel),
-            onDismissClick = { onAction(HomeAction.ChangeSosDialogState(false)) },
-            onPositiveAction = {
-                makeEmergencyCall(context)
-            },
-            onNegativeAction = { onAction(HomeAction.ChangeSosDialogState(false)) }
-        )
-    }
-}
-
-fun makeEmergencyCall(context: Context) {
-    val intent = Intent(Intent.ACTION_DIAL)
-    intent.data = Uri.parse("tel:911")
-    context.startActivity(intent)
 }
 
 data class HomeGridItem(
@@ -146,8 +117,6 @@ data class HomeGridItem(
 @Composable
 fun PreviewHomeScreen() {
     HomeScreen(
-        onEarthQuakeNavigate = {},
-        onAction = {},
-        uiState = HomeUiState()
+        onEarthQuakeNavigate = {}
     )
 }
