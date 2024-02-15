@@ -10,7 +10,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.gdscedirne.toplan.HomeActivity
+import com.gdscedirne.toplan.presentation.home.HomeActivity
 import com.gdscedirne.toplan.presentation.login.ForgotPasswordScreen
 import com.gdscedirne.toplan.presentation.login.LoginOnAction
 import com.gdscedirne.toplan.presentation.login.LoginViewModel

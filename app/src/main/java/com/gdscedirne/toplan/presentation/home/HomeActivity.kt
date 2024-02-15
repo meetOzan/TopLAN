@@ -1,4 +1,4 @@
-package com.gdscedirne.toplan
+package com.gdscedirne.toplan.presentation.home
 
 import android.Manifest
 import android.content.Context
@@ -36,16 +36,15 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.rememberNavController
+import com.gdscedirne.toplan.R
 import com.gdscedirne.toplan.components.BottomNav
 import com.gdscedirne.toplan.components.CustomAlertDialog
 import com.gdscedirne.toplan.components.CustomDrawer
 import com.gdscedirne.toplan.components.CustomText
 import com.gdscedirne.toplan.components.Screen
 import com.gdscedirne.toplan.navigation.TopLanNavGraph
-import com.gdscedirne.toplan.presentation.home.HomeAction
-import com.gdscedirne.toplan.presentation.home.HomeViewModel
+import com.gdscedirne.toplan.presentation.report.ReportActivity
 import com.gdscedirne.toplan.ui.theme.DarkRed
 import com.gdscedirne.toplan.ui.theme.LightGrey20
 import com.gdscedirne.toplan.ui.theme.MainRed
@@ -200,16 +199,8 @@ class HomeActivity : AppCompatActivity() {
                         FloatingActionButton(
                             shape = CircleShape,
                             onClick = {
-                                Screen.Alert.route?.let {
-                                    navController.navigate(it) {
-                                        popUpTo(navController.graph.findStartDestination().id) {
-                                            saveState = true
-                                        }
-                                        launchSingleTop = true
-                                        restoreState = true
-                                    }
-                                }
-                                Screen.Alert.route?.let { navController.navigate(it) }
+                                val intent = Intent(context, ReportActivity::class.java)
+                                context.startActivity(intent)
                             },
                             backgroundColor = DarkRed
                         ) {

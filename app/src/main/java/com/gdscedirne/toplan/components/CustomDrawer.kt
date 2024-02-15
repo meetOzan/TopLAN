@@ -96,7 +96,7 @@ fun CustomDrawer(
                                 elevation = ButtonDefaults.elevatedButtonElevation(
                                     defaultElevation = 0.dp
                                 ),
-                                colors = androidx.compose.material3.ButtonDefaults.elevatedButtonColors(
+                                colors = ButtonDefaults.elevatedButtonColors(
                                     containerColor = Color.White
                                 )
                             ) {

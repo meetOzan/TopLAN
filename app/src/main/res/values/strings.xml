@@ -52,4 +52,14 @@
     <string name="deny">Deny</string>
     <string name="please_allow_the_app_to_make_calls">Please allow the app to make calls</string>
     <string name="no_permission_for_calling">No permission for calling</string>
+    <string name="i_m_under_rubble">I\'m Under Rubble</string>
+    <string name="send_quick_location">Send Quick Location</string>
+    <string name="demolished_building">Demolished Building</string>
+    <string name="the_house_i_live_in_has_been_demolished">The house I live in has been demolished / there is a building around me that has been demolished or is about to be demolished.</string>
+    <string name="supplies_and_equipment">Supplies and Equipment</string>
+    <string name="do_you_or_someone_in_your_neighbourhood_need_supplies_and_equipment">Do you or someone in your neighbourhood need supplies and equipment?</string>
+    <string name="need_help">Need Help</string>
+    <string name="do_you_want_to_report">Do you want to report someone whose life is in danger?</string>
+    <string name="gathering_help"><![CDATA[Gathering & Help]]></string>
+    <string name="share_assembly_areas">Share assembly areas and aid sites with others.</string>
 </resources>

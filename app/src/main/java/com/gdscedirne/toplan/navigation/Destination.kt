@@ -32,4 +32,8 @@ object Destinations {
     object EarthQuakeDestination : Destination {
         override val route = "earthquake"
     }
+
+    object ReportDestination : Destination {
+        override val route = "report"
+    }
 }
