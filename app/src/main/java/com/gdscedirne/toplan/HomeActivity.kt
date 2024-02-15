@@ -20,11 +20,8 @@ import androidx.compose.material.BottomAppBar
 import androidx.compose.material.FabPosition
 import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Scaffold
-import androidx.compose.material3.DrawerValue
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.ModalDrawerSheet
-import androidx.compose.material3.ModalNavigationDrawer
-import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -69,20 +66,20 @@ class HomeActivity : AppCompatActivity() {
             TopLANTheme {
 
                 val navController = rememberNavController()
+                val scope = rememberCoroutineScope()
 
-                val homeViewModel = hiltViewModel<HomeViewModel>()
-                val homeUiState = homeViewModel.homeState.collectAsState().value
-
-                val context = LocalContext.current
+                val scaffoldState = rememberScaffoldState()
 
                 val permissionState = rememberPermissionState(
                     Manifest.permission.CALL_PHONE
                 )
 
+                val context = LocalContext.current
+
                 val hasPermission = permissionState.status.isGranted
 
-                val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-                val scope = rememberCoroutineScope()
+                val homeViewModel = hiltViewModel<HomeViewModel>()
+                val homeUiState = homeViewModel.homeState.collectAsState().value
 
                 if (homeUiState.sosCallDialog) {
                     CustomAlertDialog(
@@ -110,139 +107,127 @@ class HomeActivity : AppCompatActivity() {
                     )
                 }
 
-                ModalNavigationDrawer(
-                    drawerContent = {
-                        ModalDrawerSheet {
-                            CustomDrawer(onClickList = listOf())
-                        }
-                    },
-                    drawerState = drawerState,
-                    gesturesEnabled = drawerState.isOpen,
-                ) {
-                    Scaffold(
-                        topBar = {
-                            Row(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(horizontal = 16.dp, vertical = 16.dp),
-                                horizontalArrangement = Arrangement.SpaceBetween,
-                                verticalAlignment = Alignment.CenterVertically
-                            ) {
-                                IconButton(
-                                    onClick = {
-                                        scope.launch {
-                                            if (drawerState.isOpen) {
-                                                drawerState.close()
-                                            } else {
-                                                drawerState.open()
-                                            }
-                                        }
-                                    },
-                                    modifier = Modifier.size(32.dp)
-                                ) {
-                                    Image(
-                                        painter = painterResource(id = R.drawable.menu_image),
-                                        contentDescription = null,
-                                    )
-                                }
-                                Row(
-                                    verticalAlignment = Alignment.CenterVertically,
-                                    horizontalArrangement = Arrangement.spacedBy(4.dp)
-                                ) {
-                                    Image(
-                                        painter = painterResource(id = R.drawable.toplan_icon),
-                                        contentDescription = null,
-                                        modifier = Modifier.size(32.dp),
-                                        colorFilter = ColorFilter.tint(MainRed)
-                                    )
-                                    CustomText(
-                                        text = stringResource(id = R.string.toplan),
-                                        fontSize = 32,
-                                        color = MainRed,
-                                        fontStyle = TextStyle(
-                                            fontWeight = FontWeight.Medium,
-                                            fontFamily = khandFamily
-                                        )
-                                    )
-                                }
-                                IconButton(
-                                    onClick = {
-                                        if (hasPermission) {
-                                            homeViewModel.onAction(
-                                                HomeAction.ChangeSosDialogState(
-                                                    true
-                                                )
-                                            )
-                                        } else {
-                                            permissionState.launchPermissionRequest()
-                                        }
-                                    },
-                                    modifier = Modifier
-                                        .size(30.dp, 30.dp)
-                                        .clip(
-                                            RoundedCornerShape(0.dp)
-                                        )
-                                ) {
-                                    Image(
-                                        painter = painterResource(id = R.drawable.sos_image),
-                                        contentDescription = null,
-                                        modifier = Modifier.padding(4.dp)
-                                    )
-                                }
-                            }
-                        },
-                        drawerContent = {
-                            CustomDrawer(onClickList = listOf())
-                        },
-                        bottomBar = {
-                            BottomAppBar(
-                                modifier = Modifier
-                                    .border(
-                                        width = 1.dp,
-                                        color = LightGrey20
-                                    )
-                                    .fillMaxWidth(),
-                                cutoutShape = CircleShape,
-                                backgroundColor = Color.White,
-                            ) {
-                                BottomNav(navController = navController)
-                            }
-                        },
-                        floatingActionButtonPosition = FabPosition.Center,
-                        isFloatingActionButtonDocked = true,
-                        floatingActionButton = {
-                            FloatingActionButton(
-                                shape = CircleShape,
+                Scaffold(
+                    topBar = {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp, vertical = 16.dp),
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            IconButton(
                                 onClick = {
-                                    Screen.Alert.route?.let {
-                                        navController.navigate(it) {
-                                            popUpTo(navController.graph.findStartDestination().id) {
-                                                saveState = true
-                                            }
-                                            launchSingleTop = true
-                                            restoreState = true
-                                        }
+                                    scope.launch {
+                                        scaffoldState.drawerState.open()
                                     }
-                                    Screen.Alert.route?.let { navController.navigate(it) }
                                 },
-                                backgroundColor = DarkRed
+                                modifier = Modifier.size(32.dp)
                             ) {
                                 Image(
-                                    painter = painterResource(id = Screen.Alert.icon!!),
-                                    contentDescription = getString(R.string.alert_icon)
+                                    painter = painterResource(id = R.drawable.menu_image),
+                                    contentDescription = null,
+                                )
+                            }
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(4.dp)
+                            ) {
+                                Image(
+                                    painter = painterResource(id = R.drawable.toplan_icon),
+                                    contentDescription = null,
+                                    modifier = Modifier.size(32.dp),
+                                    colorFilter = ColorFilter.tint(MainRed)
+                                )
+                                CustomText(
+                                    text = stringResource(id = R.string.toplan),
+                                    fontSize = 32,
+                                    color = MainRed,
+                                    fontStyle = TextStyle(
+                                        fontWeight = FontWeight.Medium,
+                                        fontFamily = khandFamily
+                                    )
+                                )
+                            }
+                            IconButton(
+                                onClick = {
+                                    if (hasPermission) {
+                                        homeViewModel.onAction(
+                                            HomeAction.ChangeSosDialogState(
+                                                true
+                                            )
+                                        )
+                                    } else {
+                                        permissionState.launchPermissionRequest()
+                                    }
+                                },
+                                modifier = Modifier
+                                    .size(30.dp, 30.dp)
+                                    .clip(
+                                        RoundedCornerShape(0.dp)
+                                    )
+                            ) {
+                                Image(
+                                    painter = painterResource(id = R.drawable.sos_image),
+                                    contentDescription = null,
+                                    modifier = Modifier.padding(4.dp)
                                 )
                             }
                         }
-                    ) {
-                        it
-                        TopLanNavGraph(navController = navController)
+                    },
+                    drawerGesturesEnabled = scaffoldState.drawerState.isOpen,
+                    scaffoldState = scaffoldState,
+                    drawerContent = {
+                        CustomDrawer(onClickList = listOf())
+                    },
+                    bottomBar = {
+                        BottomAppBar(
+                            modifier = Modifier
+                                .border(
+                                    width = 1.dp,
+                                    color = LightGrey20
+                                )
+                                .fillMaxWidth(),
+                            cutoutShape = CircleShape,
+                            backgroundColor = Color.White,
+                        ) {
+                            BottomNav(navController = navController)
+                        }
+                    },
+                    floatingActionButtonPosition = FabPosition.Center,
+                    isFloatingActionButtonDocked = true,
+                    floatingActionButton = {
+                        FloatingActionButton(
+                            shape = CircleShape,
+                            onClick = {
+                                Screen.Alert.route?.let {
+                                    navController.navigate(it) {
+                                        popUpTo(navController.graph.findStartDestination().id) {
+                                            saveState = true
+                                        }
+                                        launchSingleTop = true
+                                        restoreState = true
+                                    }
+                                }
+                                Screen.Alert.route?.let { navController.navigate(it) }
+                            },
+                            backgroundColor = DarkRed
+                        ) {
+                            Image(
+                                painter = painterResource(id = Screen.Alert.icon!!),
+                                contentDescription = getString(R.string.alert_icon)
+                            )
+                        }
                     }
+                ) {
+                    it
+                    TopLanNavGraph(navController = navController)
                 }
-
             }
         }
     }
 }
+
 
 fun makeEmergencyCall(context: Context) {
     val intent = Intent(Intent.ACTION_DIAL)

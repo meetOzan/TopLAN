@@ -35,10 +35,11 @@ import com.gdscedirne.toplan.ui.theme.TransparentRed
 
 @Composable
 fun CustomDrawer(
-    onClickList: List<Unit>
+    onClickList: List<Unit>,
+    modifier: Modifier = Modifier
 ) {
     Surface(
-        modifier = Modifier.wrapContentWidth(),
+        modifier = Modifier.wrapContentWidth().then(modifier),
         color = Color.White
     ) {
         Column(
@@ -109,7 +110,7 @@ fun CustomDrawer(
                                     drawerItems[it].title,
                                     16,
                                     color = Black,
-                                    modifier = Modifier.padding(start = 16.dp)
+                                    modifier = Modifier.padding(start = 16.dp, end  = 16.dp)
                                 )
                             }
                         }
