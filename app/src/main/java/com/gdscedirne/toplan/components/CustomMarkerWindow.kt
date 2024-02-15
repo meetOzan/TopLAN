@@ -37,6 +37,13 @@ import com.gdscedirne.toplan.ui.theme.robatoFamily
 @Composable
 fun MarkerWindow(
     markerIcon: Int,
+    title: String,
+    description: String,
+    reportedTime: String,
+    reportedDate: String,
+    type: String,
+    location: String = stringResource(R.string.empty),
+    onAction: () -> Unit = {}
 ) {
 
     Card(
@@ -59,14 +66,13 @@ fun MarkerWindow(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             CustomText(
-                "Collapsed Building",
+                type,
                 14,
                 color = Color.White,
                 modifier = Modifier.padding(top = 16.dp, start = 8.dp, bottom = 16.dp)
             )
-            // TODO : Add reported clock
             CustomText(
-                "Reported : 9.00",
+                stringResource(R.string.reported, reportedTime),
                 14,
                 color = Color.White,
                 modifier = Modifier.padding(8.dp)
@@ -96,13 +102,12 @@ fun MarkerWindow(
                 Column(
                     modifier = Modifier.padding(start = 16.dp)
                 ) {
-                    CustomText("ABC Street", 13, color = Black)
-                    CustomText("18:82", 13, color = MediumGrey10)
+                    CustomText(reportedDate, 13, color = Black)
+                    CustomText(location, 13, color = MediumGrey10)
                 }
             }
-            // TODO : Add title
             CustomText(
-                text = "This is a collapsed building",
+                text = title,
                 13,
                 color = Black,
                 modifier = Modifier.padding(vertical = 4.dp),
@@ -112,9 +117,8 @@ fun MarkerWindow(
                     fontFamily = robatoFamily
                 )
             )
-            // TODO : Add description
             CustomText(
-                text = "This is a collapsed building is going to be fall down",
+                text = description,
                 13,
                 color = Black
             )
@@ -127,7 +131,9 @@ fun MarkerWindow(
             verticalAlignment = Alignment.CenterVertically
         ) {
             TextButton(
-                onClick = { /*TODO Add Action*/ },
+                onClick = {
+                    onAction()
+                },
                 modifier = Modifier
             ) {
                 CustomText(
@@ -141,7 +147,9 @@ fun MarkerWindow(
                 )
             }
             IconButton(
-                onClick = { /*TODO Add Action*/ },
+                onClick = {
+                    onAction()
+                },
                 modifier = Modifier.size(24.dp, 24.dp)
             ) {
                 Image(
@@ -159,6 +167,12 @@ fun MarkerWindow(
 @Composable
 fun PreviewOfWindow() {
     MarkerWindow(
-        markerIcon = R.drawable.structure
+        markerIcon = R.drawable.structure,
+        title = "Collapsed Building",
+        description = "This is a collapsed building is going to be fall down",
+        reportedTime = "18:82",
+        location = "Los Angeles",
+        reportedDate = "18.08.2022",
+        type = "Collapsed Building"
     )
 }

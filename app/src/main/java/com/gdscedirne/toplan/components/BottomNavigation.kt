@@ -66,7 +66,7 @@ fun BottomNav(navController: NavController) {
                         CustomText(
                             text = screen.title,
                             color = MediumGrey,
-                            fontSize = 14,
+                            fontSize = 12,
                             fontStyle = TextStyle(
                                 fontWeight = FontWeight.Light,
                                 fontFamily = robatoFamily,

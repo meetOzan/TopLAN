@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.startActivity
 import com.gdscedirne.toplan.R
+import com.gdscedirne.toplan.common.MarkerType
 import com.gdscedirne.toplan.components.CustomAlertDialog
 import com.gdscedirne.toplan.components.CustomErrorDialog
 import com.gdscedirne.toplan.components.MapMarker
@@ -132,12 +133,22 @@ fun EarthQuakeScreen(
                     .zoomControlsEnabled(true)
             }
         ) {
-            MapMarker(
-                position = userLatLng,
-                title = stringResource(R.string.toplan),
-                iconResourceId = R.drawable.areas,
-                markerColor = MainRed
-            )
+            earthquakeUiState.markers.forEach { marker ->
+                MapMarker(
+                    position = LatLng(marker.latitude, marker.longitude),
+                    iconResourceId = when (marker.type) {
+                        MarkerType.EARTHQUAKE.name -> R.drawable.structure
+                        MarkerType.FLOOD.name -> R.drawable.flooded_house
+                        MarkerType.FIRE.name -> R.drawable.fire
+                        MarkerType.AVALANCHE.name -> R.drawable.snow_avalanche
+                        MarkerType.GATHERING.name -> R.drawable.areas
+                        MarkerType.DEMOLITION.name -> R.drawable.structure
+                        else -> R.drawable.alert
+                    },
+                    marker = marker,
+                    markerColor = MainRed
+                )
+            }
         }
     }
 

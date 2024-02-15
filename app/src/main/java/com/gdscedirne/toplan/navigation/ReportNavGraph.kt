@@ -1,25 +1,82 @@
 package com.gdscedirne.toplan.navigation
 
+import android.content.Intent
+import android.os.Build
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.res.stringResource
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.gdscedirne.toplan.R
+import com.gdscedirne.toplan.presentation.home.HomeActivity
+import com.gdscedirne.toplan.presentation.report.ReportAction
+import com.gdscedirne.toplan.presentation.report.ReportItem
 import com.gdscedirne.toplan.presentation.report.ReportScreen
+import com.gdscedirne.toplan.presentation.report.ReportViewModel
 
 @Composable
 fun ReportNavGraph(
     navController: NavHostController
 ) {
+
+    val context = navController.context
+
     NavHost(
         navController = navController, startDestination = Destinations.ReportDestination.route
     ) {
-        reportScreen()
+        reportScreen(
+            onHomeNavigate = {
+                val intent = Intent(context, HomeActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                context.startActivity(intent)
+            }
+        )
     }
 }
 
-fun NavGraphBuilder.reportScreen() {
+fun NavGraphBuilder.reportScreen(
+    onHomeNavigate: () -> Unit
+) {
     composable(Destinations.ReportDestination.route) {
-        ReportScreen()
+
+        val reportViewModel = hiltViewModel<ReportViewModel>()
+        val reportState = reportViewModel.reportState.collectAsState().value
+
+        val reportList = listOf(
+            ReportItem(
+                title = stringResource(R.string.report_a_disaster),
+                body = stringResource(R.string.there_has_been_or_is_about_to_be_a_natural_disaster_here)
+            ),
+            ReportItem(
+                title = stringResource(R.string.supplies_and_equipment),
+                body = stringResource(R.string.do_you_or_someone_in_your_neighbourhood_need_supplies_and_equipment)
+            ),
+            ReportItem(
+                title = stringResource(R.string.need_help),
+                body = stringResource(R.string.do_you_want_to_report)
+            ),
+            ReportItem(
+                title = stringResource(R.string.gathering_help),
+                body = stringResource(R.string.share_assembly_areas)
+            )
+        )
+
+        LaunchedEffect(true) {
+            reportViewModel.onAction(ReportAction.GetCurrentDate)
+            reportViewModel.onAction(ReportAction.GetCurrentTime)
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            ReportScreen(
+                reportUiState = reportState,
+                onReportAction = { action -> reportViewModel.onAction(action) },
+                reportList = reportList,
+                onHomeNavigate = onHomeNavigate
+            )
+        }
     }
 }

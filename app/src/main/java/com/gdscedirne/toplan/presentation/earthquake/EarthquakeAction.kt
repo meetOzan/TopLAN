@@ -7,5 +7,6 @@ sealed class EarthquakeAction {
     data class ChangeErrorMessage(val errorMessage: String) : EarthquakeAction()
     data class ChangeLatLng(val latitude: Double, val longitude: Double) : EarthquakeAction()
     data class ChangeZoomLevel(val zoomLevel: Float) : EarthquakeAction()
+    data object GetMarkers : EarthquakeAction()
 
 }

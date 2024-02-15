@@ -60,10 +60,6 @@ fun ForgotPasswordScreen(
         CustomLoading()
     }
 
-    if (loginUiState.isLoading) {
-        CustomLoading()
-    }
-
     if (loginUiState.isError) {
         CustomErrorDialog(
             errorMessage = loginUiState.errorMessage,

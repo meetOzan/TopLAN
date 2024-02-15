@@ -3,7 +3,7 @@ package com.gdscedirne.toplan.presentation.login
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gdscedirne.toplan.common.ResponseState
-import com.gdscedirne.toplan.data.User
+import com.gdscedirne.toplan.data.model.User
 import com.gdscedirne.toplan.domain.repository.TopLanRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

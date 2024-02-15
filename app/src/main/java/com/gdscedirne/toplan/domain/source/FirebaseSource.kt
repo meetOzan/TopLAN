@@ -1,6 +1,7 @@
 package com.gdscedirne.toplan.domain.source
 
-import com.gdscedirne.toplan.data.User
+import com.gdscedirne.toplan.data.model.Marker
+import com.gdscedirne.toplan.data.model.User
 
 interface FirebaseSource {
 
@@ -11,8 +12,15 @@ interface FirebaseSource {
 
     fun saveUser(user: User)
 
+    suspend fun getUser(): User
+
     fun signOut()
 
     fun isUserSignedIn(): Boolean
+
+    // Marker
+    fun addMarker(marker: Marker)
+
+    suspend fun getMarkers(): List<Marker>
 
 }

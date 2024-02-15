@@ -54,30 +54,6 @@ fun CustomLoading() {
     }
 }
 
-fun StringChallenge(str: String): String {
-
-    var newString = ""
-    var count = 1
-
-    for(i in 1 until str.length){
-        if (str[i] == str[i - 1]){
-            count++
-        }else{
-            newString += "$count${str[i - 1]}"
-            count = 1
-        }
-    }
-
-    newString += "$count${str.last()}"
-
-    return newString
-}
-
-fun main() {
-    println(StringChallenge("aabbcde"))
-}
-
-
 @Preview
 @Composable
 fun CustomLoadingPreview() {

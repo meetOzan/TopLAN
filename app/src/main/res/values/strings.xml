@@ -63,4 +63,9 @@
     <string name="gathering_help"><![CDATA[Gathering & Help]]></string>
     <string name="share_assembly_areas">Share assembly areas and aid sites with others.</string>
     <string name="i_m_under_the_rubble">I\'m under the rubble</string>
+    <string name="reported">Reported : %1$s</string>
+    <string name="empty" />
+    <string name="demolish_building">Demolish Building</string>
+    <string name="there_has_been_or_is_about_to_be_a_natural_disaster_here">There has been or is about to be a natural disaster here.</string>
+    <string name="report_a_disaster">Report a Disaster</string>
 </resources>

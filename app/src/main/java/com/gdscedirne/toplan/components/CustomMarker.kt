@@ -13,6 +13,8 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.ContextCompat
 import com.gdscedirne.toplan.R
+import com.gdscedirne.toplan.data.model.Marker
+import com.gdscedirne.toplan.ui.theme.DarkWhite
 import com.gdscedirne.toplan.ui.theme.MediumGrey20
 import com.google.android.gms.maps.model.BitmapDescriptor
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
@@ -25,8 +27,8 @@ import kotlin.math.roundToInt
 @Composable
 fun MapMarker(
     position: LatLng,
-    title: String,
     iconResourceId: Int,
+    marker: Marker,
     markerColor: androidx.compose.ui.graphics.Color
 ) {
 
@@ -36,7 +38,7 @@ fun MapMarker(
     val context = LocalContext.current
     MarkerInfoWindowContent(
         state = MarkerState(position = position),
-        title = title,
+        title = marker.title,
         icon = bitmapDescriptorFromVector(
             context,
             R.drawable.custom_marker,
@@ -50,7 +52,14 @@ fun MapMarker(
         }
     ) {
         if (isClicked) {
-            MarkerWindow(markerIcon = iconResourceId)
+            MarkerWindow(
+                markerIcon = iconResourceId,
+                title = marker.title,
+                description = marker.description,
+                reportedTime = marker.time,
+                reportedDate = marker.date,
+                type = marker.type
+            )
         } else {
             it.hideInfoWindow()
         }
@@ -79,7 +88,13 @@ fun bitmapDescriptorFromVector(
         1.0f.roundToInt()
     )
 
+    val colorFilterIcon = LightingColorFilter(
+        DarkWhite.toArgb(),
+        1.0f.roundToInt()
+    )
+
     drawable.colorFilter = colorFilter
+    drawableIcon.colorFilter = colorFilterIcon
 
     drawable.setBounds(0, 0, width, height)
     drawable.draw(canvas)

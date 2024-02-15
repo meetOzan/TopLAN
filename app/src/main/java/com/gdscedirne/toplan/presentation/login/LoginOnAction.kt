@@ -1,6 +1,6 @@
 package com.gdscedirne.toplan.presentation.login
 
-import com.gdscedirne.toplan.data.User
+import com.gdscedirne.toplan.data.model.User
 
 sealed class LoginOnAction {
     data class SignInEmailChanged(val email: String) : LoginOnAction()
