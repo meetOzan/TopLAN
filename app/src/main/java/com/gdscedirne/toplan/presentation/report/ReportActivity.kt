@@ -1,6 +1,7 @@
 package com.gdscedirne.toplan.presentation.report
 
 import android.Manifest
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
@@ -8,13 +9,14 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Surface
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.collectAsState
@@ -34,6 +36,7 @@ import com.gdscedirne.toplan.R
 import com.gdscedirne.toplan.components.CustomAlertDialog
 import com.gdscedirne.toplan.components.CustomText
 import com.gdscedirne.toplan.navigation.ReportNavGraph
+import com.gdscedirne.toplan.presentation.home.HomeActivity
 import com.gdscedirne.toplan.presentation.home.makeEmergencyCall
 import com.gdscedirne.toplan.ui.theme.MainRed20
 import com.gdscedirne.toplan.ui.theme.TopLANTheme
@@ -95,16 +98,28 @@ class ReportActivity : AppCompatActivity() {
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(horizontal = 8.dp, vertical = 16.dp)
+                                .padding(horizontal = 8.dp, vertical = 24.dp)
                                 .background(MainRed20),
                             horizontalArrangement = Arrangement.SpaceBetween,
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            Spacer(modifier = Modifier.size(16.dp))
+                            IconButton(
+                                onClick = {
+                                    val intent = Intent(this@ReportActivity, HomeActivity::class.java)
+                                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                                    this@ReportActivity.startActivity(intent)
+                                },
+                                modifier = Modifier.size(24.dp)
+                            ) {
+                                Image(
+                                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                                    contentDescription = null,
+                                    colorFilter = ColorFilter.tint(Color.White),
+                                )
+                            }
                             Row(
                                 verticalAlignment = Alignment.CenterVertically,
                                 horizontalArrangement = Arrangement.spacedBy(4.dp),
-                                modifier = Modifier.padding(vertical = 16.dp)
                             ) {
                                 Image(
                                     painter = painterResource(id = R.drawable.toplan_icon),

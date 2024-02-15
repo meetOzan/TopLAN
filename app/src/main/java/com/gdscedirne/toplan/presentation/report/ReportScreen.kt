@@ -2,7 +2,6 @@ package com.gdscedirne.toplan.presentation.report
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -49,99 +48,107 @@ fun ReportScreen() {
     )
 
     Surface(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier,
         color = MainRed20
     ) {
         Column {
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 24.dp, end = 24.dp, top = 86.dp),
-                elevation = 6.dp,
-                backgroundColor = Color.White
-            ) {
-                Column {
-                    CustomText(
-                        text = "I'm under the rubble",
-                        fontSize = 24,
-                        color = Black,
-                        modifier = Modifier
-                            .padding(top = 16.dp)
-                            .fillMaxWidth(),
-                        fontStyle = TextStyle(
-                            fontWeight = FontWeight.Bold,
-                            fontFamily = interFamily,
-                            textAlign = TextAlign.Center
-                        )
-                    )
-                    TextButton(
-                        onClick = { /*TODO*/ },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 16.dp, vertical = 24.dp),
-                        colors = ButtonDefaults.buttonColors(
-                            backgroundColor = MainRed20
-                        ),
-                        shape = RoundedCornerShape(16.dp)
-                    ) {
-                        CustomText(
-                            text = stringResource(R.string.send_quick_location),
-                            fontSize = 16,
-                            color = Color.White,
+            LazyColumn(modifier = Modifier.padding(
+                start = 24.dp,
+                end = 24.dp,
+                top = 86.dp
+            ),
+                content = {
+                    item {
+                        Card(
                             modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(vertical = 8.dp),
-                            fontStyle = TextStyle(
-                                fontWeight = FontWeight.Bold,
-                                fontFamily = interFamily,
-                                textAlign = TextAlign.Center
-                            )
-                        )
-                    }
-                }
-            }
-            LazyColumn(content = {
-                items(4) {
-                    Card(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = 24.dp, end = 24.dp, top = 16.dp)
-                            .clickable {
-                                //TODO
-                            },
-                        elevation = 6.dp,
-                        backgroundColor = Color.White,
-                    ) {
-                        Column {
-                            CustomText(
-                                text = reportList[it].title,
-                                fontSize = 24,
-                                color = Black,
-                                modifier = Modifier
-                                    .padding(top = 16.dp)
-                                    .fillMaxWidth(),
-                                fontStyle = TextStyle(
-                                    fontWeight = FontWeight.Bold,
-                                    fontFamily = interFamily,
-                                    textAlign = TextAlign.Center
+                                .fillMaxWidth(),
+                            elevation = 6.dp,
+                            backgroundColor = Color.White,
+                            shape = RoundedCornerShape(16.dp)
+                        ) {
+                            Column {
+                                CustomText(
+                                    text = stringResource(R.string.i_m_under_the_rubble),
+                                    fontSize = 24,
+                                    color = Black,
+                                    modifier = Modifier
+                                        .padding(top = 16.dp)
+                                        .fillMaxWidth(),
+                                    fontStyle = TextStyle(
+                                        fontWeight = FontWeight.Bold,
+                                        fontFamily = interFamily,
+                                        textAlign = TextAlign.Center
+                                    )
                                 )
-                            )
-                            CustomText(
-                                text = reportList[it].body,
-                                fontSize = 16,
-                                color = Black,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(vertical = 16.dp, horizontal = 6.dp),
-                                fontStyle = TextStyle(
-                                    fontFamily = interFamily,
-                                    textAlign = TextAlign.Center
-                                )
-                            )
+                                TextButton(
+                                    onClick = { /*TODO*/ },
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(horizontal = 16.dp, vertical = 24.dp),
+                                    colors = ButtonDefaults.buttonColors(
+                                        backgroundColor = MainRed20
+                                    ),
+                                    shape = RoundedCornerShape(16.dp)
+                                ) {
+                                    CustomText(
+                                        text = stringResource(R.string.send_quick_location),
+                                        fontSize = 16,
+                                        color = Color.White,
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .padding(vertical = 8.dp),
+                                        fontStyle = TextStyle(
+                                            fontWeight = FontWeight.Bold,
+                                            fontFamily = interFamily,
+                                            textAlign = TextAlign.Center
+                                        )
+                                    )
+                                }
+                            }
                         }
                     }
-                }
-            })
+                    items(4) {
+                        Card(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 16.dp, bottom = if(it == 3) 8.dp else 16.dp)
+                                .clickable {
+                                    //TODO
+                                },
+                            elevation = 6.dp,
+                            shape = RoundedCornerShape(16.dp),
+                            backgroundColor = Color.White,
+                        ) {
+                            Column {
+                                CustomText(
+                                    text = reportList[it].title,
+                                    fontSize = 24,
+                                    color = Black,
+                                    modifier = Modifier
+                                        .padding(top = 16.dp)
+                                        .fillMaxWidth(),
+                                    fontStyle = TextStyle(
+                                        fontWeight = FontWeight.Bold,
+                                        fontFamily = interFamily,
+                                        textAlign = TextAlign.Center
+                                    )
+                                )
+                                CustomText(
+                                    text = reportList[it].body,
+                                    fontSize = 16,
+                                    color = Black,
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(vertical = 16.dp, horizontal = 6.dp),
+                                    fontStyle = TextStyle(
+                                        fontFamily = interFamily,
+                                        textAlign = TextAlign.Center
+                                    )
+                                )
+                            }
+                        }
+                    }
+                })
         }
     }
 }
