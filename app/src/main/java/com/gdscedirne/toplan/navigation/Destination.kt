@@ -1,5 +1,9 @@
 package com.gdscedirne.toplan.navigation
 
+import androidx.navigation.NavType
+import androidx.navigation.navArgument
+import com.gdscedirne.toplan.common.Constants.ARGS_OPTION
+
 interface Destination {
     val route: String
 }
@@ -35,5 +39,18 @@ object Destinations {
 
     object ReportDestination : Destination {
         override val route = "report"
+
     }
+
+    object ReportOptionsDestination : Destination {
+        override val route = "report_options"
+        fun navigateWithArgs(
+            option: String,
+        ): String = "${ReportDestination.route}/$option"
+        val routeWithArgs = "${ReportDestination.route}/{$ARGS_OPTION}"
+        val args = listOf(
+            navArgument(ARGS_OPTION) { type = NavType.StringType },
+        )
+    }
+
 }

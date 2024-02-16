@@ -1,8 +1,14 @@
 package com.gdscedirne.toplan.presentation.report
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.gdscedirne.toplan.common.Constants.ARGS_OPTION
+import com.gdscedirne.toplan.common.GatheringAid
+import com.gdscedirne.toplan.common.MarkerType
+import com.gdscedirne.toplan.common.ReportOptions
 import com.gdscedirne.toplan.common.ResponseState
+import com.gdscedirne.toplan.common.SuppliesEquipment
 import com.gdscedirne.toplan.data.model.Marker
 import com.gdscedirne.toplan.domain.repository.TopLanRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -13,14 +19,17 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ReportViewModel @Inject constructor(
-    private val repository: TopLanRepository
-) : ViewModel(){
+    private val repository: TopLanRepository,
+    savedStateHandle: SavedStateHandle
+) : ViewModel() {
 
     private val _reportState = MutableStateFlow(ReportUiState())
     val reportState = _reportState.asStateFlow()
 
-    fun onAction(action: ReportAction){
-        when(action){
+    private val reportOption = savedStateHandle.get<String>(key = ARGS_OPTION)
+
+    fun onAction(action: ReportAction) {
+        when (action) {
             is ReportAction.ChangeSosDialogState -> changeSosDialogState(action.newState)
             is ReportAction.ChangeCallDialogState -> changeCallDialogState(action.newState)
             is ReportAction.AddReportMarker -> addReportMarker(action.marker)
@@ -32,16 +41,56 @@ class ReportViewModel @Inject constructor(
             ReportAction.ChangeIsNoLocationRequestDialog -> changeIsNoLocationRequestDialog()
             is ReportAction.ChangeErrorMessage -> changeErrorMessage(action.message)
             is ReportAction.ChangeMarkerAddedDialogState -> changeMarkerAddedDialogState(action.newState)
+            is ReportAction.ChangeTypeOfReport -> changeTypeOfReportText(action.type)
+            is ReportAction.ChangeLocationOfReport -> changeLocationOfReportText(action.location)
+            is ReportAction.ChangeTitleOfReport -> changeTitleOfReportText(action.title)
+            is ReportAction.ChangeDescriptionOfReport -> changeDescriptionOfReportText(action.description)
+            ReportAction.GetDropdownList -> getDropdownList()
         }
     }
 
-     private fun addReportMarker(marker: Marker){
+    private fun changeReportAction() {
+        _reportState.value = _reportState.value.copy(
+            reportOptions = reportOption.orEmpty()
+        )
+    }
+
+    private fun getDropdownList(){
+        viewModelScope.launch {
+            changeReportAction()
+            when(reportOption){
+                ReportOptions.DISASTER.name -> {
+                    _reportState.value = _reportState.value.copy(
+                        dropDownMenu = MarkerType.entries.map { it.name }
+                    )
+                }
+                ReportOptions.SUPPLIES_EQUIPMENT.name -> {
+                    _reportState.value = _reportState.value.copy(
+                        dropDownMenu = SuppliesEquipment.entries.map { it.name }
+                    )
+                }
+                ReportOptions.GATHERING_AID.name -> {
+                    _reportState.value = _reportState.value.copy(
+                        dropDownMenu = GatheringAid.entries.map { it.name }
+                    )
+                }
+                ReportOptions.HELP.name -> {
+                    _reportState.value = _reportState.value.copy(
+                        dropDownMenu = emptyList()
+                    )
+                }
+            }
+        }
+    }
+
+    private fun addReportMarker(marker: Marker) {
         viewModelScope.launch {
             repository.addMarker(marker).collect { responseState ->
-                when(responseState){
+                when (responseState) {
                     is ResponseState.Loading -> {
                         _reportState.value = _reportState.value.copy(isLoading = true)
                     }
+
                     is ResponseState.Error -> {
                         _reportState.value = _reportState.value.copy(
                             errorState = true,
@@ -49,6 +98,7 @@ class ReportViewModel @Inject constructor(
                             isLoading = false
                         )
                     }
+
                     is ResponseState.Success -> {
                         _reportState.value = _reportState.value.copy(
                             errorState = false,
@@ -60,11 +110,11 @@ class ReportViewModel @Inject constructor(
         }
     }
 
-    private fun changeSosDialogState(newState: Boolean){
+    private fun changeSosDialogState(newState: Boolean) {
         _reportState.value = _reportState.value.copy(sosCallDialog = newState)
     }
 
-    private fun changeCallDialogState(newState: Boolean){
+    private fun changeCallDialogState(newState: Boolean) {
         _reportState.value = _reportState.value.copy(isSosDialogOpen = newState)
     }
 
@@ -72,36 +122,54 @@ class ReportViewModel @Inject constructor(
         _reportState.value = _reportState.value.copy(latitude = latitude, longitude = longitude)
     }
 
-    private fun changeZoomLevel(zoomLevel: Float){
+    private fun changeZoomLevel(zoomLevel: Float) {
         _reportState.value = _reportState.value.copy(zoomLevel = zoomLevel)
     }
 
-    private fun getCurrentDate(){
+    private fun getCurrentDate() {
         _reportState.value = _reportState.value.copy(
             currentDate = repository.getCurrentDate()
         )
     }
 
-    private fun getCurrentTime(){
+    private fun getCurrentTime() {
         _reportState.value = _reportState.value.copy(
             currentTime = repository.getCurrentTime()
         )
     }
 
-    private fun changeIsErrorDialog(){
-        _reportState.value = _reportState.value.copy(isErrorDialogOpen = !_reportState.value.isErrorDialogOpen)
+    private fun changeIsErrorDialog() {
+        _reportState.value =
+            _reportState.value.copy(isErrorDialogOpen = !_reportState.value.isErrorDialogOpen)
     }
 
-    private fun changeIsNoLocationRequestDialog(){
-        _reportState.value = _reportState.value.copy(isNoLocationRequestDialogOpen = !_reportState.value.isNoLocationRequestDialogOpen)
+    private fun changeIsNoLocationRequestDialog() {
+        _reportState.value =
+            _reportState.value.copy(isNoLocationRequestDialogOpen = !_reportState.value.isNoLocationRequestDialogOpen)
     }
 
-    private fun changeErrorMessage(message: String){
+    private fun changeErrorMessage(message: String) {
         _reportState.value = _reportState.value.copy(errorMessage = message)
     }
 
-    private fun changeMarkerAddedDialogState(newState: Boolean){
+    private fun changeMarkerAddedDialogState(newState: Boolean) {
         _reportState.value = _reportState.value.copy(markerAddedDialog = newState)
+    }
+
+    private fun changeTypeOfReportText(text: String) {
+        _reportState.value = _reportState.value.copy(typeOfReportText = text)
+    }
+
+    private fun changeLocationOfReportText(text: String) {
+        _reportState.value = _reportState.value.copy(locationOfReportText = text)
+    }
+
+    private fun changeTitleOfReportText(text: String) {
+        _reportState.value = _reportState.value.copy(titleOfReportText = text)
+    }
+
+    private fun changeDescriptionOfReportText(text: String) {
+        _reportState.value = _reportState.value.copy(descriptionOfReportText = text)
     }
 }
 
@@ -110,14 +178,20 @@ data class ReportUiState(
     val errorState: Boolean = false,
     val message: String = "",
     val errorMessage: String = "",
-    val sosCallDialog : Boolean = false,
+    val sosCallDialog: Boolean = false,
     val latitude: Double = 0.0,
     val longitude: Double = 0.0,
-    val zoomLevel :  Float = 15f,
-    val currentDate : String = "",
-    val currentTime : String = "",
+    val zoomLevel: Float = 15f,
+    val currentDate: String = "",
+    val currentTime: String = "",
     val isErrorDialogOpen: Boolean = false,
     val isNoLocationRequestDialogOpen: Boolean = false,
     val markerAddedDialog: Boolean = false,
     val isSosDialogOpen: Boolean = false,
+    val typeOfReportText: String = "",
+    val locationOfReportText: String = "",
+    val titleOfReportText: String = "",
+    val descriptionOfReportText: String = "",
+    val reportOptions: String = "",
+    val dropDownMenu: List<String> = listOf()
 )

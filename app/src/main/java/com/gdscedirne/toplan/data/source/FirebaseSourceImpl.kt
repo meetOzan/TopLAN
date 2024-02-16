@@ -1,5 +1,6 @@
 package com.gdscedirne.toplan.data.source
 
+import android.util.Log
 import com.gdscedirne.toplan.data.model.Marker
 import com.gdscedirne.toplan.data.model.User
 import com.gdscedirne.toplan.domain.source.FirebaseSource
@@ -149,7 +150,7 @@ class FirebaseSourceImpl @Inject constructor(
             .set(markerMap)
             .addOnCompleteListener {
                 if (it.isSuccessful) {
-                    throw RuntimeException(it.result.toString())
+                    Log.e("TAG", "addMarker: ${it.result}")
                 } else {
                     throw RuntimeException(it.exception)
                 }

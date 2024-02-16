@@ -68,4 +68,15 @@
     <string name="demolish_building">Demolish Building</string>
     <string name="there_has_been_or_is_about_to_be_a_natural_disaster_here">There has been or is about to be a natural disaster here.</string>
     <string name="report_a_disaster">Report a Disaster</string>
+    <string name="type_of_report">Type of report</string>
+    <string name="enter_the_information_of_the_advert_you_want_to_publish">Enter the information of the advert you want to publish.</string>
+    <string name="where">Where?</string>
+    <string name="location">Location</string>
+    <string name="description">Description</string>
+    <string name="give_more_information">Give more information</string>
+    <string name="publish">Publish</string>
+    <string name="type">Type</string>
+    <string name="title">Title</string>
+    <string name="what_happened">What happened?</string>
+    <string name="demolition">Demolition</string>
 </resources>

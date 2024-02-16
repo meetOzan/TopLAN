@@ -22,7 +22,9 @@ import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.startActivity
 import com.gdscedirne.toplan.R
+import com.gdscedirne.toplan.common.GatheringAid
 import com.gdscedirne.toplan.common.MarkerType
+import com.gdscedirne.toplan.common.SuppliesEquipment
 import com.gdscedirne.toplan.components.CustomAlertDialog
 import com.gdscedirne.toplan.components.CustomErrorDialog
 import com.gdscedirne.toplan.components.MapMarker
@@ -141,8 +143,10 @@ fun EarthQuakeScreen(
                         MarkerType.FLOOD.name -> R.drawable.flooded_house
                         MarkerType.FIRE.name -> R.drawable.fire
                         MarkerType.AVALANCHE.name -> R.drawable.snow_avalanche
-                        MarkerType.GATHERING.name -> R.drawable.areas
-                        MarkerType.DEMOLITION.name -> R.drawable.structure
+                        GatheringAid.GATHERING.name -> R.drawable.areas
+                        GatheringAid.AID.name -> R.drawable.areas
+                        SuppliesEquipment.entries.find { it.name == marker.type }?.name -> R.drawable.notification
+                        stringResource(id = R.string.demolition) -> R.drawable.structure
                         else -> R.drawable.alert
                     },
                     marker = marker,

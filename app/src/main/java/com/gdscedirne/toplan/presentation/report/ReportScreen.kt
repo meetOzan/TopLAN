@@ -34,7 +34,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import com.gdscedirne.toplan.R
-import com.gdscedirne.toplan.common.MarkerType
+import com.gdscedirne.toplan.common.ReportOptions
 import com.gdscedirne.toplan.components.CustomAlertDialog
 import com.gdscedirne.toplan.components.CustomErrorDialog
 import com.gdscedirne.toplan.components.CustomLoading
@@ -60,7 +60,8 @@ fun ReportScreen(
     reportUiState: ReportUiState,
     onReportAction: (ReportAction) -> Unit,
     reportList: List<ReportItem>,
-    onHomeNavigate: () -> Unit
+    onHomeNavigate: () -> Unit,
+    onReportNavigate: (String) -> Unit
 ) {
 
     val context = LocalContext.current
@@ -135,7 +136,6 @@ fun ReportScreen(
         CustomLoading()
     }
 
-
     Surface(
         modifier = Modifier,
         color = MainRed20
@@ -182,7 +182,7 @@ fun ReportScreen(
                                                     longitude = reportUiState.longitude,
                                                     title = context.getString(R.string.demolish_building),
                                                     description = context.getString(R.string.i_m_under_the_rubble),
-                                                    type = MarkerType.DEMOLITION.name,
+                                                    type = context.getString(R.string.demolition),
                                                     date = reportUiState.currentDate,
                                                     time = reportUiState.currentTime,
                                                 )
@@ -220,7 +220,7 @@ fun ReportScreen(
                                 .fillMaxWidth()
                                 .padding(top = 16.dp, bottom = if (it == 3) 8.dp else 16.dp)
                                 .clickable {
-                                    //TODO
+                                    onReportNavigate(reportList[it].type.name)
                                 },
                             elevation = 6.dp,
                             shape = RoundedCornerShape(16.dp),
@@ -297,10 +297,10 @@ fun ReportScreen(
     }
 }
 
-
 data class ReportItem(
     val title: String,
-    val body: String
+    val body: String,
+    val type: ReportOptions
 )
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -312,22 +312,27 @@ fun PreviewOfReportScreen() {
         onReportAction = {},
         reportList = listOf(
             ReportItem(
-                title = stringResource(R.string.demolished_building),
-                body = stringResource(R.string.the_house_i_live_in_has_been_demolished)
+                title = stringResource(R.string.report_a_disaster),
+                body = stringResource(R.string.there_has_been_or_is_about_to_be_a_natural_disaster_here),
+                ReportOptions.DISASTER
             ),
             ReportItem(
                 title = stringResource(R.string.supplies_and_equipment),
-                body = stringResource(R.string.do_you_or_someone_in_your_neighbourhood_need_supplies_and_equipment)
+                body = stringResource(R.string.do_you_or_someone_in_your_neighbourhood_need_supplies_and_equipment),
+                ReportOptions.SUPPLIES_EQUIPMENT
             ),
             ReportItem(
                 title = stringResource(R.string.need_help),
-                body = stringResource(R.string.do_you_want_to_report)
+                body = stringResource(R.string.do_you_want_to_report),
+                ReportOptions.HELP
             ),
             ReportItem(
                 title = stringResource(R.string.gathering_help),
-                body = stringResource(R.string.share_assembly_areas)
+                body = stringResource(R.string.share_assembly_areas),
+                ReportOptions.GATHERING_AID
             )
         ),
-        onHomeNavigate = {}
+        onHomeNavigate = {},
+        onReportNavigate = { _ -> }
     )
 }

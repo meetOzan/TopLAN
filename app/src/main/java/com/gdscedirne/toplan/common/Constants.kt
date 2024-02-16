@@ -12,4 +12,6 @@ object Constants {
         Screen.Settings
     )
 
+    const val ARGS_OPTION = "option"
+
 }

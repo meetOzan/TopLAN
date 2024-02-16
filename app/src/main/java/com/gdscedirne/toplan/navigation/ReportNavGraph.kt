@@ -12,9 +12,11 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.gdscedirne.toplan.R
+import com.gdscedirne.toplan.common.ReportOptions
 import com.gdscedirne.toplan.presentation.home.HomeActivity
 import com.gdscedirne.toplan.presentation.report.ReportAction
 import com.gdscedirne.toplan.presentation.report.ReportItem
+import com.gdscedirne.toplan.presentation.report.ReportOptionsScreen
 import com.gdscedirne.toplan.presentation.report.ReportScreen
 import com.gdscedirne.toplan.presentation.report.ReportViewModel
 
@@ -33,15 +35,28 @@ fun ReportNavGraph(
                 val intent = Intent(context, HomeActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                 context.startActivity(intent)
+            },
+            onReportNavigate = { option ->
+                navController.navigate(Destinations.ReportOptionsDestination.navigateWithArgs(option))
+            }
+        )
+        reportOptionsScreen(
+            onHomeNavigate = {
+                val intent = Intent(context, HomeActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                context.startActivity(intent)
             }
         )
     }
 }
 
 fun NavGraphBuilder.reportScreen(
-    onHomeNavigate: () -> Unit
+    onHomeNavigate: () -> Unit,
+    onReportNavigate: (String) -> Unit
 ) {
-    composable(Destinations.ReportDestination.route) {
+    composable(
+        Destinations.ReportDestination.route
+    ) {
 
         val reportViewModel = hiltViewModel<ReportViewModel>()
         val reportState = reportViewModel.reportState.collectAsState().value
@@ -49,19 +64,23 @@ fun NavGraphBuilder.reportScreen(
         val reportList = listOf(
             ReportItem(
                 title = stringResource(R.string.report_a_disaster),
-                body = stringResource(R.string.there_has_been_or_is_about_to_be_a_natural_disaster_here)
+                body = stringResource(R.string.there_has_been_or_is_about_to_be_a_natural_disaster_here),
+                ReportOptions.DISASTER
             ),
             ReportItem(
                 title = stringResource(R.string.supplies_and_equipment),
-                body = stringResource(R.string.do_you_or_someone_in_your_neighbourhood_need_supplies_and_equipment)
+                body = stringResource(R.string.do_you_or_someone_in_your_neighbourhood_need_supplies_and_equipment),
+                ReportOptions.SUPPLIES_EQUIPMENT
             ),
             ReportItem(
                 title = stringResource(R.string.need_help),
-                body = stringResource(R.string.do_you_want_to_report)
+                body = stringResource(R.string.do_you_want_to_report),
+                ReportOptions.HELP
             ),
             ReportItem(
                 title = stringResource(R.string.gathering_help),
-                body = stringResource(R.string.share_assembly_areas)
+                body = stringResource(R.string.share_assembly_areas),
+                ReportOptions.GATHERING_AID
             )
         )
 
@@ -75,8 +94,38 @@ fun NavGraphBuilder.reportScreen(
                 reportUiState = reportState,
                 onReportAction = { action -> reportViewModel.onAction(action) },
                 reportList = reportList,
-                onHomeNavigate = onHomeNavigate
+                onHomeNavigate = onHomeNavigate,
+                onReportNavigate = onReportNavigate
             )
         }
     }
+}
+
+fun NavGraphBuilder.reportOptionsScreen(
+    onHomeNavigate: () -> Unit
+) {
+
+    composable(
+        route = Destinations.ReportOptionsDestination.routeWithArgs,
+        arguments = Destinations.ReportOptionsDestination.args
+    ) {
+
+        val reportViewModel = hiltViewModel<ReportViewModel>()
+        val reportUiState = reportViewModel.reportState.collectAsState().value
+
+        LaunchedEffect(true) {
+            reportViewModel.onAction(ReportAction.GetCurrentDate)
+            reportViewModel.onAction(ReportAction.GetCurrentTime)
+            reportViewModel.onAction(ReportAction.GetDropdownList)
+        }
+
+        ReportOptionsScreen(
+            onHomeNavigate = onHomeNavigate,
+            reportUiState = reportUiState,
+            onAction = reportViewModel::onAction,
+            dropDownList = reportUiState.dropDownMenu
+        )
+
+    }
+
 }

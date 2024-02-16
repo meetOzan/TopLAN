@@ -14,4 +14,10 @@ sealed class ReportAction {
     data object ChangeIsNoLocationRequestDialog : ReportAction()
     data class ChangeErrorMessage(val message: String) : ReportAction()
     data class ChangeMarkerAddedDialogState(val newState: Boolean) : ReportAction()
+    data class ChangeTypeOfReport(val type: String) : ReportAction()
+    data class ChangeLocationOfReport(val location: String) : ReportAction()
+    data class ChangeTitleOfReport(val title: String) : ReportAction()
+    data class ChangeDescriptionOfReport(val description: String) : ReportAction()
+    data object GetDropdownList : ReportAction()
+
 }

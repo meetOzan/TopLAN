@@ -91,25 +91,27 @@ class ReportActivity : AppCompatActivity() {
                         }
                     )
                 }
-
                 Scaffold(
                     modifier = Modifier.background(MainRed20),
                     topBar = {
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(horizontal = 8.dp, vertical = 24.dp)
                                 .background(MainRed20),
                             horizontalArrangement = Arrangement.SpaceBetween,
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             IconButton(
                                 onClick = {
-                                    val intent = Intent(this@ReportActivity, HomeActivity::class.java)
-                                    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                                    val intent =
+                                        Intent(this@ReportActivity, HomeActivity::class.java)
+                                    intent.flags =
+                                        Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
                                     this@ReportActivity.startActivity(intent)
                                 },
-                                modifier = Modifier.size(24.dp)
+                                modifier = Modifier
+                                    .padding(top = 8.dp, bottom = 8.dp, start = 8.dp)
+                                    .size(24.dp)
                             ) {
                                 Image(
                                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
@@ -120,6 +122,7 @@ class ReportActivity : AppCompatActivity() {
                             Row(
                                 verticalAlignment = Alignment.CenterVertically,
                                 horizontalArrangement = Arrangement.spacedBy(4.dp),
+                                modifier = Modifier.padding(vertical = 8.dp)
                             ) {
                                 Image(
                                     painter = painterResource(id = R.drawable.toplan_icon),
@@ -150,6 +153,7 @@ class ReportActivity : AppCompatActivity() {
                                     }
                                 },
                                 modifier = Modifier
+                                    .padding(top = 8.dp, bottom = 8.dp, end = 8.dp)
                                     .size(30.dp, 30.dp)
                                     .clip(
                                         RoundedCornerShape(0.dp)

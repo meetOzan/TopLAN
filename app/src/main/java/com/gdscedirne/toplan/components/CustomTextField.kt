@@ -25,6 +25,7 @@ fun CustomTextField(
     onValueChange: (String) -> Unit,
     fontFamily: FontFamily = robatoFamily,
     maxLines: Int = 1,
+    readOnly: Boolean = false,
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
     suffix: @Composable (() -> Unit)? = null,
     prefix: @Composable (() -> Unit)? = null,
@@ -48,6 +49,7 @@ fun CustomTextField(
         textStyle = TextStyle(
             fontFamily = fontFamily
         ),
+        readOnly = readOnly,
         visualTransformation = visualTransformation,
         trailingIcon = trailingIcon,
         keyboardActions = KeyboardActions(
