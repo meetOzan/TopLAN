@@ -79,4 +79,7 @@
     <string name="title">Title</string>
     <string name="what_happened">What happened?</string>
     <string name="demolition">Demolition</string>
+    <string name="coil_image">Coil Image</string>
+    <string name="add_image">Add Image</string>
+    <string name="image">image/*</string>
 </resources>

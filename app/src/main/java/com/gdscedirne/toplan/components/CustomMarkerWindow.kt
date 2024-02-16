@@ -42,7 +42,7 @@ fun MarkerWindow(
     reportedTime: String,
     reportedDate: String,
     type: String,
-    location: String = stringResource(R.string.empty),
+    location: String = "",
     onAction: () -> Unit = {}
 ) {
 

@@ -1,5 +1,7 @@
 package com.gdscedirne.toplan.presentation.report
 
+import android.content.Context
+import android.net.Uri
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -46,6 +48,14 @@ class ReportViewModel @Inject constructor(
             is ReportAction.ChangeTitleOfReport -> changeTitleOfReportText(action.title)
             is ReportAction.ChangeDescriptionOfReport -> changeDescriptionOfReportText(action.description)
             ReportAction.GetDropdownList -> getDropdownList()
+            is ReportAction.SetImageUri -> setImageUri(action.uri, action.url)
+            is ReportAction.UploadImageFirestore -> TODO()
+            is ReportAction.UploadImageStorage -> uploadImageStorage(
+                uri = action.uri,
+                context = action.context,
+                onSuccess = action.onSuccess,
+                onFailure = action.onFailure
+            )
         }
     }
 
@@ -55,25 +65,28 @@ class ReportViewModel @Inject constructor(
         )
     }
 
-    private fun getDropdownList(){
+    private fun getDropdownList() {
         viewModelScope.launch {
             changeReportAction()
-            when(reportOption){
+            when (reportOption) {
                 ReportOptions.DISASTER.name -> {
                     _reportState.value = _reportState.value.copy(
                         dropDownMenu = MarkerType.entries.map { it.name }
                     )
                 }
+
                 ReportOptions.SUPPLIES_EQUIPMENT.name -> {
                     _reportState.value = _reportState.value.copy(
                         dropDownMenu = SuppliesEquipment.entries.map { it.name }
                     )
                 }
+
                 ReportOptions.GATHERING_AID.name -> {
                     _reportState.value = _reportState.value.copy(
                         dropDownMenu = GatheringAid.entries.map { it.name }
                     )
                 }
+
                 ReportOptions.HELP.name -> {
                     _reportState.value = _reportState.value.copy(
                         dropDownMenu = emptyList()
@@ -171,6 +184,48 @@ class ReportViewModel @Inject constructor(
     private fun changeDescriptionOfReportText(text: String) {
         _reportState.value = _reportState.value.copy(descriptionOfReportText = text)
     }
+
+    private fun setImageUri(uri: Uri, url: String) {
+        with(_reportState.value) {
+            _reportState.value = this.copy(
+                imagesUrl = url,
+                imageUri = uri
+            )
+        }
+    }
+
+    private fun uploadImageStorage(
+        uri: Uri, context: Context,
+        onSuccess: (String, String) -> Unit = { _, _ -> },
+        onFailure: (String) -> Unit = { _ -> },
+    ) {
+        viewModelScope.launch {
+            repository.uploadImageToStorage(uri, context, onSuccess, onFailure)
+                .collect { responseState ->
+                    when (responseState) {
+                        is ResponseState.Loading -> {
+                            _reportState.value = _reportState.value.copy(isLoading = true)
+                        }
+
+                        is ResponseState.Error -> {
+                            _reportState.value = _reportState.value.copy(
+                                errorState = true,
+                                message = responseState.message,
+                                isLoading = false
+                            )
+                        }
+
+                        is ResponseState.Success -> {
+                            _reportState.value = _reportState.value.copy(
+                                errorState = false,
+                                isLoading = false
+                            )
+                        }
+                    }
+                }
+        }
+    }
+
 }
 
 data class ReportUiState(
@@ -193,5 +248,7 @@ data class ReportUiState(
     val titleOfReportText: String = "",
     val descriptionOfReportText: String = "",
     val reportOptions: String = "",
-    val dropDownMenu: List<String> = listOf()
+    val dropDownMenu: List<String> = listOf(),
+    var imageUri: Uri = Uri.EMPTY,
+    val imagesUrl: String = "",
 )

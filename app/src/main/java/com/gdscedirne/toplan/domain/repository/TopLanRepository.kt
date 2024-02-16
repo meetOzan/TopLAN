@@ -1,5 +1,7 @@
 package com.gdscedirne.toplan.domain.repository
 
+import android.content.Context
+import android.net.Uri
 import com.gdscedirne.toplan.common.ResponseState
 import com.gdscedirne.toplan.data.model.Marker
 import com.gdscedirne.toplan.data.model.User
@@ -26,6 +28,21 @@ interface TopLanRepository {
     fun signOut(): Flow<ResponseState<Unit>>
 
     fun isUserSignedIn(): Flow<ResponseState<Boolean>>
+
+    // Upload Image
+    fun uploadImageToStorage(
+        uri: Uri,
+        context: Context,
+        onSuccess: (String, String) -> Unit,
+        onFailure: (String) -> Unit,
+    ): Flow<ResponseState<Unit>>
+
+    fun uploadImageToFirestore(
+        imagesUrl: List<String>,
+        imageName: String,
+        onSuccess: () -> Unit,
+        onFailure: (String) -> Unit,
+    ): Flow<ResponseState<Unit>>
 
     // Marker
     fun addMarker(marker: Marker): Flow<ResponseState<Unit>>

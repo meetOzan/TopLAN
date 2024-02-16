@@ -137,6 +137,9 @@ dependencies {
     // Location
     implementation("com.google.android.gms:play-services-location:21.1.0")
 
+    // Coil
+    implementation("io.coil-kt:coil-compose:2.5.0")
+
 }
 
 secrets {

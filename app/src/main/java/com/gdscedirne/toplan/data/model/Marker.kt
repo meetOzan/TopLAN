@@ -10,5 +10,6 @@ data class Marker(
     val location : String = "",
     val date: String = "",
     val time: String = "",
-    val userId: String = ""
+    val userId: String = "",
+    val imageUrl: String = "",
 )

@@ -10,6 +10,8 @@
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
 
     <uses-feature android:name="android.hardware.location.gps" />
 
@@ -26,12 +28,14 @@
         tools:targetApi="31">
         <activity
             android:name=".presentation.report.ReportActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".presentation.home.HomeActivity"
             android:exported="false"
             android:label="@string/title_activity_home"
-            android:theme="@style/Theme.TopLAN" />
+            android:theme="@style/Theme.TopLAN"
+            android:windowSoftInputMode="adjustResize" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

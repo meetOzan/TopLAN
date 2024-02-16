@@ -1,11 +1,18 @@
 package com.gdscedirne.toplan.data.source
 
+import android.content.Context
+import android.graphics.Bitmap
+import android.net.Uri
 import android.util.Log
+import com.gdscedirne.toplan.common.uriToBitmap
 import com.gdscedirne.toplan.data.model.Marker
 import com.gdscedirne.toplan.data.model.User
 import com.gdscedirne.toplan.domain.source.FirebaseSource
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
+import java.io.ByteArrayOutputStream
+import java.util.UUID
 import javax.inject.Inject
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
@@ -13,7 +20,8 @@ import kotlin.coroutines.suspendCoroutine
 
 class FirebaseSourceImpl @Inject constructor(
     private val firebaseAuth: FirebaseAuth,
-    private val firebaseFirestore: FirebaseFirestore
+    private val firebaseFirestore: FirebaseFirestore,
+    private val firebaseStorage: FirebaseStorage
 ) : FirebaseSource {
 
     override fun signUpUserWithEmailAndPassword(user: User, onNavigate: () -> Unit) {
@@ -133,6 +141,62 @@ class FirebaseSourceImpl @Inject constructor(
         return firebaseAuth.currentUser != null
     }
 
+    override fun uploadImageToStorage(
+        uri: Uri,
+        context: Context,
+        onSuccess: (String, String) -> Unit,
+        onFailure: (String) -> Unit
+    ) {
+
+        val uuid = UUID.randomUUID()
+        val imageName = "$uuid.jpg"
+
+        val contentResolver = context.contentResolver
+
+        val reference = firebaseStorage.reference.child("images").child(imageName)
+
+        val byteArrayOutputStream = ByteArrayOutputStream()
+        val mBitmap = uri.uriToBitmap(contentResolver)
+        mBitmap?.compress(Bitmap.CompressFormat.JPEG, 75, byteArrayOutputStream)
+        val data = byteArrayOutputStream.toByteArray()
+
+        reference.putBytes(data).addOnSuccessListener {
+            it.storage.downloadUrl.addOnSuccessListener { uri ->
+                onSuccess(uri.toString(), imageName)
+            }.addOnFailureListener { exception ->
+                onFailure(exception.message.orEmpty())
+            }
+        }.addOnFailureListener {
+            onFailure(it.message.orEmpty())
+        }
+    }
+
+    override fun uploadImageToFirestore(
+        imagesUrl: List<String>,
+        imageName: String,
+        onSuccess: () -> Unit,
+        onFailure: (String) -> Unit
+    ) {
+        val currentUser = firebaseAuth.currentUser
+        val imageMap = hashMapOf(
+            "id" to currentUser?.uid.toString(),
+            "imagesUrl" to imagesUrl,
+            "imageName" to imageName
+        )
+        firebaseFirestore.collection("images").document(currentUser?.uid.toString())
+            .set(imageMap)
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    onSuccess()
+                } else {
+                    throw RuntimeException(it.exception)
+                }
+            }
+            .addOnFailureListener {
+                onFailure(it.message.orEmpty())
+            }
+    }
+
     override fun addMarker(marker: Marker) {
         val currentUser = firebaseAuth.currentUser
         val markerMap = hashMapOf(
@@ -144,7 +208,8 @@ class FirebaseSourceImpl @Inject constructor(
             "type" to marker.type,
             "date" to marker.date,
             "time" to marker.time,
-            "userId" to currentUser?.uid.toString()
+            "userId" to currentUser?.uid.toString(),
+            "imageUrl" to marker.imageUrl
         )
         firebaseFirestore.collection("markers").document(marker.id)
             .set(markerMap)
@@ -179,7 +244,8 @@ class FirebaseSourceImpl @Inject constructor(
                                     type = data["type"] as String,
                                     date = data["date"] as String,
                                     time = data["time"] as String,
-                                    userId = data["userId"] as String
+                                    userId = data["userId"] as String,
+                                    imageUrl = data["imageUrl"] as String
                                 )
                             }
                         } ?: emptyList()

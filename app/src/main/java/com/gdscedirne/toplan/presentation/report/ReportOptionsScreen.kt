@@ -2,6 +2,10 @@ package com.gdscedirne.toplan.presentation.report
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.net.Uri
+import android.util.Log
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -40,6 +44,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import com.gdscedirne.toplan.R
+import com.gdscedirne.toplan.components.CoilImage
 import com.gdscedirne.toplan.components.CustomLoading
 import com.gdscedirne.toplan.components.CustomText
 import com.gdscedirne.toplan.components.CustomTextField
@@ -70,6 +75,39 @@ fun ReportOptionsScreen(
     var expanded by remember { mutableStateOf(false) }
 
     val context = LocalContext.current
+
+    val pickImage = rememberLauncherForActivityResult(
+        ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        uri?.let { selectedImageUri ->
+            onAction(
+                ReportAction.UploadImageStorage(
+                    uri = selectedImageUri,
+                    context = context,
+                    onSuccess = { imageUrl, _ ->
+                        onAction(
+                            ReportAction.SetImageUri(
+                                uri = selectedImageUri,
+                                url = imageUrl
+                            )
+                        )
+                    },
+                    onFailure = {
+                        Log.e("TAG", "onCreate: $it")
+                    },
+                )
+            )
+        }
+    }
+
+    val requestPermissionLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted: Boolean ->
+        if (isGranted) {
+            pickImage.launch(context.getString(R.string.image))
+        }
+    }
+
 
     // User location
     var userLatLng by remember {
@@ -303,7 +341,7 @@ fun ReportOptionsScreen(
             verticalArrangement = Arrangement.Center,
         ) {
             CustomText(
-                text = stringResource(R.string.description),
+                text = stringResource(R.string.add_image),
                 fontSize = 14,
                 color = MediumGrey,
             )
@@ -314,13 +352,32 @@ fun ReportOptionsScreen(
                     .background(DarkWhite),
                 contentAlignment = Alignment.Center
             ) {
-                Image(
-                    painter = painterResource(id = R.drawable.gallery_add),
-                    contentDescription = null,
-                    Modifier
-                        .padding(vertical = 36.dp)
-                        .size(50.dp),
-                )
+                if (reportUiState.imageUri == Uri.EMPTY){
+                    Image(
+                        painter = painterResource(id = R.drawable.gallery_add),
+                        contentDescription = null,
+                        Modifier
+                            .padding(vertical = 36.dp)
+                            .size(90.dp)
+                            .clickable {
+                                requestPermissionLauncher.launch(
+                                    Manifest.permission.READ_EXTERNAL_STORAGE
+                                )
+                                pickImage.launch(context.getString(R.string.image))
+                            },
+                    )
+                }else{
+                    CoilImage(
+                        data = reportUiState.imageUri.toString(),
+                        modifier = Modifier
+                            .padding(vertical = 8.dp, horizontal = 4.dp)
+                            .size(145.dp)
+                            .clip(RoundedCornerShape(8.dp))
+                            .clickable {
+                                pickImage.launch(context.getString(R.string.image))
+                            }
+                    )
+                }
             }
         }
 
@@ -337,7 +394,8 @@ fun ReportOptionsScreen(
                             type = reportUiState.typeOfReportText,
                             date = reportUiState.currentDate,
                             location = reportUiState.locationOfReportText,
-                            time = reportUiState.currentTime
+                            time = reportUiState.currentTime,
+                            imageUrl = reportUiState.imagesUrl,
                         )
                     )
                 )

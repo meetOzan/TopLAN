@@ -1,5 +1,7 @@
 package com.gdscedirne.toplan.presentation.report
 
+import android.content.Context
+import android.net.Uri
 import com.gdscedirne.toplan.data.model.Marker
 
 sealed class ReportAction {
@@ -19,5 +21,17 @@ sealed class ReportAction {
     data class ChangeTitleOfReport(val title: String) : ReportAction()
     data class ChangeDescriptionOfReport(val description: String) : ReportAction()
     data object GetDropdownList : ReportAction()
-
+    data class UploadImageStorage(
+        val uri: Uri,
+        val context: Context,
+        val onSuccess: (String, String) -> Unit,
+        val onFailure: (String) -> Unit,
+    ) : ReportAction()
+    data class SetImageUri(val uri: Uri, val url: String) : ReportAction()
+    data class UploadImageFirestore(
+        val imagesUrl: List<String>,
+        val imageName: String,
+        val onSuccess: () -> Unit,
+        val onFailure: (String) -> Unit,
+    ) : ReportAction()
 }

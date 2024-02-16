@@ -58,7 +58,8 @@ fun MapMarker(
                 description = marker.description,
                 reportedTime = marker.time,
                 reportedDate = marker.date,
-                type = marker.type
+                type = marker.type,
+                location = marker.location
             )
         } else {
             it.hideInfoWindow()

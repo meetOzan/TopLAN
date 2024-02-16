@@ -4,6 +4,7 @@ import com.gdscedirne.toplan.data.source.FirebaseSourceImpl
 import com.gdscedirne.toplan.domain.source.FirebaseSource
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,11 +19,13 @@ object SourceModule {
     @Singleton
     fun provideFirebaseSource(
         firebaseAuth: FirebaseAuth,
-        firebaseFirestore: FirebaseFirestore
+        firebaseFirestore: FirebaseFirestore,
+        firebaseStorage: FirebaseStorage
     ): FirebaseSource {
         return FirebaseSourceImpl(
             firebaseAuth,
-            firebaseFirestore
+            firebaseFirestore,
+            firebaseStorage
         )
     }
 

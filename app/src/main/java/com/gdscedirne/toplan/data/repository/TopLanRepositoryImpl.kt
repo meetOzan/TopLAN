@@ -1,5 +1,7 @@
 package com.gdscedirne.toplan.data.repository
 
+import android.content.Context
+import android.net.Uri
 import android.os.Build
 import androidx.annotation.RequiresApi
 import com.gdscedirne.toplan.common.ResponseState
@@ -73,6 +75,36 @@ class TopLanRepositoryImpl @Inject constructor(
             emit(ResponseState.Loading)
             val isUserSignedIn = firebaseSource.isUserSignedIn()
             emit(ResponseState.Success(isUserSignedIn))
+        }.catch {
+            emit(ResponseState.Error(it.message.orEmpty()))
+        }
+    }
+
+    override fun uploadImageToStorage(
+        uri: Uri,
+        context: Context,
+        onSuccess: (String, String) -> Unit,
+        onFailure: (String) -> Unit,
+    ): Flow<ResponseState<Unit>> {
+        return flow {
+            emit(ResponseState.Loading)
+            firebaseSource.uploadImageToStorage(uri, context, onSuccess, onFailure)
+            emit(ResponseState.Success(Unit))
+        }.catch {
+            emit(ResponseState.Error(it.message.orEmpty()))
+        }
+    }
+
+    override fun uploadImageToFirestore(
+        imagesUrl: List<String>,
+        imageName: String,
+        onSuccess: () -> Unit,
+        onFailure: (String) -> Unit
+    ): Flow<ResponseState<Unit>> {
+        return flow {
+            emit(ResponseState.Loading)
+            firebaseSource.uploadImageToFirestore(imagesUrl, imageName, onSuccess, onFailure)
+            emit(ResponseState.Success(Unit))
         }.catch {
             emit(ResponseState.Error(it.message.orEmpty()))
         }
