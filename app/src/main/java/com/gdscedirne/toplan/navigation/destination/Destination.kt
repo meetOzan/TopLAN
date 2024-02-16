@@ -1,4 +1,4 @@
-package com.gdscedirne.toplan.navigation
+package com.gdscedirne.toplan.navigation.destination
 
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
@@ -51,6 +51,10 @@ object Destinations {
         val args = listOf(
             navArgument(ARGS_OPTION) { type = NavType.StringType },
         )
+    }
+
+    object ContactUsDestination : Destination {
+        override val route = "contact_us"
     }
 
 }

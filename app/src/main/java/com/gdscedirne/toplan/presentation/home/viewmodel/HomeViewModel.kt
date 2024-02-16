@@ -1,4 +1,4 @@
-package com.gdscedirne.toplan.presentation.home
+package com.gdscedirne.toplan.presentation.home.viewmodel
 
 import androidx.lifecycle.ViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel

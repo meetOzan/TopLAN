@@ -1,4 +1,4 @@
-package com.gdscedirne.toplan.navigation
+package com.gdscedirne.toplan.navigation.navgraph
 
 import android.content.Intent
 import androidx.compose.runtime.Composable
@@ -10,10 +10,11 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.gdscedirne.toplan.navigation.destination.Destinations
 import com.gdscedirne.toplan.presentation.home.HomeActivity
 import com.gdscedirne.toplan.presentation.login.ForgotPasswordScreen
-import com.gdscedirne.toplan.presentation.login.LoginOnAction
-import com.gdscedirne.toplan.presentation.login.LoginViewModel
+import com.gdscedirne.toplan.presentation.login.viewmodel.LoginOnAction
+import com.gdscedirne.toplan.presentation.login.viewmodel.LoginViewModel
 import com.gdscedirne.toplan.presentation.login.SignInScreen
 import com.gdscedirne.toplan.presentation.login.SignUpScreen
 import com.gdscedirne.toplan.presentation.login.WelcomeScreen

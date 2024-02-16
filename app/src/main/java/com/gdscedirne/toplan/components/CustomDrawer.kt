@@ -24,7 +24,9 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.gdscedirne.toplan.R
+import com.gdscedirne.toplan.navigation.destination.Destinations
 import com.gdscedirne.toplan.ui.theme.Black
 import com.gdscedirne.toplan.ui.theme.LightGrey5
 import com.gdscedirne.toplan.ui.theme.MainRed
@@ -35,11 +37,14 @@ import com.gdscedirne.toplan.ui.theme.TransparentRed
 
 @Composable
 fun CustomDrawer(
-    onClickList: List<Unit>,
-    modifier: Modifier = Modifier
+    navController: NavHostController,
+    modifier: Modifier = Modifier,
+    closeDrawerAciton : () -> Unit
 ) {
     Surface(
-        modifier = Modifier.wrapContentWidth().then(modifier),
+        modifier = Modifier
+            .wrapContentWidth()
+            .then(modifier),
         color = Color.White
     ) {
         Column(
@@ -91,7 +96,28 @@ fun CustomDrawer(
                         items(4) {
                             ElevatedButton(
                                 onClick = {
-                                    onClickList[it]
+                                    when (it) {
+                                        0 -> {
+                                            // TODO : Navigate to Profile
+                                        }
+
+                                        1 -> {
+                                            // TODO : Navigate to Settings
+                                        }
+
+                                        2 -> {
+                                            navController.navigate(Destinations.ContactUsDestination.route){
+                                                popUpTo(Destinations.ContactUsDestination.route){
+                                                    inclusive = true
+                                                }
+                                            }
+                                            closeDrawerAciton()
+                                        }
+
+                                        3 -> {
+                                            // TODO : Logout
+                                        }
+                                    }
                                 },
                                 elevation = ButtonDefaults.elevatedButtonElevation(
                                     defaultElevation = 0.dp
@@ -110,7 +136,7 @@ fun CustomDrawer(
                                     drawerItems[it].title,
                                     16,
                                     color = Black,
-                                    modifier = Modifier.padding(start = 16.dp, end  = 16.dp)
+                                    modifier = Modifier.padding(start = 16.dp, end = 16.dp)
                                 )
                             }
                         }
@@ -166,5 +192,10 @@ data class ComponentItems(
 @Preview
 @Composable
 fun PreviewOfDrawer() {
-    CustomDrawer(onClickList = listOf(Unit))
+    CustomDrawer(
+        navController = NavHostController(
+            context = androidx.compose.ui.platform.LocalContext.current
+        ),
+        closeDrawerAciton = {}
+    )
 }

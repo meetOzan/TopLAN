@@ -1,4 +1,4 @@
-package com.gdscedirne.toplan.navigation
+package com.gdscedirne.toplan.navigation.navgraph
 
 import android.content.Intent
 import android.os.Build
@@ -13,12 +13,13 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.gdscedirne.toplan.R
 import com.gdscedirne.toplan.common.ReportOptions
+import com.gdscedirne.toplan.navigation.destination.Destinations
 import com.gdscedirne.toplan.presentation.home.HomeActivity
-import com.gdscedirne.toplan.presentation.report.ReportAction
+import com.gdscedirne.toplan.presentation.report.viewModel.ReportAction
 import com.gdscedirne.toplan.presentation.report.ReportItem
+import com.gdscedirne.toplan.presentation.report.ReportOptionScreen
 import com.gdscedirne.toplan.presentation.report.ReportOptionsScreen
-import com.gdscedirne.toplan.presentation.report.ReportScreen
-import com.gdscedirne.toplan.presentation.report.ReportViewModel
+import com.gdscedirne.toplan.presentation.report.viewModel.ReportViewModel
 
 @Composable
 fun ReportNavGraph(
@@ -90,7 +91,7 @@ fun NavGraphBuilder.reportScreen(
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            ReportScreen(
+            ReportOptionScreen(
                 reportUiState = reportState,
                 onReportAction = { action -> reportViewModel.onAction(action) },
                 reportList = reportList,
@@ -125,7 +126,5 @@ fun NavGraphBuilder.reportOptionsScreen(
             onAction = reportViewModel::onAction,
             dropDownList = reportUiState.dropDownMenu
         )
-
     }
-
 }

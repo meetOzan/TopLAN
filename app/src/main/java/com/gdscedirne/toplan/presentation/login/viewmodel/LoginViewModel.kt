@@ -1,4 +1,4 @@
-package com.gdscedirne.toplan.presentation.login
+package com.gdscedirne.toplan.presentation.login.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

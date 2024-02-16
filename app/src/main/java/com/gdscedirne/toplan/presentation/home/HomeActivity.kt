@@ -43,7 +43,9 @@ import com.gdscedirne.toplan.components.CustomAlertDialog
 import com.gdscedirne.toplan.components.CustomDrawer
 import com.gdscedirne.toplan.components.CustomText
 import com.gdscedirne.toplan.components.Screen
-import com.gdscedirne.toplan.navigation.TopLanNavGraph
+import com.gdscedirne.toplan.navigation.navgraph.TopLanNavGraph
+import com.gdscedirne.toplan.presentation.home.viewmodel.HomeAction
+import com.gdscedirne.toplan.presentation.home.viewmodel.HomeViewModel
 import com.gdscedirne.toplan.presentation.report.ReportActivity
 import com.gdscedirne.toplan.ui.theme.DarkRed
 import com.gdscedirne.toplan.ui.theme.LightGrey20
@@ -105,7 +107,6 @@ class HomeActivity : AppCompatActivity() {
                         }
                     )
                 }
-
                 Scaffold(
                     topBar = {
                         Row(
@@ -177,7 +178,14 @@ class HomeActivity : AppCompatActivity() {
                     drawerGesturesEnabled = scaffoldState.drawerState.isOpen,
                     scaffoldState = scaffoldState,
                     drawerContent = {
-                        CustomDrawer(onClickList = listOf())
+                        CustomDrawer(
+                            navController = navController,
+                            closeDrawerAciton = {
+                                scope.launch {
+                                    scaffoldState.drawerState.close()
+                                }
+                            }
+                        )
                     },
                     bottomBar = {
                         BottomAppBar(

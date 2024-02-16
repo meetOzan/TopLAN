@@ -50,6 +50,8 @@ import com.gdscedirne.toplan.components.CustomLoading
 import com.gdscedirne.toplan.components.CustomText
 import com.gdscedirne.toplan.components.CustomTextField
 import com.gdscedirne.toplan.data.model.User
+import com.gdscedirne.toplan.presentation.login.viewmodel.LoginOnAction
+import com.gdscedirne.toplan.presentation.login.viewmodel.LoginUiState
 import com.gdscedirne.toplan.ui.theme.Black
 import com.gdscedirne.toplan.ui.theme.DarkGrey
 import com.gdscedirne.toplan.ui.theme.DarkRed
@@ -465,6 +467,7 @@ fun SignUpScreen(
                                 onValueChange = { newRelativeName ->
                                     onAction(LoginOnAction.AddressChanged(newRelativeName))
                                 },
+                                maxLines = 10,
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .height(250.dp)

@@ -1,4 +1,4 @@
-package com.gdscedirne.toplan.presentation.login
+package com.gdscedirne.toplan.presentation.login.viewmodel
 
 import com.gdscedirne.toplan.data.model.User
 

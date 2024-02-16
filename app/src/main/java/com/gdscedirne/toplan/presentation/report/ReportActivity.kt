@@ -35,9 +35,11 @@ import androidx.navigation.compose.rememberNavController
 import com.gdscedirne.toplan.R
 import com.gdscedirne.toplan.components.CustomAlertDialog
 import com.gdscedirne.toplan.components.CustomText
-import com.gdscedirne.toplan.navigation.ReportNavGraph
+import com.gdscedirne.toplan.navigation.navgraph.ReportNavGraph
 import com.gdscedirne.toplan.presentation.home.HomeActivity
 import com.gdscedirne.toplan.presentation.home.makeEmergencyCall
+import com.gdscedirne.toplan.presentation.report.viewModel.ReportAction
+import com.gdscedirne.toplan.presentation.report.viewModel.ReportViewModel
 import com.gdscedirne.toplan.ui.theme.MainRed20
 import com.gdscedirne.toplan.ui.theme.TopLANTheme
 import com.gdscedirne.toplan.ui.theme.khandFamily

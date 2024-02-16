@@ -8,7 +8,7 @@ import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.compose.rememberNavController
-import com.gdscedirne.toplan.navigation.LoginNavGraph
+import com.gdscedirne.toplan.navigation.navgraph.LoginNavGraph
 import com.gdscedirne.toplan.ui.theme.TopLANTheme
 import dagger.hilt.android.AndroidEntryPoint
 

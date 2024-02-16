@@ -1,4 +1,4 @@
-package com.gdscedirne.toplan.presentation.home
+package com.gdscedirne.toplan.presentation.home.viewmodel
 
 sealed class HomeAction {
 

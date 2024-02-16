@@ -1,4 +1,4 @@
-package com.gdscedirne.toplan.presentation.report
+package com.gdscedirne.toplan.presentation.report.viewModel
 
 import android.content.Context
 import android.net.Uri

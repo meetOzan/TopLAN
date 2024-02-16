@@ -82,4 +82,7 @@
     <string name="coil_image">Coil Image</string>
     <string name="add_image">Add Image</string>
     <string name="image">image/*</string>
+    <string name="your_message">Your Message</string>
+    <string name="your_e_mail_address">Your E-Mail address</string>
+    <string name="contact_us">Contact Us</string>
 </resources>
