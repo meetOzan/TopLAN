@@ -22,6 +22,7 @@ import androidx.compose.material.FloatingActionButton
 import androidx.compose.material.Scaffold
 import androidx.compose.material.rememberScaffoldState
 import androidx.compose.material3.IconButton
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -37,10 +38,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.rememberNavController
+import com.gdscedirne.toplan.MainActivity
 import com.gdscedirne.toplan.R
 import com.gdscedirne.toplan.components.BottomNav
 import com.gdscedirne.toplan.components.CustomAlertDialog
 import com.gdscedirne.toplan.components.CustomDrawer
+import com.gdscedirne.toplan.components.CustomLoading
 import com.gdscedirne.toplan.components.CustomText
 import com.gdscedirne.toplan.components.Screen
 import com.gdscedirne.toplan.navigation.navgraph.TopLanNavGraph
@@ -82,6 +85,10 @@ class HomeActivity : AppCompatActivity() {
                 val homeViewModel = hiltViewModel<HomeViewModel>()
                 val homeUiState = homeViewModel.homeState.collectAsState().value
 
+                LaunchedEffect(true) {
+                    homeViewModel.onAction(HomeAction.GetUser)
+                }
+
                 if (homeUiState.sosCallDialog) {
                     CustomAlertDialog(
                         title = stringResource(R.string.sos_call),
@@ -107,6 +114,11 @@ class HomeActivity : AppCompatActivity() {
                         }
                     )
                 }
+
+                if (homeUiState.isLoading){
+                    CustomLoading()
+                }
+
                 Scaffold(
                     topBar = {
                         Row(
@@ -184,7 +196,19 @@ class HomeActivity : AppCompatActivity() {
                                 scope.launch {
                                     scaffoldState.drawerState.close()
                                 }
-                            }
+                            },
+                            onSignOut = {
+                                homeViewModel.onAction(HomeAction.SignOut(
+                                    onNavigate = {
+                                        val intent = Intent(this@HomeActivity, MainActivity::class.java)
+                                        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
+                                        context.startActivity(intent)
+                                    }
+                                )
+                                )
+                            },
+                            user = homeUiState.user,
+                            context = this@HomeActivity
                         )
                     },
                     bottomBar = {

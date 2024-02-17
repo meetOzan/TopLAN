@@ -91,4 +91,8 @@
     <string name="your_address">Your address</string>
     <string name="your_full_name">Your full name</string>
     <string name="your_phone_number">Your phone number</string>
+    <string name="please_sign_in_to_continue">Please sign in to continue.</string>
+    <string name="all_rights_reserved">All rights reserved.</string>
+    <string name="_2024_toplan">2024 - topLAN</string>
+    <string name="guest">Guest</string>
 </resources>

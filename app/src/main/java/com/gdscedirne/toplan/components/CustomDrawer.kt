@@ -1,11 +1,14 @@
 package com.gdscedirne.toplan.components
 
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -22,10 +25,12 @@ import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.gdscedirne.toplan.R
+import com.gdscedirne.toplan.data.model.User
 import com.gdscedirne.toplan.navigation.destination.Destinations
 import com.gdscedirne.toplan.ui.theme.Black
 import com.gdscedirne.toplan.ui.theme.LightGrey5
@@ -37,9 +42,12 @@ import com.gdscedirne.toplan.ui.theme.TransparentRed
 
 @Composable
 fun CustomDrawer(
+    user: User = User(),
     navController: NavHostController,
     modifier: Modifier = Modifier,
-    closeDrawerAction : () -> Unit
+    closeDrawerAction: () -> Unit,
+    onSignOut: () -> Unit,
+    context: Context
 ) {
     Surface(
         modifier = Modifier
@@ -77,17 +85,26 @@ fun CustomDrawer(
                     Column(
                         modifier = Modifier.padding(start = 16.dp)
                     ) {
-                        // TODO : Add user name
-                        CustomText("user123", 13, color = Black)
-                        // TODO : Add user email
-                        CustomText("user@example.com", 13, color = MediumGrey10)
+                        CustomText(
+                            if (user.name == context.getString(R.string.empty)) context.getString(R.string.guest)
+                            else user.name,
+                            13,
+                            color = Black
+                        )
+                        CustomText(
+                            if (user.email == context.getString(R.string.empty)) context.getString(R.string.please_sign_in_to_continue)
+                            else user.name,
+                            13,
+                            color = MediumGrey10
+                        )
                     }
                 }
                 Divider(
                     modifier = Modifier
-                        .height(1.dp)
+                        .height(2.dp)
                         .padding(top = 16.dp)
                         .background(LightGrey5)
+                        .fillMaxWidth()
                 )
                 LazyColumn(
                     modifier = Modifier.padding(start = 8.dp, top = 48.dp),
@@ -98,12 +115,24 @@ fun CustomDrawer(
                                 onClick = {
                                     when (it) {
                                         0 -> {
-                                            navController.navigate(Destinations.ProfileDestination.route){
-                                                popUpTo(Destinations.ProfileDestination.route){
-                                                    inclusive = true
+                                            if (user != User(
+                                                    name = "",
+                                                    email = ""
+                                                )
+                                            ) {
+                                                navController.navigate(Destinations.ProfileDestination.route) {
+                                                    popUpTo(Destinations.ProfileDestination.route) {
+                                                        inclusive = true
+                                                    }
                                                 }
+                                                closeDrawerAction()
+                                            } else {
+                                                Toast.makeText(
+                                                    context,
+                                                    context.getString(R.string.please_sign_in_to_continue),
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
                                             }
-                                            closeDrawerAction()
                                         }
 
                                         1 -> {
@@ -111,16 +140,28 @@ fun CustomDrawer(
                                         }
 
                                         2 -> {
-                                            navController.navigate(Destinations.ContactUsDestination.route){
-                                                popUpTo(Destinations.ContactUsDestination.route){
-                                                    inclusive = true
+                                            if (user != User(
+                                                    name = context.getString(R.string.empty),
+                                                    email = context.getString(R.string.empty)
+                                                )
+                                            ) {
+                                                navController.navigate(Destinations.ContactUsDestination.route) {
+                                                    popUpTo(Destinations.ContactUsDestination.route) {
+                                                        inclusive = true
+                                                    }
                                                 }
+                                                closeDrawerAction()
+                                            } else {
+                                                Toast.makeText(
+                                                    context,
+                                                    context.getString(R.string.please_sign_in_to_continue),
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
                                             }
-                                            closeDrawerAction()
                                         }
 
                                         3 -> {
-                                            // TODO : Logout
+                                            onSignOut()
                                         }
                                     }
                                 },
@@ -165,14 +206,14 @@ fun CustomDrawer(
                         modifier = Modifier.size(16.dp),
                     )
                     CustomText(
-                        "2024 - topLAN",
+                        stringResource(R.string._2024_toplan),
                         14,
                         color = MediumGrey20,
                         modifier = Modifier.padding(start = 4.dp)
                     )
                 }
                 CustomText(
-                    text = "All rights reserved.",
+                    text = stringResource(R.string.all_rights_reserved),
                     14,
                     color = MediumGrey20,
                     modifier = Modifier.padding(bottom = 48.dp)
@@ -201,6 +242,12 @@ fun PreviewOfDrawer() {
         navController = NavHostController(
             context = androidx.compose.ui.platform.LocalContext.current
         ),
-        closeDrawerAction = {}
+        closeDrawerAction = {},
+        onSignOut = {},
+        user = User(
+            name = "John Doe",
+            email = "johndoe@email.com"
+        ),
+        context = androidx.compose.ui.platform.LocalContext.current
     )
 }

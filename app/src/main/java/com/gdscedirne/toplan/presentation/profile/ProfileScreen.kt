@@ -40,7 +40,7 @@ import com.gdscedirne.toplan.ui.theme.robatoFamily
 
 @Composable
 fun ProfileScreen(
-    user: User,
+    user: User = User(name = "Guest"),
     profileUiState: ProfileUiState,
     onAction: (ProfileOnAction) -> Unit,
     modifier: Modifier = Modifier,
