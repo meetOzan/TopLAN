@@ -136,7 +136,24 @@ fun CustomDrawer(
                                         }
 
                                         1 -> {
-                                            // TODO : Navigate to Settings
+                                            if (user != User(
+                                                    name = context.getString(R.string.empty),
+                                                    email = context.getString(R.string.empty)
+                                                )
+                                            ) {
+                                                navController.navigate(Destinations.SettingsDestination.route) {
+                                                    popUpTo(Destinations.SettingsDestination.route) {
+                                                        inclusive = true
+                                                    }
+                                                }
+                                                closeDrawerAction()
+                                            } else {
+                                                Toast.makeText(
+                                                    context,
+                                                    context.getString(R.string.please_sign_in_to_continue),
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
+                                            }
                                         }
 
                                         2 -> {

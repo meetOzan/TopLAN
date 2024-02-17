@@ -128,7 +128,7 @@ fun EarthQuakeScreen(
             cameraPositionState = cameraPositionState,
             googleMapOptionsFactory = {
                 GoogleMapOptions()
-                    .mapType(com.google.android.gms.maps.GoogleMap.MAP_TYPE_NORMAL)
+                    .mapType(R.raw.map_style)
                     .compassEnabled(true)
                     .rotateGesturesEnabled(true)
                     .tiltGesturesEnabled(true)

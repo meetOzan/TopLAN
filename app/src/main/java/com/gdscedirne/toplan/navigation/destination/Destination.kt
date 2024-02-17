@@ -61,4 +61,12 @@ object Destinations {
         override val route = "profile"
     }
 
+    object SettingsDestination : Destination {
+        override val route = "settings"
+    }
+
+    object EditProfileDestination : Destination {
+        override val route = "edit_profile"
+    }
+
 }

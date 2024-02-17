@@ -20,6 +20,7 @@ fun CustomElevatedButton(
     shape: Shape = RoundedCornerShape(8.dp),
     text: @Composable () -> Unit,
     border: BorderStroke? = null,
+    suffix: Int = 0,
     elevation: ButtonElevation = ButtonDefaults.buttonElevation(
         defaultElevation = 0.dp,
         pressedElevation = 0.dp
