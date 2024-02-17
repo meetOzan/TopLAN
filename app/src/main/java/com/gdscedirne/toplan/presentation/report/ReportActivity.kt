@@ -46,6 +46,7 @@ import com.gdscedirne.toplan.ui.theme.khandFamily
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -61,6 +62,14 @@ class ReportActivity : AppCompatActivity() {
 
                 val permissionState = rememberPermissionState(
                     Manifest.permission.CALL_PHONE
+                )
+
+                val systemUiController = rememberSystemUiController()
+                systemUiController.setStatusBarColor(
+                    color = Color.Red
+                )
+                systemUiController.setSystemBarsColor(
+                    color = MainRed20
                 )
 
                 val hasPermission = permissionState.status.isGranted

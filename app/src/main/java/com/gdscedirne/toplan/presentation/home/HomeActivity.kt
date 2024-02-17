@@ -58,6 +58,7 @@ import com.gdscedirne.toplan.ui.theme.khandFamily
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -68,6 +69,14 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             TopLANTheme {
+
+                val systemUiController = rememberSystemUiController()
+                systemUiController.setSystemBarsColor(
+                    color = Color.White
+                )
+                systemUiController.setStatusBarColor(
+                    color = Color.White
+                )
 
                 val navController = rememberNavController()
                 val scope = rememberCoroutineScope()

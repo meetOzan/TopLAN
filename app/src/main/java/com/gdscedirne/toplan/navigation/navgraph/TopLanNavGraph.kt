@@ -124,7 +124,7 @@ fun NavGraphBuilder.profileScreen(
 }
 
 fun NavGraphBuilder.settingsScreen(
-    modifier : Modifier = Modifier
+    modifier: Modifier = Modifier
 ) {
     composable(Destinations.SettingsDestination.route) {
 
@@ -153,7 +153,12 @@ fun NavGraphBuilder.settingsScreen(
             )
         )
 
-        SettingsScreen(modifier = modifier, user = profileUiState.user, profileOptionTitleList = profileOptionTitleList)
+        SettingsScreen(
+            modifier = modifier,
+            user = profileUiState.user,
+            uiState = profileUiState,
+            profileOptionTitleList = profileOptionTitleList
+        )
     }
 }
 

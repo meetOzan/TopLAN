@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -19,6 +20,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -26,21 +29,28 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.gdscedirne.toplan.R
 import com.gdscedirne.toplan.components.CustomElevatedButton
+import com.gdscedirne.toplan.components.CustomLoading
 import com.gdscedirne.toplan.components.CustomText
 import com.gdscedirne.toplan.data.model.User
+import com.gdscedirne.toplan.presentation.profile.viewmodel.ProfileUiState
 import com.gdscedirne.toplan.ui.theme.Black
 import com.gdscedirne.toplan.ui.theme.DarkGrey
 import com.gdscedirne.toplan.ui.theme.LightGrey20
-import com.gdscedirne.toplan.ui.theme.LightPink
-import com.gdscedirne.toplan.ui.theme.Red
+import com.gdscedirne.toplan.ui.theme.MainRed
+import com.gdscedirne.toplan.ui.theme.TransparentRed
 import com.gdscedirne.toplan.ui.theme.robatoFamily
 
 @Composable
 fun SettingsScreen(
     modifier: Modifier = Modifier,
     user: User = User(name = "Guest"),
+    uiState : ProfileUiState,
     profileOptionTitleList: List<ProfileOption>
 ) {
+
+    if(uiState.isLoading){
+        CustomLoading()
+    }
 
     Column(
         modifier = Modifier
@@ -75,16 +85,21 @@ fun SettingsScreen(
                         .padding(bottom = 32.dp)
                         .align(Alignment.CenterHorizontally)
                 )
-                CustomText(
-                    text = user.name[0].toString(),
-                    color = Red,
-                    fontSize = 34,
+                Image(
+                    painter = painterResource(id = R.drawable.toplan_icon),
+                    contentDescription = null,
+                    colorFilter = ColorFilter.tint(MainRed),
                     modifier = Modifier
-                        .padding(vertical = 4.dp)
+                        .padding(vertical = 8.dp, horizontal = 8.dp)
+                        .size(48.dp)
                         .drawWithContent {
-                            drawCircle(color = LightPink, radius = 96f, center = center)
+                            drawCircle(
+                                color = TransparentRed,
+                                radius = 96f,
+                                center = center
+                            )
                             this.drawContent()
-                        }
+                        },
                 )
                 CustomText(
                     text = user.name, color = Black, fontSize = 16, fontStyle = TextStyle(
@@ -168,6 +183,11 @@ fun PreviewOfSettings() {
     SettingsScreen(
         user = User(
             name = "Guest"
+        ),
+        uiState = ProfileUiState(
+            isLoading = false,
+            isError = false,
+            message = ""
         ),
         profileOptionTitleList = (
                 listOf(

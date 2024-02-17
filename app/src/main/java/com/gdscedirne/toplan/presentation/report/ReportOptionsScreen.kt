@@ -146,7 +146,7 @@ fun ReportOptionScreen(
             LazyColumn(modifier = Modifier.padding(
                 start = 24.dp,
                 end = 24.dp,
-                top = 86.dp
+                top = 24.dp
             ),
                 content = {
                     item {

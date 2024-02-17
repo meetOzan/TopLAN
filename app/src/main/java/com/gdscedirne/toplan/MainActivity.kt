@@ -10,6 +10,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.navigation.compose.rememberNavController
 import com.gdscedirne.toplan.navigation.navgraph.LoginNavGraph
 import com.gdscedirne.toplan.ui.theme.TopLANTheme
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -18,6 +19,14 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             TopLANTheme {
+
+                val systemUiController = rememberSystemUiController()
+                systemUiController.setSystemBarsColor(
+                    color = Color.White
+                )
+                systemUiController.setStatusBarColor(
+                    color = Color.White
+                )
 
                 val navController = rememberNavController()
 

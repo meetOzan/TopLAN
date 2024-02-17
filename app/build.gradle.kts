@@ -140,6 +140,9 @@ dependencies {
     // Coil
     implementation("io.coil-kt:coil-compose:2.5.0")
 
+    // Accompanist UI Controller
+    implementation("com.google.accompanist:accompanist-systemuicontroller:0.32.0")
+
 }
 
 secrets {

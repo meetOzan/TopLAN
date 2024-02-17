@@ -185,7 +185,7 @@ fun ReportOptionsScreen(
             .verticalScroll(
                 rememberScrollState()
             )
-            .padding(start = 16.dp, end = 16.dp, top = 72.dp)
+            .padding(start = 16.dp, end = 16.dp, top = 24.dp)
             .background(Color.White),
         verticalArrangement = Arrangement.spacedBy(16.dp),
     ) {
@@ -210,7 +210,7 @@ fun ReportOptionsScreen(
                         ReportAction.ChangeTypeOfReport(it)
                     )
                 },
-                readOnly = if (dropDownList.isEmpty()) false else true,
+                readOnly = dropDownList.isNotEmpty(),
                 placerHolder = {
                     CustomText(
                         text = stringResource(R.string.type),
