@@ -3,6 +3,7 @@ package com.gdscedirne.toplan.navigation.navgraph
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -14,10 +15,14 @@ import com.gdscedirne.toplan.presentation.earthquake.EarthQuakeScreen
 import com.gdscedirne.toplan.presentation.earthquake.EarthquakeAction
 import com.gdscedirne.toplan.presentation.earthquake.EarthquakeViewModel
 import com.gdscedirne.toplan.presentation.home.HomeScreen
+import com.gdscedirne.toplan.presentation.profile.ProfileScreen
+import com.gdscedirne.toplan.presentation.profile.viewmodel.ProfileOnAction
+import com.gdscedirne.toplan.presentation.profile.viewmodel.ProfileViewModel
 
 @Composable
 fun TopLanNavGraph(
-    navController: NavHostController
+    navController: NavHostController,
+    modifier : Modifier = Modifier
 ) {
     NavHost(
         navController = navController, startDestination = Destinations.HomeDestination.route
@@ -45,6 +50,7 @@ fun TopLanNavGraph(
                 }
             }
         )
+        profileScreen(modifier)
     }
 }
 
@@ -86,6 +92,29 @@ fun NavGraphBuilder.contactUsScreen(
         ContactUsScreen {
             onHomeNavigate()
         }
+    }
+}
+
+fun NavGraphBuilder.profileScreen(
+    modifier: Modifier
+){
+    composable(Destinations.ProfileDestination.route) {
+
+        val profileViewModel = hiltViewModel<ProfileViewModel>()
+        val profileUiState = profileViewModel.profileState.collectAsState().value
+
+        LaunchedEffect(true) {
+            profileViewModel.onAction(ProfileOnAction.GetUser)
+        }
+
+        ProfileScreen(
+            user = profileUiState.user,
+            profileUiState = profileUiState,
+            modifier = modifier,
+            onAction = profileViewModel::onAction,
+            onEditProfileNavigate = {}
+        )
+
     }
 }
 

@@ -171,9 +171,8 @@ class ReportActivity : AppCompatActivity() {
                         }
                     },
                 ) {
-                    it
                     Surface(
-                        modifier = Modifier.fillMaxSize(),
+                        modifier = Modifier.fillMaxSize().padding(it),
                         color = Color.White
                     ) {
                         ReportNavGraph(navController = navController)

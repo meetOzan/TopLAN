@@ -34,6 +34,7 @@ import com.gdscedirne.toplan.ui.theme.robatoFamily
 @Composable
 fun HomeScreen(
     onEarthQuakeNavigate: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
 
     val (selected, setSelected) = remember {
@@ -55,6 +56,7 @@ fun HomeScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.White)
+            .then(modifier)
     ) {
         Image(
             painter = painterResource(id = R.drawable.hub_maps), contentDescription = null,

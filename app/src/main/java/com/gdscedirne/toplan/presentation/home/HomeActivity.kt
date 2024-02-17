@@ -180,7 +180,7 @@ class HomeActivity : AppCompatActivity() {
                     drawerContent = {
                         CustomDrawer(
                             navController = navController,
-                            closeDrawerAciton = {
+                            closeDrawerAction = {
                                 scope.launch {
                                     scaffoldState.drawerState.close()
                                 }
@@ -219,8 +219,7 @@ class HomeActivity : AppCompatActivity() {
                         }
                     }
                 ) {
-                    it
-                    TopLanNavGraph(navController = navController)
+                    TopLanNavGraph(navController = navController, modifier = Modifier.padding(it))
                 }
             }
         }

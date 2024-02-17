@@ -39,7 +39,7 @@ import com.gdscedirne.toplan.ui.theme.TransparentRed
 fun CustomDrawer(
     navController: NavHostController,
     modifier: Modifier = Modifier,
-    closeDrawerAciton : () -> Unit
+    closeDrawerAction : () -> Unit
 ) {
     Surface(
         modifier = Modifier
@@ -98,7 +98,12 @@ fun CustomDrawer(
                                 onClick = {
                                     when (it) {
                                         0 -> {
-                                            // TODO : Navigate to Profile
+                                            navController.navigate(Destinations.ProfileDestination.route){
+                                                popUpTo(Destinations.ProfileDestination.route){
+                                                    inclusive = true
+                                                }
+                                            }
+                                            closeDrawerAction()
                                         }
 
                                         1 -> {
@@ -111,7 +116,7 @@ fun CustomDrawer(
                                                     inclusive = true
                                                 }
                                             }
-                                            closeDrawerAciton()
+                                            closeDrawerAction()
                                         }
 
                                         3 -> {
@@ -196,6 +201,6 @@ fun PreviewOfDrawer() {
         navController = NavHostController(
             context = androidx.compose.ui.platform.LocalContext.current
         ),
-        closeDrawerAciton = {}
+        closeDrawerAction = {}
     )
 }

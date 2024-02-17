@@ -57,4 +57,8 @@ object Destinations {
         override val route = "contact_us"
     }
 
+    object ProfileDestination : Destination {
+        override val route = "profile"
+    }
+
 }

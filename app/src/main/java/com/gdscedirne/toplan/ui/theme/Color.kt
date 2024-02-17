@@ -10,6 +10,12 @@ val Purple40 = Color(0xFF6650a4)
 val PurpleGrey40 = Color(0xFF625b71)
 val Pink40 = Color(0xFF7D5260)
 
+// #F2DADD
+val LightPink = Color(0xFFF2DADD)
+
+// #BE1B2C
+val Red = Color(0xFFBE1B2C)
+
 // #DF091A
 val MainRed = Color(0xFFDF091A)
 
@@ -49,6 +55,9 @@ val MediumGrey10 = Color(0xFF737373)
 // #9E9E9E
 val MediumGrey20 = Color(0xFF9E9E9E)
 
+// #E0E0E0
+val MediumGrey30 = Color(0xFFE0E0E0)
+
 // #5E5E5E
 val MediumGrey40 = Color(0xFF5E5E5E)
 
@@ -60,3 +69,5 @@ val DarkWhite = Color(0xFFF2F4F7)
 
 // #1B0404
 val Black = Color(0xFF1B0404)
+
+

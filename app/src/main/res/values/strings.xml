@@ -85,4 +85,10 @@
     <string name="your_message">Your Message</string>
     <string name="your_e_mail_address">Your E-Mail address</string>
     <string name="contact_us">Contact Us</string>
+    <string name="my_profile">My Profile</string>
+    <string name="full_name">Full Name</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="your_address">Your address</string>
+    <string name="your_full_name">Your full name</string>
+    <string name="your_phone_number">Your phone number</string>
 </resources>

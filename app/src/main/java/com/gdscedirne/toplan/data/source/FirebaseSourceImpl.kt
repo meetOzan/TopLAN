@@ -111,7 +111,7 @@ class FirebaseSourceImpl @Inject constructor(
                         val document = task.result
                         user = document?.data?.let { data ->
                             User(
-                                id = data["id"] as Int,
+                                id = data["id"] as String,
                                 name = data["name"] as String,
                                 surname = data["surname"] as String,
                                 relativeName = data["relativeName"] as String,
