@@ -33,10 +33,6 @@ object Destinations {
         override val route = "home"
     }
 
-    object EarthQuakeDestination : Destination {
-        override val route = "earthquake"
-    }
-
     object ReportDestination : Destination {
         override val route = "report"
 
@@ -67,6 +63,10 @@ object Destinations {
 
     object EditProfileDestination : Destination {
         override val route = "edit_profile"
+    }
+
+    object ChatDestination : Destination {
+        override val route = "chat"
     }
 
 }

@@ -9,6 +9,7 @@ import com.gdscedirne.toplan.data.model.Marker
 import com.gdscedirne.toplan.data.model.User
 import com.gdscedirne.toplan.domain.repository.TopLanRepository
 import com.gdscedirne.toplan.domain.source.FirebaseSource
+import com.google.ai.client.generativeai.GenerativeModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
@@ -20,7 +21,8 @@ import javax.inject.Inject
 
 @RequiresApi(Build.VERSION_CODES.O)
 class TopLanRepositoryImpl @Inject constructor(
-    private val firebaseSource: FirebaseSource
+    private val firebaseSource: FirebaseSource,
+    private val generativeModel: GenerativeModel
 ) : TopLanRepository {
 
     override fun signInUserWithEmailAndPassword(
@@ -160,6 +162,17 @@ class TopLanRepositoryImpl @Inject constructor(
         val currentTime: LocalTime = LocalTime.now()
         val formatter = DateTimeFormatter.ofPattern("HH:mm")
         return currentTime.format(formatter)
+    }
+
+    // Gemini - Chat
+    override fun askQuestion(question: String): Flow<ResponseState<String>> {
+        return flow {
+            emit(ResponseState.Loading)
+            val response = generativeModel.generateContent(question).text.toString()
+            emit(ResponseState.Success(response))
+        }.catch {
+            emit(ResponseState.Error(it.message.orEmpty()))
+        }
     }
 
 }

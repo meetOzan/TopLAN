@@ -143,6 +143,9 @@ dependencies {
     // Accompanist UI Controller
     implementation("com.google.accompanist:accompanist-systemuicontroller:0.32.0")
 
+    // Gemini
+    implementation("com.google.ai.client.generativeai:generativeai:0.2.0")
+
 }
 
 secrets {

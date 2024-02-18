@@ -55,4 +55,7 @@ interface TopLanRepository {
 
     fun getCurrentTime(): String
 
+    // Gemini - Chat
+    fun askQuestion(question: String): Flow<ResponseState<String>>
+
 }

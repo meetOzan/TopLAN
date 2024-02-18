@@ -113,4 +113,10 @@
     <string name="oncreate">onCreate: %1$s</string>
     <string name="tag">TAG</string>
     <string name="emergency_location">Emergency Location</string>
+    <string name="what_should_earthquake_preparedness_kit">What should be included in an earthquake preparedness kit?</string>
+    <string name="what_are_the_safety_measures">What are the safety measures that can be taken at home against earthquakes?</string>
+    <string name="where_can_i_apply">Where can I apply for help after an earthquake?</string>
+    <string name="ask_question">Ask Question</string>
+    <string name="enter_a_prompt_here">Enter a prompt here...</string>
+    <string name="ask_something_like">Ask something like:</string>
 </resources>

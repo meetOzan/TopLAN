@@ -49,7 +49,7 @@ fun BottomNav(navController: NavController) {
                         }
                     }
                 },
-                // Kullanılabilirlik özelliğini kontrol etmek için interactionSource ve indication'ı null olarak ayarla
+                enabled = screen.title != null,
                 icon = {
                     screen.icon?.let {
                         Icon(
@@ -83,8 +83,8 @@ fun BottomNav(navController: NavController) {
 
 sealed class Screen(val route: String?, val title: String?, val icon: Int?) {
     data object Home : Screen("home", "Home", R.drawable.home)
-    data object Empty : Screen(null, null, null)
-    data object Alert : Screen("alert", "Alert", R.drawable.alert)
+    data object Chat : Screen("chat", "Chat", R.drawable.google_gemini)
+    data object Empty : Screen( null, null, null)
     data object Profile : Screen("profile", "Profile", R.drawable.profile)
     data object Settings : Screen("settings", "Settings", R.drawable.settings)
 }

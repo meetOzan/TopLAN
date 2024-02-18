@@ -45,7 +45,6 @@ import com.gdscedirne.toplan.components.CustomAlertDialog
 import com.gdscedirne.toplan.components.CustomDrawer
 import com.gdscedirne.toplan.components.CustomLoading
 import com.gdscedirne.toplan.components.CustomText
-import com.gdscedirne.toplan.components.Screen
 import com.gdscedirne.toplan.navigation.navgraph.TopLanNavGraph
 import com.gdscedirne.toplan.presentation.home.viewmodel.HomeAction
 import com.gdscedirne.toplan.presentation.home.viewmodel.HomeViewModel
@@ -246,7 +245,7 @@ class HomeActivity : AppCompatActivity() {
                             backgroundColor = DarkRed
                         ) {
                             Image(
-                                painter = painterResource(id = Screen.Alert.icon!!),
+                                painter = painterResource(id = R.drawable.alert),
                                 contentDescription = getString(R.string.alert_icon)
                             )
                         }
@@ -258,7 +257,6 @@ class HomeActivity : AppCompatActivity() {
         }
     }
 }
-
 
 fun makeEmergencyCall(context: Context) {
     val intent = Intent(Intent.ACTION_DIAL)

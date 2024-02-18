@@ -12,6 +12,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.gdscedirne.toplan.R
 import com.gdscedirne.toplan.navigation.destination.Destinations
+import com.gdscedirne.toplan.presentation.chat.ChatScreen
+import com.gdscedirne.toplan.presentation.chat.ChatViewModel
 import com.gdscedirne.toplan.presentation.contact_us.ContactUsScreen
 import com.gdscedirne.toplan.presentation.earthquake.EarthQuakeScreen
 import com.gdscedirne.toplan.presentation.earthquake.EarthquakeAction
@@ -59,6 +61,9 @@ fun TopLanNavGraph(
                     }
                 }
             }
+        )
+        chatScreen(
+            modifier = modifier
         )
     }
 }
@@ -231,7 +236,22 @@ fun NavGraphBuilder.editProfileScreen(
             list = list,
             onHomeNavigate = onHomeNavigate
         )
+    }
+}
 
+fun NavGraphBuilder.chatScreen(
+    modifier: Modifier = Modifier
+) {
+    composable(Destinations.ChatDestination.route) {
+
+        val chatViewModel = hiltViewModel<ChatViewModel>()
+        val chatUiState = chatViewModel.chatState.collectAsState().value
+
+        ChatScreen(
+            modifier = modifier,
+            onAction = chatViewModel::onAction,
+            chatUiState = chatUiState
+        )
     }
 }
 

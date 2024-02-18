@@ -6,12 +6,14 @@ object Constants {
 
     val bottomNavItems = listOf(
         Screen.Home,
-        Screen.Empty,
+        Screen.Chat,
         Screen.Empty,
         Screen.Profile,
         Screen.Settings
     )
 
     const val ARGS_OPTION = "option"
+
+    const val GEMINI_MODEL = "gemini-pro"
 
 }

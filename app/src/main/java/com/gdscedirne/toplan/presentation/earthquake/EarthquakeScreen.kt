@@ -33,6 +33,7 @@ import com.google.accompanist.permissions.rememberPermissionState
 import com.google.accompanist.permissions.shouldShowRationale
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.GoogleMapOptions
+import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.GoogleMap
@@ -110,11 +111,14 @@ fun EarthQuakeScreen(
                 }
 
             }
+
             is PermissionStatus.Denied -> {
                 onAction(EarthquakeAction.ChangeIsNoLocationRequestDialog)
             }
         }
     }
+
+    val mapView = MapView(context)
 
     Box(
         Modifier
@@ -126,12 +130,14 @@ fun EarthQuakeScreen(
             cameraPositionState = cameraPositionState,
             googleMapOptionsFactory = {
                 GoogleMapOptions()
-                    .mapType(R.raw.map_style)
+                    .mapType(
+                        R.raw.map_style
+                    )
                     .compassEnabled(true)
                     .rotateGesturesEnabled(true)
                     .tiltGesturesEnabled(true)
                     .zoomControlsEnabled(true)
-            }
+            },
         ) {
             earthquakeUiState.markers.forEach { marker ->
                 MapMarker(
