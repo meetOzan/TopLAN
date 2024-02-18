@@ -119,4 +119,5 @@
     <string name="ask_question">Ask Question</string>
     <string name="enter_a_prompt_here">Enter a prompt here...</string>
     <string name="ask_something_like">Ask something like:</string>
+    <string name="map_loading_error">Map Loading Error</string>
 </resources>

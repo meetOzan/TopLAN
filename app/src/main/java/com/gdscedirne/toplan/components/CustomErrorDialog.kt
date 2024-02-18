@@ -55,7 +55,7 @@ fun CustomErrorDialog(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 32.dp, horizontal = 8.dp),
+                    .padding(top = 32.dp, start = 8.dp, end = 8.dp, bottom = 12.dp),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {

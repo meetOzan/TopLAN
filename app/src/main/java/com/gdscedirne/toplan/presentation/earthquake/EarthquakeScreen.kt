@@ -32,8 +32,8 @@ import com.google.accompanist.permissions.PermissionStatus
 import com.google.accompanist.permissions.rememberPermissionState
 import com.google.accompanist.permissions.shouldShowRationale
 import com.google.android.gms.location.LocationServices
+import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.GoogleMapOptions
-import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.GoogleMap
@@ -118,8 +118,6 @@ fun EarthQuakeScreen(
         }
     }
 
-    val mapView = MapView(context)
-
     Box(
         Modifier
             .fillMaxSize()
@@ -130,9 +128,7 @@ fun EarthQuakeScreen(
             cameraPositionState = cameraPositionState,
             googleMapOptionsFactory = {
                 GoogleMapOptions()
-                    .mapType(
-                        R.raw.map_style
-                    )
+                    .mapType(GoogleMap.MAP_TYPE_NONE)
                     .compassEnabled(true)
                     .rotateGesturesEnabled(true)
                     .tiltGesturesEnabled(true)
@@ -148,8 +144,8 @@ fun EarthQuakeScreen(
                         MarkerType.FIRE.name -> R.drawable.fire
                         MarkerType.AVALANCHE.name -> R.drawable.snow_avalanche
                         GatheringAid.GATHERING.name -> R.drawable.areas
-                        GatheringAid.AID.name -> R.drawable.areas
-                        SuppliesEquipment.entries.find { it.name == marker.type }?.name -> R.drawable.notification
+                        GatheringAid.AID.name -> R.drawable.first_aid
+                        SuppliesEquipment.entries.find { it.name == marker.type }?.name -> R.drawable.supply_chain
                         stringResource(id = R.string.demolition) -> R.drawable.structure
                         else -> R.drawable.alert
                     },
@@ -162,7 +158,7 @@ fun EarthQuakeScreen(
 
     if (earthquakeUiState.isErrorDialog) {
         CustomErrorDialog(
-            errorMessage = earthquakeUiState.errorMessage,
+            errorMessage = stringResource(R.string.map_loading_error),
             onDismissClick = {
                 onAction(EarthquakeAction.ChangeIsErrorDialog)
             },
