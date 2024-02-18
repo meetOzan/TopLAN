@@ -110,7 +110,6 @@ fun ReportOptionsScreen(
         }
     }
 
-
     // User location
     var userLatLng by remember {
         mutableStateOf(LatLng(0.0, 0.0))
@@ -325,7 +324,7 @@ fun ReportOptionsScreen(
                         ReportAction.ChangeDescriptionOfReport(it)
                     )
                 },
-                maxLines = 8,
+                maxLines = 4,
                 placerHolder = {
                     CustomText(
                         text = stringResource(R.string.give_more_information),

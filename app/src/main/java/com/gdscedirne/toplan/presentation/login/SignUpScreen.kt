@@ -263,7 +263,7 @@ fun SignUpScreen(
                                         color = DarkGrey
                                     )
                                 },
-                                maxLines = 10,
+                                maxLines = 4,
                                 keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Email)
                             )
                             CustomTextField(
@@ -467,7 +467,7 @@ fun SignUpScreen(
                                 onValueChange = { newRelativeName ->
                                     onAction(LoginOnAction.AddressChanged(newRelativeName))
                                 },
-                                maxLines = 10,
+                                maxLines = 4,
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .height(250.dp)

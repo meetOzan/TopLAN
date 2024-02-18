@@ -17,8 +17,10 @@ import com.gdscedirne.toplan.presentation.earthquake.EarthQuakeScreen
 import com.gdscedirne.toplan.presentation.earthquake.EarthquakeAction
 import com.gdscedirne.toplan.presentation.earthquake.EarthquakeViewModel
 import com.gdscedirne.toplan.presentation.home.HomeScreen
+import com.gdscedirne.toplan.presentation.profile.EditProfileItem
+import com.gdscedirne.toplan.presentation.profile.EditProfileScreen
 import com.gdscedirne.toplan.presentation.profile.ProfileScreen
-import com.gdscedirne.toplan.presentation.profile.viewmodel.ProfileOnAction
+import com.gdscedirne.toplan.presentation.profile.viewmodel.ProfileAction
 import com.gdscedirne.toplan.presentation.profile.viewmodel.ProfileViewModel
 import com.gdscedirne.toplan.presentation.settings.ProfileOption
 import com.gdscedirne.toplan.presentation.settings.SettingsScreen
@@ -54,8 +56,22 @@ fun TopLanNavGraph(
                 }
             }
         )
-        profileScreen(modifier)
-        settingsScreen(modifier)
+        profileScreen(modifier, onEditProfileNavigate = {
+            navController.navigate(Destinations.EditProfileDestination.route)
+        })
+        settingsScreen(modifier, onEditProfileNavigate = {
+            navController.navigate(Destinations.EditProfileDestination.route)
+        })
+        editProfileScreen(
+            modifier = modifier,
+            onHomeNavigate = {
+                navController.navigate(Destinations.HomeDestination.route) {
+                    popUpTo(Destinations.HomeDestination.route) {
+                        inclusive = true
+                    }
+                }
+            }
+        )
     }
 }
 
@@ -101,7 +117,8 @@ fun NavGraphBuilder.contactUsScreen(
 }
 
 fun NavGraphBuilder.profileScreen(
-    modifier: Modifier
+    modifier: Modifier,
+    onEditProfileNavigate: () -> Unit
 ) {
     composable(Destinations.ProfileDestination.route) {
 
@@ -109,7 +126,7 @@ fun NavGraphBuilder.profileScreen(
         val profileUiState = profileViewModel.profileState.collectAsState().value
 
         LaunchedEffect(true) {
-            profileViewModel.onAction(ProfileOnAction.GetUser)
+            profileViewModel.onAction(ProfileAction.GetUser)
         }
 
         ProfileScreen(
@@ -117,14 +134,15 @@ fun NavGraphBuilder.profileScreen(
             profileUiState = profileUiState,
             modifier = modifier,
             onAction = profileViewModel::onAction,
-            onEditProfileNavigate = {}
+            onEditProfileNavigate = onEditProfileNavigate
         )
 
     }
 }
 
 fun NavGraphBuilder.settingsScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onEditProfileNavigate: () -> Unit
 ) {
     composable(Destinations.SettingsDestination.route) {
 
@@ -132,14 +150,27 @@ fun NavGraphBuilder.settingsScreen(
         val profileUiState = viewModel.profileState.collectAsState().value
 
         LaunchedEffect(true) {
-            viewModel.onAction(ProfileOnAction.GetUser)
+            viewModel.onAction(ProfileAction.GetUser)
+        }
+
+        LaunchedEffect(profileUiState.user) {
+            viewModel.onAction(
+                ProfileAction.ChangeEditProfileUser(
+                    name = profileUiState.user.name,
+                    surname = profileUiState.user.surname,
+                    email = profileUiState.user.email,
+                    phoneNumber = profileUiState.user.phone,
+                    address = profileUiState.user.address,
+                    relativeName = profileUiState.user.relativeName
+                )
+            )
         }
 
         val profileOptionTitleList = listOf(
             ProfileOption(
                 title = stringResource(id = R.string.profile_settings),
                 option = stringResource(id = R.string.edit_profile),
-                onNavigate = {}
+                onNavigate = onEditProfileNavigate
             ),
             ProfileOption(
                 title = stringResource(id = R.string.security_settings),
@@ -159,6 +190,70 @@ fun NavGraphBuilder.settingsScreen(
             uiState = profileUiState,
             profileOptionTitleList = profileOptionTitleList
         )
+    }
+}
+
+fun NavGraphBuilder.editProfileScreen(
+    modifier: Modifier = Modifier,
+    onHomeNavigate: () -> Unit
+) {
+    composable(Destinations.EditProfileDestination.route) {
+
+        val viewModel = hiltViewModel<ProfileViewModel>()
+        val profileUiState = viewModel.profileState.collectAsState().value
+
+        LaunchedEffect(true) {
+            viewModel.onAction(ProfileAction.GetUser)
+        }
+
+        LaunchedEffect(profileUiState.user) {
+            viewModel.onAction(
+                ProfileAction.ChangeEditProfileUser(
+                    name = profileUiState.user.name,
+                    surname = profileUiState.user.surname,
+                    email = profileUiState.user.email,
+                    phoneNumber = profileUiState.user.phone,
+                    address = profileUiState.user.address,
+                    relativeName = profileUiState.user.relativeName
+                )
+            )
+        }
+
+        val list = listOf(
+            EditProfileItem(
+                title = stringResource(id = R.string.name),
+                text = profileUiState.name,
+                hint = stringResource(R.string.your_name),
+                action = { viewModel.onAction(ProfileAction.ChangeName(it)) }
+            ),
+            EditProfileItem(
+                title = stringResource(R.string.surname),
+                text = profileUiState.surname,
+                hint = stringResource(R.string.your_surname),
+                action = { viewModel.onAction(ProfileAction.ChangeSurname(it)) }
+            ),
+            EditProfileItem(
+                title = stringResource(R.string.phone),
+                text = profileUiState.phoneNumber,
+                hint = stringResource(id = R.string.your_phone_number),
+                action = { viewModel.onAction(ProfileAction.ChangePhoneNumber(it)) }
+            ),
+            EditProfileItem(
+                title = stringResource(R.string.relative_name),
+                text = profileUiState.relativeName,
+                hint = stringResource(R.string.your_relative_s_full_name),
+                action = { viewModel.onAction(ProfileAction.ChangeRelativeName(it)) }
+            )
+        )
+
+        EditProfileScreen(
+            modifier = modifier,
+            profileUiState = profileUiState,
+            onAction = viewModel::onAction,
+            list = list,
+            onHomeNavigate = onHomeNavigate
+        )
+
     }
 }
 

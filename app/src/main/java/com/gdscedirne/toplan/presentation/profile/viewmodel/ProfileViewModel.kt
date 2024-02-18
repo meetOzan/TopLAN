@@ -1,5 +1,7 @@
 package com.gdscedirne.toplan.presentation.profile.viewmodel
 
+import android.content.Context
+import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gdscedirne.toplan.common.ResponseState
@@ -14,79 +16,201 @@ import javax.inject.Inject
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     private val repository: TopLanRepository
-) : ViewModel(){
+) : ViewModel() {
 
     private val _profileState = MutableStateFlow(ProfileUiState.initial)
     val profileState = _profileState.asStateFlow()
 
-    fun onAction(action: ProfileOnAction){
-        when(action){
-            is ProfileOnAction.ChangeLoadingState -> changeLoadingState(action.isLoading)
-            is ProfileOnAction.ChangeErrorMessageState -> changeErrorMessageState(action.errorMessage)
-            ProfileOnAction.GetUser -> getUserData()
-            is ProfileOnAction.ChangeAddress -> changeAddress(action.address)
-            is ProfileOnAction.ChangeEmail -> changeEmail(action.email)
-            is ProfileOnAction.ChangeName -> changeFullName(action.name)
-            is ProfileOnAction.ChangePhoneNumber -> changePhoneNumber(action.phoneNumber)
+    fun onAction(action: ProfileAction) {
+        when (action) {
+            is ProfileAction.ChangeLoadingState -> changeLoadingState(action.isLoading)
+            is ProfileAction.ChangeErrorMessageState -> changeErrorMessageState(action.errorMessage)
+            ProfileAction.GetUser -> getUserData()
+            is ProfileAction.ChangeAddress -> changeAddress(action.address)
+            is ProfileAction.ChangeEmail -> changeEmail(action.email)
+            is ProfileAction.ChangeRelativeName -> changeRelativeName(action.relativeName)
+            is ProfileAction.ChangeSurname -> changeSurname(action.surname)
+            is ProfileAction.ChangeEditProfileUser -> changeEditProfileUser(
+                action.name,
+                action.surname,
+                action.email,
+                action.phoneNumber,
+                action.address,
+                action.relativeName
+            )
+            is ProfileAction.ChangeName -> changeName(action.name)
+            is ProfileAction.ChangePhoneNumber -> changePhoneNumber(action.phoneNumber)
+            is ProfileAction.UpdateProfile -> updateProfile(action.user, action.onHomeNavigate)
+            is ProfileAction.SetImageUri -> setImageUri(action.uri, action.url)
+            is ProfileAction.UploadImageStorage -> uploadImageStorage(
+                uri = action.uri,
+                context = action.context,
+                onSuccess = action.onSuccess,
+                onFailure = action.onFailure
+            )
         }
     }
 
-    private fun getUserData(){
+    private fun getUserData() {
         viewModelScope.launch {
             repository.getUser().collect { response ->
-                when(response){
+                when (response) {
                     is ResponseState.Loading -> {
                         _profileState.value = _profileState.value.copy(isLoading = true)
                     }
+
                     is ResponseState.Success -> {
-                        _profileState.value = _profileState.value.copy(user = response.data, isLoading = false)
+                        _profileState.value =
+                            _profileState.value.copy(user = response.data, isLoading = false)
                     }
+
                     is ResponseState.Error -> {
-                        _profileState.value = _profileState.value.copy(isError = true, isLoading = false, message = response.message!!)
+                        _profileState.value = _profileState.value.copy(
+                            isError = true,
+                            isLoading = false,
+                            message = response.message
+                        )
                     }
                 }
             }
         }
     }
 
-    private fun changeLoadingState(isLoading: Boolean){
-        _profileState.value =  _profileState.value.copy(isLoading = isLoading)
+    private fun updateProfile(user: User, onNavigate: () -> Unit) {
+        viewModelScope.launch {
+            repository.updateProfile(user).collect { response ->
+                when (response) {
+                    is ResponseState.Loading -> {
+                        _profileState.value = _profileState.value.copy(isLoading = true)
+                    }
+
+                    is ResponseState.Success -> {
+                        _profileState.value = _profileState.value.copy(isLoading = false)
+                        onNavigate()
+                    }
+
+                    is ResponseState.Error -> {
+                        _profileState.value = _profileState.value.copy(
+                            isError = true,
+                            isLoading = false,
+                            message = response.message!!
+                        )
+                    }
+                }
+            }
+        }
     }
 
-    private fun changeErrorMessageState(errorMessage: Boolean){
+    private fun changeLoadingState(isLoading: Boolean) {
+        _profileState.value = _profileState.value.copy(isLoading = isLoading)
+    }
+
+    private fun changeErrorMessageState(errorMessage: Boolean) {
         _profileState.value = _profileState.value.copy(errorState = errorMessage)
     }
 
-    private fun changeEmail(email: String){
+    private fun changeEmail(email: String) {
         _profileState.value = _profileState.value.copy(email = email)
     }
 
-    private fun changePhoneNumber(phoneNumber: String){
+    private fun changePhoneNumber(phoneNumber: String) {
         _profileState.value = _profileState.value.copy(phoneNumber = phoneNumber)
     }
 
-    private fun changeFullName(fullName: String){
-        _profileState.value = _profileState.value.copy(fullName = fullName)
+    private fun changeAddress(address: String) {
+        _profileState.value = _profileState.value.copy(address = address)
     }
 
-    private fun changeAddress(address: String){
-        _profileState.value = _profileState.value.copy(address = address)
+    private fun changeRelativeName(relativeName: String) {
+        _profileState.value = _profileState.value.copy(relativeName = relativeName)
+    }
+
+    private fun changeName(name: String) {
+        _profileState.value = _profileState.value.copy(name = name)
+    }
+
+    private fun changeSurname(surname: String) {
+        _profileState.value = _profileState.value.copy(surname = surname)
+    }
+
+    private fun changeEditProfileUser(
+        name: String,
+        surname: String,
+        email: String,
+        phoneNumber: String,
+        address: String,
+        relativeName: String
+    ) {
+        _profileState.value = _profileState.value.copy(
+            name = name,
+            surname = surname,
+            email = email,
+            phoneNumber = phoneNumber,
+            address = address,
+            relativeName = relativeName
+        )
+    }
+
+    private fun setImageUri(uri: Uri, url: String) {
+        with(_profileState.value) {
+            _profileState.value = this.copy(
+                imageUrl = url,
+                imageUri = uri
+            )
+        }
+    }
+
+    private fun uploadImageStorage(
+        uri: Uri, context: Context,
+        onSuccess: (String, String) -> Unit = { _, _ -> },
+        onFailure: (String) -> Unit = { _ -> },
+    ) {
+        viewModelScope.launch {
+            repository.uploadImageToStorage(uri, context, onSuccess, onFailure)
+                .collect { responseState ->
+                    when (responseState) {
+                        is ResponseState.Loading -> {
+                            _profileState.value = _profileState.value.copy(isLoading = true)
+                        }
+
+                        is ResponseState.Error -> {
+                            _profileState.value = _profileState.value.copy(
+                                errorState = true,
+                                message = responseState.message,
+                                isLoading = false
+                            )
+                        }
+
+                        is ResponseState.Success -> {
+                            _profileState.value = _profileState.value.copy(
+                                errorState = false,
+                                isLoading = false
+                            )
+                        }
+                    }
+                }
+        }
     }
 
 }
 
 data class ProfileUiState(
     val isLoading: Boolean = false,
-    val isError : Boolean = false,
+    val isError: Boolean = false,
     val errorState: Boolean = false,
     val message: String = "",
     val user: User = User(),
     val email: String = "",
+    val name: String = "",
+    val surname: String = "",
     val phoneNumber: String = "",
+    val relativeName: String = "",
     val fullName: String = "",
     val address: String = "",
-){
-    companion object{
+    val imageUrl: String = "",
+    val imageUri: Uri = Uri.EMPTY
+) {
+    companion object {
         val initial = ProfileUiState(isLoading = true)
     }
 }

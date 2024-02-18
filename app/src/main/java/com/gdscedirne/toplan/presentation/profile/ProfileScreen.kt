@@ -8,12 +8,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
@@ -23,12 +25,13 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.gdscedirne.toplan.R
+import com.gdscedirne.toplan.components.CoilImage
 import com.gdscedirne.toplan.components.CustomElevatedButton
 import com.gdscedirne.toplan.components.CustomLoading
 import com.gdscedirne.toplan.components.CustomText
 import com.gdscedirne.toplan.components.CustomTextField
 import com.gdscedirne.toplan.data.model.User
-import com.gdscedirne.toplan.presentation.profile.viewmodel.ProfileOnAction
+import com.gdscedirne.toplan.presentation.profile.viewmodel.ProfileAction
 import com.gdscedirne.toplan.presentation.profile.viewmodel.ProfileUiState
 import com.gdscedirne.toplan.ui.theme.Black
 import com.gdscedirne.toplan.ui.theme.DarkGrey
@@ -42,7 +45,7 @@ import com.gdscedirne.toplan.ui.theme.robatoFamily
 fun ProfileScreen(
     user: User = User(name = "Guest"),
     profileUiState: ProfileUiState,
-    onAction: (ProfileOnAction) -> Unit,
+    onAction: (ProfileAction) -> Unit,
     modifier: Modifier = Modifier,
     onEditProfileNavigate: () -> Unit
 ) {
@@ -51,6 +54,7 @@ fun ProfileScreen(
         profileUiState.isLoading -> {
             CustomLoading()
         }
+
         profileUiState.isError -> {
             CustomText(
                 text = profileUiState.message,
@@ -58,6 +62,7 @@ fun ProfileScreen(
                 modifier = Modifier.padding(16.dp)
             )
         }
+
         else -> {
             Column(
                 modifier = Modifier
@@ -73,17 +78,27 @@ fun ProfileScreen(
                     color = Black,
                     modifier = Modifier.padding(top = 8.dp, bottom = 16.dp)
                 )
-                CustomText(
-                    text = user.name[0].toString(),
-                    color = Red,
-                    fontSize = 34,
-                    modifier = Modifier
-                        .padding(vertical = 24.dp)
-                        .drawWithContent {
-                            drawCircle(color = LightPink, radius = 96f, center = center)
-                            this.drawContent()
-                        }
-                )
+                if (user.imageUrl != "") {
+                    CoilImage(
+                        data = user.imageUrl,
+                        modifier = Modifier
+                            .padding(vertical = 12.dp)
+                            .size(84.dp)
+                            .clip(CircleShape)
+                    )
+                } else {
+                    CustomText(
+                        text = user.name[0].toString(),
+                        color = Red,
+                        fontSize = 34,
+                        modifier = Modifier
+                            .padding(vertical = 24.dp)
+                            .drawWithContent {
+                                drawCircle(color = LightPink, radius = 96f, center = center)
+                                this.drawContent()
+                            }
+                    )
+                }
                 CustomText(
                     text = user.name, color = Black, fontSize = 16, fontStyle = TextStyle(
                         fontWeight = FontWeight.Medium,
@@ -100,12 +115,8 @@ fun ProfileScreen(
                         color = MediumGrey,
                     )
                     CustomTextField(
-                        textTitle = profileUiState.email,
-                        onValueChange = {
-                            onAction(
-                                ProfileOnAction.ChangeEmail(it)
-                            )
-                        },
+                        textTitle = profileUiState.user.email,
+                        readOnly = true,
                         placerHolder = {
                             CustomText(
                                 text = stringResource(R.string.your_e_mail_address),
@@ -127,12 +138,8 @@ fun ProfileScreen(
                         color = MediumGrey,
                     )
                     CustomTextField(
-                        textTitle = profileUiState.phoneNumber,
-                        onValueChange = {
-                            onAction(
-                                ProfileOnAction.ChangePhoneNumber(it)
-                            )
-                        },
+                        textTitle = profileUiState.user.phone,
+                        readOnly = true,
                         placerHolder = {
                             CustomText(
                                 text = stringResource(R.string.your_phone_number),
@@ -154,12 +161,8 @@ fun ProfileScreen(
                         color = MediumGrey,
                     )
                     CustomTextField(
-                        textTitle = profileUiState.fullName,
-                        onValueChange = {
-                            onAction(
-                                ProfileOnAction.ChangeName(it)
-                            )
-                        },
+                        textTitle = profileUiState.user.name + " " + user.surname,
+                        readOnly = true,
                         placerHolder = {
                             CustomText(
                                 text = stringResource(R.string.your_full_name),
@@ -182,12 +185,8 @@ fun ProfileScreen(
                         color = MediumGrey,
                     )
                     CustomTextField(
-                        textTitle = profileUiState.address,
-                        onValueChange = {
-                            onAction(
-                                ProfileOnAction.ChangeAddress(it)
-                            )
-                        },
+                        textTitle = user.address,
+                        readOnly = true,
                         maxLines = 4,
                         placerHolder = {
                             CustomText(

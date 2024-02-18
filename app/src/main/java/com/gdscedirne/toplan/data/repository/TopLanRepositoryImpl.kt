@@ -80,6 +80,16 @@ class TopLanRepositoryImpl @Inject constructor(
         }
     }
 
+    override fun updateProfile(user: User): Flow<ResponseState<Unit>> {
+        return flow {
+            emit(ResponseState.Loading)
+            firebaseSource.updateProfileImage(user)
+            emit(ResponseState.Success(Unit))
+        }.catch {
+            emit(ResponseState.Error(it.message.orEmpty()))
+        }
+    }
+
     override fun uploadImageToStorage(
         uri: Uri,
         context: Context,

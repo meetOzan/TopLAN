@@ -101,4 +101,15 @@
     <string name="security_settings">Security Settings</string>
     <string name="agreements">Agreements</string>
     <string name="user_policy">User Policy</string>
+    <string name="profile_picture">Profile Picture</string>
+    <string name="change_photo">Change Photo</string>
+    <string name="save_the_changes">Save the changes</string>
+    <string name="relative_name">Relative Name</string>
+    <string name="your_relative_s_full_name">Your relative\'s full name</string>
+    <string name="phone">Phone</string>
+    <string name="your_surname">Your surname</string>
+    <string name="your_name">Your name</string>
+    <string name="please_fill_all_fields">Please, fill all fields</string>
+    <string name="oncreate">onCreate: %1$s</string>
+    <string name="tag">TAG</string>
 </resources>

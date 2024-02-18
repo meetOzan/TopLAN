@@ -22,7 +22,7 @@ import com.gdscedirne.toplan.ui.theme.robatoFamily
 @Composable
 fun CustomTextField(
     textTitle: String,
-    onValueChange: (String) -> Unit,
+    onValueChange: (String) -> Unit = {},
     fontFamily: FontFamily = robatoFamily,
     maxLines: Int = 1,
     readOnly: Boolean = false,

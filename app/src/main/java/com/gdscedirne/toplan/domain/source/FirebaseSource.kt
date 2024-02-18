@@ -20,6 +20,8 @@ interface FirebaseSource {
 
     fun isUserSignedIn(): Boolean
 
+    fun updateProfileImage(user: User)
+
     // Upload Image
     fun uploadImageToStorage(
         uri: Uri,

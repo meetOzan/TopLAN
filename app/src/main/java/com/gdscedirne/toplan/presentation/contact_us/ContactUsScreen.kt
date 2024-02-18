@@ -80,7 +80,7 @@ fun ContactUsScreen(
                 onValueChange = {
                     contactUsText = it
                 },
-                maxLines = 15,
+                maxLines = 4,
                 placerHolder = {
                     CustomText(
                         text = stringResource(R.string.give_more_information),

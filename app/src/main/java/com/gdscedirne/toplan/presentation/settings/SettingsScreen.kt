@@ -43,7 +43,7 @@ import com.gdscedirne.toplan.ui.theme.robatoFamily
 @Composable
 fun SettingsScreen(
     modifier: Modifier = Modifier,
-    user: User = User(name = "Guest"),
+    user: User,
     uiState : ProfileUiState,
     profileOptionTitleList: List<ProfileOption>
 ) {

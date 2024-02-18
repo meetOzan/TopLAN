@@ -85,6 +85,7 @@ class FirebaseSourceImpl @Inject constructor(
             "phone" to user.phone,
             "email" to user.email,
             "password" to user.password,
+            "imageUrl" to user.imageUrl
         )
         firebaseFirestore.collection("users").document(currentUser?.uid.toString())
             .set(userMap)
@@ -118,7 +119,8 @@ class FirebaseSourceImpl @Inject constructor(
                                 address = data["address"] as String,
                                 phone = data["phone"] as String,
                                 email = data["email"] as String,
-                                password = data["password"] as String
+                                password = data["password"] as String,
+                                imageUrl = data["imageUrl"] as String
                             )
                         } ?: User()
                     } else {
@@ -139,6 +141,33 @@ class FirebaseSourceImpl @Inject constructor(
 
     override fun isUserSignedIn(): Boolean {
         return firebaseAuth.currentUser != null
+    }
+
+    override fun updateProfileImage(user: User) {
+        val currentUser = firebaseAuth.currentUser
+        val userMap = hashMapOf(
+            "id" to currentUser?.uid.toString(),
+            "name" to user.name,
+            "surname" to user.surname,
+            "relativeName" to user.relativeName,
+            "address" to user.address,
+            "phone" to user.phone,
+            "email" to user.email,
+            "password" to user.password,
+            "imageUrl" to user.imageUrl
+        )
+        firebaseFirestore.collection("users").document(currentUser?.uid.toString())
+            .set(userMap)
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    Log.e("TAG", "updateProfileImage: ${it.result}")
+                } else {
+                    throw RuntimeException(it.exception)
+                }
+            }
+            .addOnFailureListener {
+                throw RuntimeException(it.message)
+            }
     }
 
     override fun uploadImageToStorage(

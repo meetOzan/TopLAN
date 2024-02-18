@@ -29,6 +29,8 @@ interface TopLanRepository {
 
     fun isUserSignedIn(): Flow<ResponseState<Boolean>>
 
+    fun updateProfile(user: User): Flow<ResponseState<Unit>>
+
     // Upload Image
     fun uploadImageToStorage(
         uri: Uri,
