@@ -31,7 +31,6 @@ import com.gdscedirne.toplan.components.CustomLoading
 import com.gdscedirne.toplan.components.CustomText
 import com.gdscedirne.toplan.components.CustomTextField
 import com.gdscedirne.toplan.data.model.User
-import com.gdscedirne.toplan.presentation.profile.viewmodel.ProfileAction
 import com.gdscedirne.toplan.presentation.profile.viewmodel.ProfileUiState
 import com.gdscedirne.toplan.ui.theme.Black
 import com.gdscedirne.toplan.ui.theme.DarkGrey
@@ -45,7 +44,6 @@ import com.gdscedirne.toplan.ui.theme.robatoFamily
 fun ProfileScreen(
     user: User = User(name = "Guest"),
     profileUiState: ProfileUiState,
-    onAction: (ProfileAction) -> Unit,
     modifier: Modifier = Modifier,
     onEditProfileNavigate: () -> Unit
 ) {
@@ -245,7 +243,6 @@ fun PreviewOfProfileScreen() {
             password = "mjkjjj",
         ),
         profileUiState = ProfileUiState(),
-        onAction = {},
         onEditProfileNavigate = {}
     )
 }

@@ -7,7 +7,6 @@ import android.net.Uri
 import android.provider.Settings
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -18,7 +17,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.startActivity
 import com.gdscedirne.toplan.R
@@ -44,7 +42,7 @@ import com.google.maps.android.compose.rememberCameraPositionState
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
 fun EarthQuakeScreen(
-    onHomeNavigate: () -> Unit,
+    modifier: Modifier = Modifier,
     onAction: (EarthquakeAction) -> Unit,
     earthquakeUiState: EarthquakeUiState
 ) {
@@ -121,7 +119,7 @@ fun EarthQuakeScreen(
     Box(
         Modifier
             .fillMaxSize()
-            .padding(bottom = 56.dp, end = 8.dp, start = 8.dp, top = 16.dp)
+            .then(modifier)
     ) {
         GoogleMap(
             modifier = Modifier.fillMaxSize(),
@@ -163,7 +161,6 @@ fun EarthQuakeScreen(
                 onAction(EarthquakeAction.ChangeIsErrorDialog)
             },
             onPositiveAction = {
-                onHomeNavigate()
                 onAction(EarthquakeAction.ChangeIsErrorDialog)
             }
         )
@@ -187,7 +184,6 @@ fun EarthQuakeScreen(
                 onAction(EarthquakeAction.ChangeIsNoLocationRequestDialog)
             },
             onNegativeAction = {
-                onHomeNavigate()
                 onAction(EarthquakeAction.ChangeIsNoLocationRequestDialog)
             }
         )
@@ -199,7 +195,6 @@ fun EarthQuakeScreen(
 @Composable
 fun PreviewOfEarthquakeScreen() {
     EarthQuakeScreen(
-        onHomeNavigate = {},
         onAction = {},
         earthquakeUiState = EarthquakeUiState.initial()
     )

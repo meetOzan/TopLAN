@@ -42,7 +42,7 @@ fun MarkerWindow(
     reportedTime: String,
     reportedDate: String,
     type: String,
-    location: String = "",
+    location: String,
     onAction: () -> Unit = {}
 ) {
 
@@ -102,8 +102,10 @@ fun MarkerWindow(
                 Column(
                     modifier = Modifier.padding(start = 16.dp)
                 ) {
-                    CustomText(reportedDate, 13, color = Black)
-                    CustomText(location, 13, color = MediumGrey10)
+                    CustomText(
+                        if (location == stringResource(id = R.string.empty)) location
+                        else stringResource(R.string.emergency_location), 13, color = Black)
+                    CustomText(reportedDate, 13, color = MediumGrey10)
                 }
             }
             CustomText(

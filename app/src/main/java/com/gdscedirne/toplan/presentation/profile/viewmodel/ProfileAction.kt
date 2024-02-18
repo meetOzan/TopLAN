@@ -20,7 +20,8 @@ sealed class ProfileAction {
         val email: String,
         val phoneNumber: String,
         val address: String,
-        val relativeName: String
+        val relativeName: String,
+        val imageUrl: String
     ) : ProfileAction()
     data class UpdateProfile(val user: User, val onHomeNavigate: () -> Unit) : ProfileAction()
     data class UploadImageStorage(

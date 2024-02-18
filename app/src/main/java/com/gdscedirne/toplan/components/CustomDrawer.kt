@@ -93,7 +93,7 @@ fun CustomDrawer(
                         )
                         CustomText(
                             if (user.email == context.getString(R.string.empty)) context.getString(R.string.please_sign_in_to_continue)
-                            else user.name,
+                            else user.email,
                             13,
                             color = MediumGrey10
                         )

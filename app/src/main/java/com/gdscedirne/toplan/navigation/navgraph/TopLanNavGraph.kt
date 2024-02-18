@@ -16,7 +16,6 @@ import com.gdscedirne.toplan.presentation.contact_us.ContactUsScreen
 import com.gdscedirne.toplan.presentation.earthquake.EarthQuakeScreen
 import com.gdscedirne.toplan.presentation.earthquake.EarthquakeAction
 import com.gdscedirne.toplan.presentation.earthquake.EarthquakeViewModel
-import com.gdscedirne.toplan.presentation.home.HomeScreen
 import com.gdscedirne.toplan.presentation.profile.EditProfileItem
 import com.gdscedirne.toplan.presentation.profile.EditProfileScreen
 import com.gdscedirne.toplan.presentation.profile.ProfileScreen
@@ -34,18 +33,7 @@ fun TopLanNavGraph(
         navController = navController, startDestination = Destinations.HomeDestination.route
     ) {
         homeScreen(
-            onEarthQuakeNavigate = {
-                navController.navigate(Destinations.EarthQuakeDestination.route)
-            }
-        )
-        earthquakeScreen(
-            onHomeNavigate = {
-                navController.navigate(Destinations.HomeDestination.route) {
-                    popUpTo(Destinations.HomeDestination.route) {
-                        inclusive = true
-                    }
-                }
-            }
+            modifier = modifier
         )
         contactUsScreen(
             onHomeNavigate = {
@@ -76,20 +64,9 @@ fun TopLanNavGraph(
 }
 
 fun NavGraphBuilder.homeScreen(
-    onEarthQuakeNavigate: () -> Unit
+    modifier: Modifier = Modifier
 ) {
     composable(Destinations.HomeDestination.route) {
-
-        HomeScreen(
-            onEarthQuakeNavigate = onEarthQuakeNavigate
-        )
-    }
-}
-
-fun NavGraphBuilder.earthquakeScreen(
-    onHomeNavigate: () -> Unit
-) {
-    composable(Destinations.EarthQuakeDestination.route) {
 
         val earthquakeViewModel = hiltViewModel<EarthquakeViewModel>()
         val uiState = earthquakeViewModel.earthquakeUiState.collectAsState().value
@@ -99,7 +76,7 @@ fun NavGraphBuilder.earthquakeScreen(
         }
 
         EarthQuakeScreen(
-            onHomeNavigate = onHomeNavigate,
+            modifier = modifier,
             onAction = earthquakeViewModel::onAction,
             earthquakeUiState = uiState
         )
@@ -133,7 +110,6 @@ fun NavGraphBuilder.profileScreen(
             user = profileUiState.user,
             profileUiState = profileUiState,
             modifier = modifier,
-            onAction = profileViewModel::onAction,
             onEditProfileNavigate = onEditProfileNavigate
         )
 
@@ -161,7 +137,8 @@ fun NavGraphBuilder.settingsScreen(
                     email = profileUiState.user.email,
                     phoneNumber = profileUiState.user.phone,
                     address = profileUiState.user.address,
-                    relativeName = profileUiState.user.relativeName
+                    relativeName = profileUiState.user.relativeName,
+                    imageUrl = profileUiState.user.imageUrl
                 )
             )
         }
@@ -214,7 +191,8 @@ fun NavGraphBuilder.editProfileScreen(
                     email = profileUiState.user.email,
                     phoneNumber = profileUiState.user.phone,
                     address = profileUiState.user.address,
-                    relativeName = profileUiState.user.relativeName
+                    relativeName = profileUiState.user.relativeName,
+                    imageUrl = profileUiState.user.imageUrl
                 )
             )
         }

@@ -224,7 +224,10 @@ fun EditProfileScreen(
                                             address = profileUiState.address,
                                             relativeName = profileUiState.relativeName,
                                             phone = profileUiState.phoneNumber,
-                                            imageUrl = profileUiState.imageUrl,
+                                            imageUrl =
+                                            if (profileUiState.imageUrl == context.getString(R.string.empty))
+                                                profileUiState.user.imageUrl
+                                            else profileUiState.imageUrl,
                                             email = profileUiState.user.email,
                                             id = profileUiState.user.id,
                                             password = profileUiState.user.password,

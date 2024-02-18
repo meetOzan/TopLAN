@@ -112,4 +112,5 @@
     <string name="please_fill_all_fields">Please, fill all fields</string>
     <string name="oncreate">onCreate: %1$s</string>
     <string name="tag">TAG</string>
+    <string name="emergency_location">Emergency Location</string>
 </resources>

@@ -236,6 +236,7 @@ class FirebaseSourceImpl @Inject constructor(
             "description" to marker.description,
             "type" to marker.type,
             "date" to marker.date,
+            "location" to marker.location,
             "time" to marker.time,
             "userId" to currentUser?.uid.toString(),
             "imageUrl" to marker.imageUrl

@@ -82,7 +82,7 @@ fun SettingsScreen(
                     text = stringResource(R.string.settings),
                     color = Black,
                     modifier = Modifier
-                        .padding(bottom = 32.dp)
+                        .padding(bottom = 16.dp)
                         .align(Alignment.CenterHorizontally)
                 )
                 Image(
