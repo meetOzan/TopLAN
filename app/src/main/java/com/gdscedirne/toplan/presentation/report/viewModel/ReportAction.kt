@@ -2,13 +2,14 @@ package com.gdscedirne.toplan.presentation.report.viewModel
 
 import android.content.Context
 import android.net.Uri
+import com.gdscedirne.toplan.data.model.Feed
 import com.gdscedirne.toplan.data.model.Marker
 
 sealed class ReportAction {
     data class ChangeSosDialogState(val newState: Boolean) : ReportAction()
     data class ChangeCallDialogState(val newState: Boolean) : ReportAction()
     data class ChangeLatLng(val latitude: Double, val longitude: Double) : ReportAction()
-    data class AddReportMarker(val marker: Marker) : ReportAction()
+    data class AddReportMarker(val marker: Marker, val onNavigate: () -> Unit) : ReportAction()
     data class ChangeZoomLevel(val zoomLevel: Float) : ReportAction()
     data object GetCurrentDate : ReportAction()
     data object GetCurrentTime : ReportAction()
@@ -34,4 +35,5 @@ sealed class ReportAction {
         val onSuccess: () -> Unit,
         val onFailure: (String) -> Unit,
     ) : ReportAction()
+    data class AddFeed(val feed: Feed) : ReportAction()
 }

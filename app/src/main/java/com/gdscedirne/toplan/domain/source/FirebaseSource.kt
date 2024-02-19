@@ -2,6 +2,7 @@ package com.gdscedirne.toplan.domain.source
 
 import android.content.Context
 import android.net.Uri
+import com.gdscedirne.toplan.data.model.Feed
 import com.gdscedirne.toplan.data.model.Marker
 import com.gdscedirne.toplan.data.model.User
 
@@ -15,6 +16,8 @@ interface FirebaseSource {
     fun saveUser(user: User)
 
     suspend fun getUser(): User
+
+    suspend fun getUserById(userId: String): User
 
     fun signOut()
 
@@ -41,5 +44,10 @@ interface FirebaseSource {
     fun addMarker(marker: Marker)
 
     suspend fun getMarkers(): List<Marker>
+
+    // Feed
+    fun addFeed(marker: Feed)
+
+    suspend fun getFeed(): List<Feed>
 
 }

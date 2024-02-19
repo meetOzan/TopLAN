@@ -48,6 +48,7 @@ import com.gdscedirne.toplan.components.CoilImage
 import com.gdscedirne.toplan.components.CustomLoading
 import com.gdscedirne.toplan.components.CustomText
 import com.gdscedirne.toplan.components.CustomTextField
+import com.gdscedirne.toplan.data.model.Feed
 import com.gdscedirne.toplan.data.model.Marker
 import com.gdscedirne.toplan.presentation.report.viewModel.ReportAction
 import com.gdscedirne.toplan.presentation.report.viewModel.ReportUiState
@@ -381,13 +382,13 @@ fun ReportOptionsScreen(
                 }
             }
         }
-
+        val randomId = UUID.randomUUID().toString()
         ElevatedButton(
             onClick = {
                 onAction(
                     ReportAction.AddReportMarker(
                         Marker(
-                            id = UUID.randomUUID().toString(),
+                            id = randomId,
                             latitude = reportUiState.latitude,
                             longitude = reportUiState.longitude,
                             title = reportUiState.titleOfReportText,
@@ -397,10 +398,20 @@ fun ReportOptionsScreen(
                             location = reportUiState.locationOfReportText,
                             time = reportUiState.currentTime,
                             imageUrl = reportUiState.imagesUrl,
+                        ),
+                        onHomeNavigate
+                    )
+                )
+                onAction(
+                    ReportAction.AddFeed(
+                        Feed(
+                            id = randomId,
+                            title = reportUiState.titleOfReportText,
+                            description = reportUiState.descriptionOfReportText,
+                            imageUrl = reportUiState.imagesUrl,
                         )
                     )
                 )
-                onHomeNavigate()
             },
             modifier = Modifier
                 .fillMaxWidth()

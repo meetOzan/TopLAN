@@ -11,6 +11,7 @@ import com.gdscedirne.toplan.common.MarkerType
 import com.gdscedirne.toplan.common.ReportOptions
 import com.gdscedirne.toplan.common.ResponseState
 import com.gdscedirne.toplan.common.SuppliesEquipment
+import com.gdscedirne.toplan.data.model.Feed
 import com.gdscedirne.toplan.data.model.Marker
 import com.gdscedirne.toplan.domain.repository.TopLanRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -34,7 +35,7 @@ class ReportViewModel @Inject constructor(
         when (action) {
             is ReportAction.ChangeSosDialogState -> changeSosDialogState(action.newState)
             is ReportAction.ChangeCallDialogState -> changeCallDialogState(action.newState)
-            is ReportAction.AddReportMarker -> addReportMarker(action.marker)
+            is ReportAction.AddReportMarker -> addReportMarker(action.marker, action.onNavigate)
             is ReportAction.ChangeLatLng -> changeLatLng(action.latitude, action.longitude)
             is ReportAction.ChangeZoomLevel -> changeZoomLevel(action.zoomLevel)
             ReportAction.GetCurrentDate -> getCurrentDate()
@@ -56,6 +57,34 @@ class ReportViewModel @Inject constructor(
                 onSuccess = action.onSuccess,
                 onFailure = action.onFailure
             )
+            is ReportAction.AddFeed -> addFeed(action.feed)
+        }
+    }
+
+    private fun addFeed(feed: Feed) {
+        viewModelScope.launch {
+            repository.addFeed(feed).collect { responseState ->
+                when (responseState) {
+                    is ResponseState.Loading -> {
+                        _reportState.value = _reportState.value.copy(isLoading = true)
+                    }
+
+                    is ResponseState.Error -> {
+                        _reportState.value = _reportState.value.copy(
+                            errorState = true,
+                            message = responseState.message,
+                            isLoading = false
+                        )
+                    }
+
+                    is ResponseState.Success -> {
+                        _reportState.value = _reportState.value.copy(
+                            errorState = false,
+                            isLoading = false
+                        )
+                    }
+                }
+            }
         }
     }
 
@@ -96,7 +125,7 @@ class ReportViewModel @Inject constructor(
         }
     }
 
-    private fun addReportMarker(marker: Marker) {
+    private fun addReportMarker(marker: Marker, onNavigate: () -> Unit) {
         viewModelScope.launch {
             repository.addMarker(marker).collect { responseState ->
                 when (responseState) {
@@ -117,6 +146,7 @@ class ReportViewModel @Inject constructor(
                             errorState = false,
                             isLoading = false
                         )
+                        onNavigate()
                     }
                 }
             }

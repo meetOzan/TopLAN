@@ -86,5 +86,5 @@ sealed class Screen(val route: String?, val title: String?, val icon: Int?) {
     data object Chat : Screen("chat", "Chat", R.drawable.google_gemini)
     data object Empty : Screen( null, null, null)
     data object Profile : Screen("feed", "Feed", R.drawable.feed_category)
-    data object Settings : Screen("News", "News", R.drawable.folded_newspaper)
+    data object Settings : Screen("news", "News", R.drawable.folded_newspaper)
 }

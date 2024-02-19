@@ -32,7 +32,6 @@ import com.google.accompanist.permissions.PermissionStatus
 import com.google.accompanist.permissions.rememberPermissionState
 import com.google.accompanist.permissions.shouldShowRationale
 import com.google.android.gms.location.LocationServices
-import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.GoogleMapOptions
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
@@ -128,7 +127,7 @@ fun EarthQuakeScreen(
             cameraPositionState = cameraPositionState,
             googleMapOptionsFactory = {
                 GoogleMapOptions()
-                    .mapType(GoogleMap.MAP_TYPE_NONE)
+                    .mapType(R.raw.map_style)
                     .compassEnabled(true)
                     .rotateGesturesEnabled(true)
                     .tiltGesturesEnabled(true)

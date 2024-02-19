@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Build
 import androidx.annotation.RequiresApi
 import com.gdscedirne.toplan.common.ResponseState
+import com.gdscedirne.toplan.data.model.Feed
 import com.gdscedirne.toplan.data.model.Marker
 import com.gdscedirne.toplan.data.model.User
 import com.gdscedirne.toplan.domain.repository.TopLanRepository
@@ -132,6 +133,16 @@ class TopLanRepositoryImpl @Inject constructor(
         }
     }
 
+    override fun getUserById(userId: String): Flow<ResponseState<User>> {
+        return flow {
+            emit(ResponseState.Loading)
+            val user = firebaseSource.getUserById(userId)
+            emit(ResponseState.Success(user))
+        }.catch {
+            emit(ResponseState.Error(it.message.orEmpty()))
+        }
+    }
+
     override fun addMarker(marker: Marker): Flow<ResponseState<Unit>> {
         return flow {
             emit(ResponseState.Loading)
@@ -170,6 +181,26 @@ class TopLanRepositoryImpl @Inject constructor(
             emit(ResponseState.Loading)
             val response = generativeModel.generateContent(question).text.toString()
             emit(ResponseState.Success(response))
+        }.catch {
+            emit(ResponseState.Error(it.message.orEmpty()))
+        }
+    }
+
+    override fun addFeed(feed: Feed): Flow<ResponseState<Unit>> {
+        return flow {
+            emit(ResponseState.Loading)
+            firebaseSource.addFeed(feed)
+            emit(ResponseState.Success(Unit))
+        }.catch {
+            emit(ResponseState.Error(it.message.orEmpty()))
+        }
+    }
+
+    override fun getFeed(): Flow<ResponseState<List<Feed>>> {
+        return flow {
+            emit(ResponseState.Loading)
+            val feed = firebaseSource.getFeed()
+            emit(ResponseState.Success(feed))
         }.catch {
             emit(ResponseState.Error(it.message.orEmpty()))
         }

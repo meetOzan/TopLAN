@@ -18,6 +18,9 @@ import com.gdscedirne.toplan.presentation.contact_us.ContactUsScreen
 import com.gdscedirne.toplan.presentation.earthquake.EarthQuakeScreen
 import com.gdscedirne.toplan.presentation.earthquake.EarthquakeAction
 import com.gdscedirne.toplan.presentation.earthquake.EarthquakeViewModel
+import com.gdscedirne.toplan.presentation.feed.FeedAction
+import com.gdscedirne.toplan.presentation.feed.FeedScreen
+import com.gdscedirne.toplan.presentation.feed.FeedViewModel
 import com.gdscedirne.toplan.presentation.profile.EditProfileItem
 import com.gdscedirne.toplan.presentation.profile.EditProfileScreen
 import com.gdscedirne.toplan.presentation.profile.ProfileScreen
@@ -63,6 +66,9 @@ fun TopLanNavGraph(
             }
         )
         chatScreen(
+            modifier = modifier
+        )
+        feedScreen(
             modifier = modifier
         )
     }
@@ -253,5 +259,27 @@ fun NavGraphBuilder.chatScreen(
             chatUiState = chatUiState
         )
     }
+}
+
+fun NavGraphBuilder.feedScreen(
+    modifier: Modifier = Modifier
+){
+
+    composable(Destinations.FeedDestination.route){
+
+        val viewModel = hiltViewModel<FeedViewModel>()
+        val feedUiState = viewModel.feedState.collectAsState().value
+
+        LaunchedEffect(true){
+            viewModel.onAction(FeedAction.LoadFeed)
+        }
+
+        FeedScreen(
+            modifier = modifier,
+            feedUiState = feedUiState,
+            onAction = viewModel::onAction
+        )
+    }
+
 }
 

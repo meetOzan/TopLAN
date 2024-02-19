@@ -69,4 +69,7 @@ object Destinations {
         override val route = "chat"
     }
 
+    object FeedDestination : Destination {
+        override val route = "feed"
+    }
 }

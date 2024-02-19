@@ -5,6 +5,7 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.util.Log
 import com.gdscedirne.toplan.common.uriToBitmap
+import com.gdscedirne.toplan.data.model.Feed
 import com.gdscedirne.toplan.data.model.Marker
 import com.gdscedirne.toplan.data.model.User
 import com.gdscedirne.toplan.domain.source.FirebaseSource
@@ -106,6 +107,39 @@ class FirebaseSourceImpl @Inject constructor(
         var user: User
         return suspendCoroutine {continuation ->
             firebaseFirestore.collection("users").document(currentUser?.uid.toString())
+                .get()
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        val document = task.result
+                        user = document?.data?.let { data ->
+                            User(
+                                id = data["id"] as String,
+                                name = data["name"] as String,
+                                surname = data["surname"] as String,
+                                relativeName = data["relativeName"] as String,
+                                address = data["address"] as String,
+                                phone = data["phone"] as String,
+                                email = data["email"] as String,
+                                password = data["password"] as String,
+                                imageUrl = data["imageUrl"] as String
+                            )
+                        } ?: User()
+                    } else {
+                        continuation.resumeWithException(RuntimeException("User could not be fetched."))
+                        return@addOnCompleteListener
+                    }
+                    continuation.resume(user)
+                }
+                .addOnFailureListener {
+                    throw RuntimeException(it.message)
+                }
+        }
+    }
+
+    override suspend fun getUserById(userId: String): User {
+        var user: User
+        return suspendCoroutine { continuation ->
+            firebaseFirestore.collection("users").document(userId)
                 .get()
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
@@ -290,4 +324,63 @@ class FirebaseSourceImpl @Inject constructor(
                 }
         }
     }
+
+    override fun addFeed(feed: Feed) {
+        val currentUser = firebaseAuth.currentUser
+        val feedMap = hashMapOf(
+            "id" to feed.id,
+            "title" to feed.title,
+            "imageUrl" to feed.imageUrl,
+            "description" to feed.description,
+            "user" to currentUser?.uid.toString(),
+            "likeCount" to 0.toLong().toInt(),
+            "comments" to emptyList<String>(),
+        )
+        firebaseFirestore.collection("feeds").document(feed.id)
+            .set(feedMap)
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    Log.e("TAG", "addFeed: ${it.result}")
+                } else {
+                    throw RuntimeException(it.exception)
+                }
+            }
+            .addOnFailureListener {
+                throw RuntimeException(it.message)
+            }
+    }
+
+    override suspend fun getFeed(): List<Feed> {
+        var feeds: List<Feed>
+        return suspendCoroutine { continuation ->
+            firebaseFirestore.collection("feeds")
+                .get()
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        val documents = task.result
+                        feeds = documents?.map { document ->
+                            document.data.let { data ->
+                                Feed(
+                                    id = data["id"] as String,
+                                    title = data["title"] as String,
+                                    imageUrl = data["imageUrl"] as String,
+                                    user = data["user"] as String,
+                                    description = data["description"] as String,
+                                    likeCount = data["likeCount"] as Long,
+                                    comments = data["comments"] as List<String>,
+                                )
+                            }
+                        } ?: emptyList()
+                    } else {
+                        continuation.resumeWithException(RuntimeException("Feeds could not be fetched."))
+                        return@addOnCompleteListener
+                    }
+                    continuation.resume(feeds)
+                }
+                .addOnFailureListener {
+                    throw RuntimeException(it.message)
+                }
+        }
+    }
+
 }

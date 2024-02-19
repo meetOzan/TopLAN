@@ -39,6 +39,7 @@ import com.gdscedirne.toplan.components.CustomAlertDialog
 import com.gdscedirne.toplan.components.CustomErrorDialog
 import com.gdscedirne.toplan.components.CustomLoading
 import com.gdscedirne.toplan.components.CustomText
+import com.gdscedirne.toplan.data.model.Feed
 import com.gdscedirne.toplan.data.model.Marker
 import com.gdscedirne.toplan.presentation.report.viewModel.ReportAction
 import com.gdscedirne.toplan.presentation.report.viewModel.ReportUiState
@@ -172,6 +173,7 @@ fun ReportOptionScreen(
                                         textAlign = TextAlign.Center
                                     )
                                 )
+                                val randomId = UUID.randomUUID().toString()
                                 TextButton(
                                     onClick = {
                                         onReportAction(ReportAction.GetCurrentDate)
@@ -179,7 +181,7 @@ fun ReportOptionScreen(
                                         onReportAction(
                                             ReportAction.AddReportMarker(
                                                 Marker(
-                                                    id = UUID.randomUUID().toString(),
+                                                    id = randomId,
                                                     latitude = reportUiState.latitude,
                                                     longitude = reportUiState.longitude,
                                                     title = context.getString(R.string.demolish_building),
@@ -187,6 +189,17 @@ fun ReportOptionScreen(
                                                     type = context.getString(R.string.demolition),
                                                     date = reportUiState.currentDate,
                                                     time = reportUiState.currentTime,
+                                                ),
+                                                onHomeNavigate
+                                            )
+                                        )
+                                        onReportAction(
+                                            ReportAction.AddFeed(
+                                                Feed(
+                                                    id = randomId,
+                                                    title = context.getString(R.string.demolish_building),
+                                                    description = context.getString(R.string.i_m_under_the_rubble),
+                                                    imageUrl = context.getString(R.string.emergency_feed_image_url)
                                                 )
                                             )
                                         )
