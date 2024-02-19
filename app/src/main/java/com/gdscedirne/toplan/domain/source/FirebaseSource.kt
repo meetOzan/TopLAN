@@ -46,7 +46,7 @@ interface FirebaseSource {
     suspend fun getMarkers(): List<Marker>
 
     // Feed
-    fun addFeed(marker: Feed)
+    fun addFeed(feed: Feed)
 
     suspend fun getFeed(): List<Feed>
 

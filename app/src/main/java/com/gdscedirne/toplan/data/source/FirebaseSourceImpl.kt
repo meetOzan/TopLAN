@@ -86,7 +86,7 @@ class FirebaseSourceImpl @Inject constructor(
             "phone" to user.phone,
             "email" to user.email,
             "password" to user.password,
-            "imageUrl" to user.imageUrl
+            "imageUrl" to ""
         )
         firebaseFirestore.collection("users").document(currentUser?.uid.toString())
             .set(userMap)
