@@ -76,7 +76,9 @@ fun SignUpScreen(
     var isPasswordVisible by remember { mutableStateOf(false) }
     val keyboardController = LocalSoftwareKeyboardController.current
 
-    val currentPage = rememberPagerState(pageCount = { 3 })
+    val currentPage = rememberPagerState(
+        pageCount = { 3 }
+    )
 
     val coroutineScope = rememberCoroutineScope()
 
@@ -213,8 +215,9 @@ fun SignUpScreen(
                 state = currentPage,
                 modifier = Modifier
                     .padding(vertical = 16.dp),
-                pageSpacing = 16.dp
-            ) { page ->
+                pageSpacing = 16.dp,
+                userScrollEnabled = false
+                ) { page ->
                 when (page) {
                     0 -> {
                         Column(
