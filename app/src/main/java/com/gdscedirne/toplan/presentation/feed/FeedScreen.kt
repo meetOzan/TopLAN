@@ -35,8 +35,6 @@ fun FeedScreen(
                     FeedItem(
                         modifier = modifier,
                         feed = feedUiState.feedList[index],
-                        onAction = onAction,
-                        uiState = feedUiState
                     )
                 }
             }

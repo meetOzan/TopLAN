@@ -17,41 +17,12 @@ class FeedViewModel @Inject constructor(
     private val repository: TopLanRepository
 ) : ViewModel() {
 
-
     private val _feedState = MutableStateFlow(FeedUiState())
     val feedState = _feedState.asStateFlow()
 
     fun onAction(action: FeedAction) {
         when (action) {
             is FeedAction.LoadFeed -> loadFeed()
-            is FeedAction.GetUser -> getUserById(action.userId)
-        }
-    }
-
-    private fun getUserById(userId: String) {
-        viewModelScope.launch {
-            repository.getUserById(userId).collect { response ->
-                when (response) {
-                    is ResponseState.Loading -> {
-                        _feedState.value = _feedState.value.copy(isLoading = true)
-                    }
-
-                    is ResponseState.Success -> {
-                        _feedState.value = _feedState.value.copy(
-                            isLoading = false,
-                            user = response.data
-                        )
-                    }
-
-                    is ResponseState.Error -> {
-                        _feedState.value = _feedState.value.copy(
-                            isLoading = false,
-                            isError = true,
-                            errorMessage = response.message
-                        )
-                    }
-                }
-            }
         }
     }
 

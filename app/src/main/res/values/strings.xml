@@ -26,7 +26,9 @@
     <string name="back">Back</string>
     <string name="next">Next</string>
     <string name="surname">Surname</string>
+    <string name="small_surname">surname</string>
     <string name="name">Name</string>
+    <string name="small_name">name</string>
     <string name="_3">3</string>
     <string name="optional">Optional</string>
     <string name="address">Address</string>
@@ -124,4 +126,5 @@
     <string name="like">Like</string>
     <string name="comment">Comment</string>
     <string name="emergency_feed_image_url">https://ca-times.brightspotcdn.com/dims4/default/21f650e/2147483647/strip/true/crop/5000x3333+0+0/resize/1200x800!/quality/75/?url=https%3A%2F%2Fcalifornia-times-brightspot.s3.amazonaws.com%2Ffb%2F8c%2Fb6e8796e450885f50ea8bc22dbec%2Fap23037523545482.jpg</string>
+    <string name="imageurl">imageUrl</string>
 </resources>

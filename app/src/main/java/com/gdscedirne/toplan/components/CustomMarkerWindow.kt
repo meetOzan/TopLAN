@@ -103,7 +103,7 @@ fun MarkerWindow(
                     modifier = Modifier.padding(start = 16.dp)
                 ) {
                     CustomText(
-                        if (location == stringResource(id = R.string.empty)) location
+                        if (location != stringResource(id = R.string.empty)) location
                         else stringResource(R.string.emergency_location), 13, color = Black)
                     CustomText(reportedDate, 13, color = MediumGrey10)
                 }

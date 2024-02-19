@@ -304,6 +304,7 @@ class FirebaseSourceImpl @Inject constructor(
                                     latitude = data["latitude"] as Double,
                                     longitude = data["longitude"] as Double,
                                     title = data["title"] as String,
+                                    location = data["location"] as String,
                                     description = data["description"] as String,
                                     type = data["type"] as String,
                                     date = data["date"] as String,
@@ -325,14 +326,15 @@ class FirebaseSourceImpl @Inject constructor(
         }
     }
 
-    override fun addFeed(feed: Feed) {
+    override suspend fun addFeed(feed: Feed) {
         val currentUser = firebaseAuth.currentUser
+        val user = this.getUserById(currentUser?.uid.toString())
         val feedMap = hashMapOf(
             "id" to feed.id,
             "title" to feed.title,
             "imageUrl" to feed.imageUrl,
             "description" to feed.description,
-            "user" to currentUser?.uid.toString(),
+            "user" to user,
             "likeCount" to 0.toLong().toInt(),
             "comments" to emptyList<String>(),
         )
@@ -364,7 +366,7 @@ class FirebaseSourceImpl @Inject constructor(
                                     id = data["id"] as String,
                                     title = data["title"] as String,
                                     imageUrl = data["imageUrl"] as String,
-                                    user = data["user"] as String,
+                                    user = data["user"] as Map<String, String>,
                                     description = data["description"] as String,
                                     likeCount = data["likeCount"] as Long,
                                     comments = data["comments"] as List<String>,

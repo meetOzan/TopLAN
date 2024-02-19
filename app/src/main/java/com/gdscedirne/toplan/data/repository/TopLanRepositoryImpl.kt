@@ -132,17 +132,7 @@ class TopLanRepositoryImpl @Inject constructor(
             emit(ResponseState.Error(it.message.orEmpty()))
         }
     }
-
-    override fun getUserById(userId: String): Flow<ResponseState<User>> {
-        return flow {
-            emit(ResponseState.Loading)
-            val user = firebaseSource.getUserById(userId)
-            emit(ResponseState.Success(user))
-        }.catch {
-            emit(ResponseState.Error(it.message.orEmpty()))
-        }
-    }
-
+    
     override fun addMarker(marker: Marker): Flow<ResponseState<Unit>> {
         return flow {
             emit(ResponseState.Loading)

@@ -26,8 +26,6 @@ interface TopLanRepository {
 
     fun getUser(): Flow<ResponseState<User>>
 
-    fun getUserById(userId: String): Flow<ResponseState<User>>
-
     fun signOut(): Flow<ResponseState<Unit>>
 
     fun isUserSignedIn(): Flow<ResponseState<Boolean>>

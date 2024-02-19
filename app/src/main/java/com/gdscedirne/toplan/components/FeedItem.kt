@@ -24,7 +24,6 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -40,8 +39,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.gdscedirne.toplan.R
 import com.gdscedirne.toplan.data.model.Feed
-import com.gdscedirne.toplan.presentation.feed.FeedAction
-import com.gdscedirne.toplan.presentation.feed.FeedUiState
 import com.gdscedirne.toplan.ui.theme.Black
 import com.gdscedirne.toplan.ui.theme.DarkGrey
 import com.gdscedirne.toplan.ui.theme.LightGrey
@@ -50,19 +47,8 @@ import com.gdscedirne.toplan.ui.theme.interFamily
 @Composable
 fun FeedItem(
     modifier: Modifier = Modifier,
-    feed: Feed,
-    onAction: (FeedAction) -> Unit,
-    uiState: FeedUiState
+    feed: Feed
 ) {
-
-    LaunchedEffect(feed.user) {
-        onAction(FeedAction.GetUser(feed.user))
-    }
-
-    if (uiState.isLoading) {
-        CustomLoading()
-    }
-
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -81,12 +67,13 @@ fun FeedItem(
                 .background(Color.White)
                 .fillMaxWidth()
                 .padding(
-                    vertical = 4.dp,
-                    horizontal = 8.dp
+                    top = 4.dp,
+                    start = 8.dp,
+                    end = 8.dp,
                 ),
         ) {
             CoilImage(
-                data = uiState.user.imageUrl,
+                data = feed.user.get(key = stringResource(R.string.imageurl)) as String,
                 modifier = Modifier
                     .padding(
                         start = 2.dp,
@@ -98,14 +85,18 @@ fun FeedItem(
                     )
                     .drawBehind {
                         this.drawCircle(
-                            color = Color.Red,
+                            color = DarkGrey,
                             radius = 48f,
                             center = center
                         )
                     }
             )
             CustomText(
-                text = "${uiState.user.name} ${uiState.user.surname}",
+                text = "${
+                    feed.user.get(key = stringResource(id = R.string.small_name))
+                } ${
+                    feed.user.get(key = stringResource(id = R.string.small_surname))
+                }",
                 modifier = Modifier
                     .padding(start = 24.dp)
                     .weight(1f)
@@ -120,7 +111,9 @@ fun FeedItem(
             )
             IconButton(
                 onClick = { /*TODO*/ },
-                modifier = Modifier.width(24.dp)
+                modifier = Modifier
+                    .width(24.dp)
+                    .height(32.dp)
             ) {
                 Icon(
                     imageVector = Icons.Default.MoreVert,
@@ -136,7 +129,7 @@ fun FeedItem(
                 .height(200.dp)
         )
         CustomText(
-            text = feed.title,
+            text = feed.description,
             modifier = Modifier
                 .padding(vertical = 8.dp)
                 .fillMaxWidth()
@@ -210,8 +203,6 @@ fun PreviewOfFeedItem() {
             title = "Title",
             imageUrl = "https://www.google.com",
             description = "Description"
-        ),
-        onAction = {},
-        uiState = FeedUiState()
+        )
     )
 }
