@@ -1,4 +1,4 @@
-package com.gdscedirne.toplan.presentation.feed
+package com.gdscedirne.toplan.presentation.news
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -8,15 +8,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.gdscedirne.toplan.components.CustomLoading
-import com.gdscedirne.toplan.components.FeedItem
+import com.gdscedirne.toplan.components.NewsItem
 
 @Composable
-fun FeedScreen(
-    modifier: Modifier = Modifier,
-    feedUiState: FeedUiState
+fun NewsScreen(
+    modifier : Modifier = Modifier,
+    newsUiState: NewsUiState
 ) {
 
-    if (feedUiState.isLoading) {
+    if (newsUiState.isLoading) {
         CustomLoading()
     }
 
@@ -30,10 +30,9 @@ fun FeedScreen(
                 .fillMaxSize()
                 .padding(horizontal = 16.dp),
             content = {
-                items(feedUiState.feedList.size) { index ->
-                    FeedItem(
-                        modifier = modifier,
-                        feed = feedUiState.feedList[index],
+                items(newsUiState.newsList.size) { index ->
+                    NewsItem(
+                        news = newsUiState.newsList[index],
                     )
                 }
             }

@@ -7,6 +7,7 @@ import androidx.annotation.RequiresApi
 import com.gdscedirne.toplan.common.ResponseState
 import com.gdscedirne.toplan.data.model.Feed
 import com.gdscedirne.toplan.data.model.Marker
+import com.gdscedirne.toplan.data.model.News
 import com.gdscedirne.toplan.data.model.User
 import com.gdscedirne.toplan.domain.repository.TopLanRepository
 import com.gdscedirne.toplan.domain.source.FirebaseSource
@@ -132,7 +133,7 @@ class TopLanRepositoryImpl @Inject constructor(
             emit(ResponseState.Error(it.message.orEmpty()))
         }
     }
-    
+
     override fun addMarker(marker: Marker): Flow<ResponseState<Unit>> {
         return flow {
             emit(ResponseState.Loading)
@@ -191,6 +192,16 @@ class TopLanRepositoryImpl @Inject constructor(
             emit(ResponseState.Loading)
             val feed = firebaseSource.getFeed()
             emit(ResponseState.Success(feed))
+        }.catch {
+            emit(ResponseState.Error(it.message.orEmpty()))
+        }
+    }
+
+    override fun getNews(): Flow<ResponseState<List<News>>> {
+        return flow {
+            emit(ResponseState.Loading)
+            val news = firebaseSource.getNews()
+            emit(ResponseState.Success(news))
         }.catch {
             emit(ResponseState.Error(it.message.orEmpty()))
         }

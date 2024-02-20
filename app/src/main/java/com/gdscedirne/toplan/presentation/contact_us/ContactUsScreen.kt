@@ -38,6 +38,7 @@ import com.gdscedirne.toplan.ui.theme.MediumGrey
 
 @Composable
 fun ContactUsScreen(
+    modifier: Modifier = Modifier,
     onHomeNavigation: () -> Unit
 ) {
 
@@ -53,7 +54,8 @@ fun ContactUsScreen(
         modifier = Modifier
             .background(Color.White)
             .verticalScroll(rememberScrollState())
-            .padding(horizontal = 16.dp),
+            .padding(horizontal = 16.dp)
+            .then(modifier),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Row(

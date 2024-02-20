@@ -5,6 +5,7 @@ import android.net.Uri
 import com.gdscedirne.toplan.common.ResponseState
 import com.gdscedirne.toplan.data.model.Feed
 import com.gdscedirne.toplan.data.model.Marker
+import com.gdscedirne.toplan.data.model.News
 import com.gdscedirne.toplan.data.model.User
 import kotlinx.coroutines.flow.Flow
 
@@ -63,5 +64,8 @@ interface TopLanRepository {
     fun addFeed(feed: Feed): Flow<ResponseState<Unit>>
 
     fun getFeed(): Flow<ResponseState<List<Feed>>>
+
+    // News
+    fun getNews(): Flow<ResponseState<List<News>>>
 
 }

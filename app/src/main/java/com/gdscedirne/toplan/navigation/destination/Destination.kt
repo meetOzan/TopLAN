@@ -72,4 +72,8 @@ object Destinations {
     object FeedDestination : Destination {
         override val route = "feed"
     }
+
+    object NewsDestination : Destination {
+        override val route = "news"
+    }
 }

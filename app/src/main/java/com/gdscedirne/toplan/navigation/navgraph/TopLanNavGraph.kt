@@ -21,6 +21,9 @@ import com.gdscedirne.toplan.presentation.earthquake.EarthquakeViewModel
 import com.gdscedirne.toplan.presentation.feed.FeedAction
 import com.gdscedirne.toplan.presentation.feed.FeedScreen
 import com.gdscedirne.toplan.presentation.feed.FeedViewModel
+import com.gdscedirne.toplan.presentation.news.NewsAction
+import com.gdscedirne.toplan.presentation.news.NewsScreen
+import com.gdscedirne.toplan.presentation.news.NewsViewModel
 import com.gdscedirne.toplan.presentation.profile.EditProfileItem
 import com.gdscedirne.toplan.presentation.profile.EditProfileScreen
 import com.gdscedirne.toplan.presentation.profile.ProfileScreen
@@ -71,6 +74,9 @@ fun TopLanNavGraph(
         feedScreen(
             modifier = modifier
         )
+        newsScreen(
+            modifier = modifier
+        )
     }
 }
 
@@ -95,12 +101,14 @@ fun NavGraphBuilder.homeScreen(
 }
 
 fun NavGraphBuilder.contactUsScreen(
+    modifier: Modifier = Modifier,
     onHomeNavigate: () -> Unit
 ) {
     composable(Destinations.ContactUsDestination.route) {
-        ContactUsScreen {
-            onHomeNavigate()
-        }
+        ContactUsScreen(
+            modifier = modifier,
+            onHomeNavigation = onHomeNavigate
+        )
     }
 }
 
@@ -123,7 +131,6 @@ fun NavGraphBuilder.profileScreen(
             modifier = modifier,
             onEditProfileNavigate = onEditProfileNavigate
         )
-
     }
 }
 
@@ -263,23 +270,41 @@ fun NavGraphBuilder.chatScreen(
 
 fun NavGraphBuilder.feedScreen(
     modifier: Modifier = Modifier
-){
+) {
 
-    composable(Destinations.FeedDestination.route){
+    composable(Destinations.FeedDestination.route) {
 
         val viewModel = hiltViewModel<FeedViewModel>()
         val feedUiState = viewModel.feedState.collectAsState().value
 
-        LaunchedEffect(true){
+        LaunchedEffect(true) {
             viewModel.onAction(FeedAction.LoadFeed)
         }
 
         FeedScreen(
             modifier = modifier,
-            feedUiState = feedUiState,
-            onAction = viewModel::onAction
+            feedUiState = feedUiState
         )
     }
+}
 
+fun NavGraphBuilder.newsScreen(
+    modifier: Modifier = Modifier
+) {
+
+    composable(Destinations.NewsDestination.route) {
+
+        val viewModel = hiltViewModel<NewsViewModel>()
+        val newsUiState = viewModel.newsUiState.collectAsState().value
+
+        LaunchedEffect(true) {
+            viewModel.onAction(NewsAction.GetNews)
+        }
+
+        NewsScreen(
+            modifier = modifier,
+            newsUiState = newsUiState
+        )
+    }
 }
 

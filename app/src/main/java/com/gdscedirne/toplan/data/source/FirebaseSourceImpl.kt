@@ -7,6 +7,7 @@ import android.util.Log
 import com.gdscedirne.toplan.common.uriToBitmap
 import com.gdscedirne.toplan.data.model.Feed
 import com.gdscedirne.toplan.data.model.Marker
+import com.gdscedirne.toplan.data.model.News
 import com.gdscedirne.toplan.data.model.User
 import com.gdscedirne.toplan.domain.source.FirebaseSource
 import com.google.firebase.auth.FirebaseAuth
@@ -105,7 +106,7 @@ class FirebaseSourceImpl @Inject constructor(
     override suspend fun getUser(): User {
         val currentUser = firebaseAuth.currentUser
         var user: User
-        return suspendCoroutine {continuation ->
+        return suspendCoroutine { continuation ->
             firebaseFirestore.collection("users").document(currentUser?.uid.toString())
                 .get()
                 .addOnCompleteListener { task ->
@@ -291,7 +292,7 @@ class FirebaseSourceImpl @Inject constructor(
 
     override suspend fun getMarkers(): List<Marker> {
         var markers: List<Marker>
-        return suspendCoroutine {  continuation ->
+        return suspendCoroutine { continuation ->
             firebaseFirestore.collection("markers")
                 .get()
                 .addOnCompleteListener { task ->
@@ -378,6 +379,40 @@ class FirebaseSourceImpl @Inject constructor(
                         return@addOnCompleteListener
                     }
                     continuation.resume(feeds)
+                }
+                .addOnFailureListener {
+                    throw RuntimeException(it.message)
+                }
+        }
+    }
+
+    override suspend fun getNews(): List<News> {
+        var news: List<News>
+        return suspendCoroutine { continuation ->
+            firebaseFirestore.collection("news")
+                .get()
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        val documents = task.result
+                        news = documents?.map { document ->
+                            document.data.let { data ->
+                                News(
+                                    id = data["id"] as String,
+                                    name = data["name"] as String,
+                                    author = data["author"] as String,
+                                    imageUrl = data["imageUrl"] as String,
+                                    date = data["date"] as String,
+                                    isImportant = data["isImportant"] as Boolean,
+                                    description = data["description"] as String,
+                                    authorImageUrl = data["authorImageUrl"] as String
+                                )
+                            }
+                        } ?: emptyList()
+                    } else {
+                        continuation.resumeWithException(RuntimeException("News could not be fetched."))
+                        return@addOnCompleteListener
+                    }
+                    continuation.resume(news)
                 }
                 .addOnFailureListener {
                     throw RuntimeException(it.message)

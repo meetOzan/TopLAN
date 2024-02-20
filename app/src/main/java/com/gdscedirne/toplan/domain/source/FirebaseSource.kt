@@ -4,6 +4,7 @@ import android.content.Context
 import android.net.Uri
 import com.gdscedirne.toplan.data.model.Feed
 import com.gdscedirne.toplan.data.model.Marker
+import com.gdscedirne.toplan.data.model.News
 import com.gdscedirne.toplan.data.model.User
 
 interface FirebaseSource {
@@ -49,5 +50,8 @@ interface FirebaseSource {
     suspend fun addFeed(feed: Feed)
 
     suspend fun getFeed(): List<Feed>
+
+    // News
+    suspend fun getNews(): List<News>
 
 }

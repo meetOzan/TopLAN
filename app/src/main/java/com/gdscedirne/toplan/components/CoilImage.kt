@@ -12,6 +12,7 @@ import com.gdscedirne.toplan.R
 fun CoilImage(
     data: String,
     modifier: Modifier = Modifier,
+    contentScale: ContentScale = ContentScale.Crop
 ) {
 
     val painter = rememberAsyncImagePainter(data)
@@ -19,7 +20,7 @@ fun CoilImage(
     Image(
         painter = painter,
         contentDescription = stringResource(R.string.coil_image),
-        contentScale = ContentScale.Crop,
+        contentScale = contentScale,
         modifier = modifier
     )
 }
