@@ -13,31 +13,31 @@
 ## Screenshoots
 | Splash | Welcome | Sign Up |
 | ------ | ---- | ------ |
-|<img src="https://github.com/meetOzan/TopLAN/assets/99891928/2ad7b021-b5fd-4501-ab7c-3de19b5add6c" width="250" height="450"/>|<img src="https://github.com/meetOzan/TopLAN/assets/99891928/c2a50758-a4ad-41a9-b6ee-5c37bf3baa70)" width="250" height="450"/>|<img src="https://github.com/meetOzan/TopLAN/assets/99891928/76dcbb73-8bf9-4276-9f81-b5a8f5501850" width="250" height="450"/>|
+|<img src="https://github.com/meetOzan/TopLAN/assets/99891928/2ad7b021-b5fd-4501-ab7c-3de19b5add6c" width="250" height="500"/>|<img src="https://github.com/meetOzan/TopLAN/assets/99891928/c2a50758-a4ad-41a9-b6ee-5c37bf3baa70)" width="250" height="500"/>|<img src="https://github.com/meetOzan/TopLAN/assets/99891928/76dcbb73-8bf9-4276-9f81-b5a8f5501850" width="250" height="500"/>|
 
 </br>
 
 | Home | Report Options | Report |
 | --- | ------- | ------- |
-|<img src= "https://github.com/meetOzan/TopLAN/assets/99891928/f619bca8-0df3-4169-a46f-ad7e6f93388b" width="250" height="450"/>|<img src= "https://github.com/meetOzan/TopLAN/assets/99891928/21bb4ca7-c8b1-4c9a-86b1-c1d445f3230d)" width="250" height="450"/>|<img src="https://github.com/meetOzan/TopLAN/assets/99891928/8d420082-c28e-4e83-b9be-f9eba9c4be35" width="250" height="450"/>|
+|<img src= "https://github.com/meetOzan/TopLAN/assets/99891928/f619bca8-0df3-4169-a46f-ad7e6f93388b" width="250" height="500"/>|<img src= "https://github.com/meetOzan/TopLAN/assets/99891928/21bb4ca7-c8b1-4c9a-86b1-c1d445f3230d)" width="250" height="500"/>|<img src="https://github.com/meetOzan/TopLAN/assets/99891928/8d420082-c28e-4e83-b9be-f9eba9c4be35" width="250" height="500"/>|
 
 </br>
 
 | Chat | Feed | News |
 | --------- | ------ | ------- |
-|<img src="https://github.com/meetOzan/TopLAN/assets/99891928/e4770b3d-0508-4ab2-bedc-e7442dc3a303" width="250" height="450"/>|<img src="https://github.com/meetOzan/TopLAN/assets/99891928/fbe05d07-7a5a-4c84-b11b-a5374bd4d854" width="250" height="450"/>|<img src="https://github.com/meetOzan/TopLAN/assets/99891928/f7c61aa5-471e-4fdd-bfee-2210158b6c15" width="250" height="450"/>|
+|<img src="https://github.com/meetOzan/TopLAN/assets/99891928/e4770b3d-0508-4ab2-bedc-e7442dc3a303" width="250" height="500"/>|<img src="https://github.com/meetOzan/TopLAN/assets/99891928/fbe05d07-7a5a-4c84-b11b-a5374bd4d854" width="250" height="500"/>|<img src="https://github.com/meetOzan/TopLAN/assets/99891928/f7c61aa5-471e-4fdd-bfee-2210158b6c15" width="250" height="500"/>|
 
 </br>
 
 | Profile | Edit Profile | Settings |
 | --------- | ------- | ------- |
-|<img src= "https://github.com/meetOzan/TopLAN/assets/99891928/545c4565-6329-4b81-880a-6111e6f8a6d1" width="250" height="450"/>|<img src = "https://github.com/meetOzan/TopLAN/assets/99891928/3234f098-8be4-4273-8ffa-3ee87c722587" width="250" height="450"/> | <img src= "https://github.com/meetOzan/TopLAN/assets/99891928/2e9fa51a-2b22-4764-830e-51b4c4e7e534" width="250" height="450"/> |
+|<img src= "https://github.com/meetOzan/TopLAN/assets/99891928/545c4565-6329-4b81-880a-6111e6f8a6d1" width="250" height="500"/>|<img src = "https://github.com/meetOzan/TopLAN/assets/99891928/3234f098-8be4-4273-8ffa-3ee87c722587" width="250" height="500"/> | <img src= "https://github.com/meetOzan/TopLAN/assets/99891928/2e9fa51a-2b22-4764-830e-51b4c4e7e534" width="250" height="500"/> |
 
 </br>
 
 | SOS Call | Marker | Contact Us |
 | --------- | ------- | ------- |
-|<img src="https://github.com/meetOzan/TopLAN/assets/99891928/7d1946b8-2847-49fa-9c25-a0ab6efce898" width="250" height="450"/>|<img src="https://github.com/meetOzan/TopLAN/assets/99891928/b3132884-faaf-4351-b8c0-51e076eec948)" width="250" height="450"/> | <img src="https://github.com/meetOzan/TopLAN/assets/99891928/22e3896e-45f8-447b-8aab-ff5fd5903094" width="250" height="450"/> |
+|<img src="https://github.com/meetOzan/TopLAN/assets/99891928/7d1946b8-2847-49fa-9c25-a0ab6efce898" width="250" height="500"/>|<img src="https://github.com/meetOzan/TopLAN/assets/99891928/b3132884-faaf-4351-b8c0-51e076eec948)" width="250" height="500"/> | <img src="https://github.com/meetOzan/TopLAN/assets/99891928/22e3896e-45f8-447b-8aab-ff5fd5903094" width="250" height="500"/> |
 
 ## What did I use?
 - Minimum SDK level 23
