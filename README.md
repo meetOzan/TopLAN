@@ -11,7 +11,7 @@
 </p>
 
 ## App Demo
-https://github.com/meetOzan/TopLAN/assets/99891928/20bd598c-9843-4c5f-b085-e0ccbd5c09ab
+https://github.com/meetOzan/TopLAN/assets/99891928/c7cd8b69-d486-456b-9a91-7fed7fb3064a
 
 ## Screenshoots
 | Splash | Welcome | Sign Up |
@@ -77,30 +77,30 @@ https://github.com/meetOzan/TopLAN/assets/99891928/20bd598c-9843-4c5f-b085-e0ccb
 
 ## Architecture
 This app uses [***MVVM (Model View View-Model)***](https://developer.android.com/jetpack/docs/guide#recommended-app-arch) architecture structure.
-![](https://i.stack.imgur.com/cr3Qk.png)
+![](https://media.licdn.com/dms/image/D4D12AQFDwqpaHf8Wyg/article-cover_image-shrink_600_2000/0/1653718093150?e=2147483647&v=beta&t=feA6XMeMbiA5dN24YrGD89bYZCcO4jQjt6AHd0mkobw)
 
 <br></br>
 
 ## Project Slide
 [<img width="360" alt="Screenshot 2024-02-21 at 19 27 55" src="https://github.com/meetOzan/TopLAN/assets/99891928/9e676755-481d-4299-af79-85fcf0107af2">](https://drive.google.com/drive/folders/16Aj0N0aHwF64IKplts-_vW_VD41N4lBz?usp=sharing)
 
-Click image to download 😄
+Click the image to access to Google Drive link of the presentation. 🙂
 
 ## Introduction Video
 [<img width="360" alt="Screenshot 2024-02-21 at 19 58 36" src="https://github.com/meetOzan/TopLAN/assets/99891928/421db1e6-7e2a-4532-8422-e4dacf5c7e45">
 ](https://www.youtube.com/watch?v=C460VnK-UkA)
 
-Click to watch YouTube video 🎬
+Click to watch our demo YouTube video! 🎬
 
 <br></br>
 
 ## :heart: Are you liked that repository? 
-__[Follow Me!](https://github.com/meetOzan)__ for projects!
+__[Follow Me!](https://github.com/meetOzan)__ for other projects!
 
 
 # License
 ```xml
-Designed and developed by 2023 meetOzan (Mert Ozan Kahraman)
+Designed and developed by 2024 meetOzan (Mert Ozan Kahraman)
 
 Licensed under the MIT License (the "License");
 you may not use this file except in compliance with the License.
