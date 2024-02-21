@@ -5,7 +5,7 @@
 </br>
 
 <p align="center">
-  <a href="https://opensource.org/licenses/Apache-2.0"><img alt="License" src="https://img.shields.io/badge/License-Apache%202.0-red.svg"/></a>
+  <a href="https://opensource.org/licenses/MIT"><img alt="License" src="https://img.shields.io/badge/License-MIT-red.svg"/></a>
   <a href="https://android-arsenal.com/api?level=23"><img alt="API" src="https://img.shields.io/badge/API-23%2B-brightgreen.svg?style=flat"/></a>
   <a href="https://github.com/meetOzab"><img alt="Profile" src="https://img.shields.io/badge/github-meetOzan-blue"/></a> 
 </p>
@@ -33,7 +33,18 @@
 | --------- | ------- | ------- |
 |<img src="https://github.com/meetOzan/I-Watch/assets/99891928/5196ac75-1362-4cba-b998-a098bf748b6b" width="250" height="550"/>|<img src="https://github.com/meetOzan/I-Watch/assets/99891928/7e7fae65-b6cf-43b7-9a42-c6d5a6ae9c2a" width="250" height="550"/> | <img src="https://github.com/meetOzan/I-Watch/assets/99891928/a0336676-1855-408b-aeae-dec73acbb18d" width="250" height="550"/> |
 
-## What did I use?
+## How to launch project in your device
+1. Open **Android Studio** in your computer, if you don't have download from that **[link](https://developer.android.com/studio)**
+2. When opened Android Studio, click on the **"File"** menu and select **"New" > "Project from Version Control" > "Git"**.
+3. In the "Git Repository URL" field, enter the link of the project. **Link: [https://github.com/meetOzan/TopLAN](https://github.com/meetOzan/TopLAN)**
+4. Click on the "**Clone**" button.
+5. Android Studio will clone the repository and open it in a new project.
+6. When repository clonned and loaded, click **Launch** button.
+7. Log in when the application opens, create a user if you do not have an account, of course you can also log in as a guest.
+9. After that, you can use and examine **TopLAN**
+
+
+## What did used in project?
 - Minimum SDK level 23
 - Only [Kotlin](https://kotlinlang.org/) based
 - [Android Architecture Components](https://developer.android.com/topic/libraries/architecture)
@@ -63,9 +74,9 @@ __[Follow Me!](https://github.com/meetOzan)__ for projects!
 
 # License
 ```xml
-Designed and developed by 2023 meetOzan (Mert Ozan Kahraman)
+Designed and developed by 2024 meetOzan (Mert Ozan Kahraman)
 
-Licensed under the Apache License, Version 2.0 (the "License");
+Licensed under the MIT License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
