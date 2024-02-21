@@ -44,11 +44,12 @@ import com.gdscedirne.toplan.ui.theme.robatoFamily
 fun SettingsScreen(
     modifier: Modifier = Modifier,
     user: User,
-    uiState : ProfileUiState,
-    profileOptionTitleList: List<ProfileOption>
+    uiState: ProfileUiState,
+    profileOptionTitleList: List<ProfileOption>,
+    onUserPolicyNavigate: () -> Unit
 ) {
 
-    if(uiState.isLoading){
+    if (uiState.isLoading) {
         CustomLoading()
     }
 
@@ -154,7 +155,9 @@ fun SettingsScreen(
                 }
                 item {
                     CustomElevatedButton(
-                        onClick = {},
+                        onClick = {
+                            onUserPolicyNavigate()
+                        },
                         text = {
                             CustomText(
                                 text = stringResource(R.string.user_policy),
@@ -208,7 +211,8 @@ fun PreviewOfSettings() {
                     )
 
                 )
-                )
+                ),
+        onUserPolicyNavigate = {}
     )
 }
 

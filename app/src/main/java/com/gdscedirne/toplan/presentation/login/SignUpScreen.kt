@@ -171,7 +171,7 @@ fun SignUpScreen(
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     CustomText(
-                        text = loginUiState.pagerState.toString(),
+                        text = "",
                         fontSize = 16,
                         color = Black,
                         modifier = Modifier.padding(top = 16.dp),
@@ -181,7 +181,7 @@ fun SignUpScreen(
                         )
                     )
                     CustomText(
-                        text = stringResource(R.string.slash),
+                        text = "",
                         fontSize = 16,
                         color = Black,
                         modifier = Modifier.padding(top = 16.dp),
@@ -191,7 +191,7 @@ fun SignUpScreen(
                         )
                     )
                     CustomText(
-                        text = stringResource(R.string._3),
+                        text = "",
                         fontSize = 16,
                         color = Black,
                         modifier = Modifier.padding(top = 16.dp),
@@ -215,8 +215,7 @@ fun SignUpScreen(
                 state = currentPage,
                 modifier = Modifier
                     .padding(vertical = 16.dp),
-                pageSpacing = 16.dp,
-                userScrollEnabled = false
+                pageSpacing = 16.dp
                 ) { page ->
                 when (page) {
                     0 -> {
@@ -311,7 +310,7 @@ fun SignUpScreen(
                                             LoginOnAction.ChangeErrorStateWithMessage(
                                                 errorState = true,
                                                 isLoading = false,
-                                                message = "Please fill all the fields"
+                                                message = "Please fill all the fields and try again"
                                             )
                                         )
                                     } else {
@@ -464,7 +463,10 @@ fun SignUpScreen(
                     }
 
                     2 -> {
-                        Column {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth(),
+                        ) {
                             CustomTextField(
                                 textTitle = loginUiState.signUpAddress,
                                 onValueChange = { newRelativeName ->
@@ -473,8 +475,8 @@ fun SignUpScreen(
                                 maxLines = 4,
                                 modifier = Modifier
                                     .fillMaxWidth()
-                                    .height(250.dp)
-                                    .padding(top = 24.dp),
+                                    .height(220.dp)
+                                    .padding(top = 26.dp),
                                 placerHolder = {
                                     CustomText(
                                         text = stringResource(R.string.address),

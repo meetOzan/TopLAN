@@ -67,6 +67,8 @@ val DarkGrey = Color(0xFF525252)
 // #F2F4F7
 val DarkWhite = Color(0xFFF2F4F7)
 
+
+
 // #1B0404
 val Black = Color(0xFF1B0404)
 

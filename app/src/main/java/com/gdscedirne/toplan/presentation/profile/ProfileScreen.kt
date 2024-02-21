@@ -63,12 +63,11 @@ fun ProfileScreen(
 
         else -> {
             Column(
-                modifier = Modifier
+                modifier = modifier
                     .verticalScroll(rememberScrollState())
                     .background(Color.White)
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
-                    .then(modifier),
+                    .padding(horizontal = 16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 CustomText(

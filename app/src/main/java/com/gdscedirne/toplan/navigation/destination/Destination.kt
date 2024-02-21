@@ -76,4 +76,12 @@ object Destinations {
     object NewsDestination : Destination {
         override val route = "news"
     }
+
+    object UserPolicyDestination : Destination {
+        override val route = "user_policy"
+    }
+
+    object PrivacyPolicyDestination : Destination {
+        override val route = "privacy_policy"
+    }
 }

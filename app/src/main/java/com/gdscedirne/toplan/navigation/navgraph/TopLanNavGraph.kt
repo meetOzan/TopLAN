@@ -24,6 +24,8 @@ import com.gdscedirne.toplan.presentation.feed.FeedViewModel
 import com.gdscedirne.toplan.presentation.news.NewsAction
 import com.gdscedirne.toplan.presentation.news.NewsScreen
 import com.gdscedirne.toplan.presentation.news.NewsViewModel
+import com.gdscedirne.toplan.presentation.policys.PrivacyPolicy
+import com.gdscedirne.toplan.presentation.policys.UserPolicy
 import com.gdscedirne.toplan.presentation.profile.EditProfileItem
 import com.gdscedirne.toplan.presentation.profile.EditProfileScreen
 import com.gdscedirne.toplan.presentation.profile.ProfileScreen
@@ -55,9 +57,16 @@ fun TopLanNavGraph(
         profileScreen(modifier, onEditProfileNavigate = {
             navController.navigate(Destinations.EditProfileDestination.route)
         })
-        settingsScreen(modifier, onEditProfileNavigate = {
-            navController.navigate(Destinations.EditProfileDestination.route)
-        })
+        settingsScreen(
+            modifier,
+            onEditProfileNavigate = {
+                navController.navigate(Destinations.EditProfileDestination.route)
+            }, onPrivacyPolicyNavigate = {
+                navController.navigate(Destinations.PrivacyPolicyDestination.route)
+            }, onUserPolicyNavigate = {
+                navController.navigate(Destinations.UserPolicyDestination.route)
+            }
+        )
         editProfileScreen(
             modifier = modifier,
             onHomeNavigate = {
@@ -75,6 +84,12 @@ fun TopLanNavGraph(
             modifier = modifier
         )
         newsScreen(
+            modifier = modifier
+        )
+        userPolicy(
+            modifier = modifier
+        )
+        privacyPolicy(
             modifier = modifier
         )
     }
@@ -136,7 +151,9 @@ fun NavGraphBuilder.profileScreen(
 
 fun NavGraphBuilder.settingsScreen(
     modifier: Modifier = Modifier,
-    onEditProfileNavigate: () -> Unit
+    onEditProfileNavigate: () -> Unit,
+    onPrivacyPolicyNavigate: () -> Unit,
+    onUserPolicyNavigate: () -> Unit
 ) {
     composable(Destinations.SettingsDestination.route) {
 
@@ -175,7 +192,9 @@ fun NavGraphBuilder.settingsScreen(
             ProfileOption(
                 title = stringResource(id = R.string.agreements),
                 option = stringResource(id = R.string.privacy_policy),
-                onNavigate = {}
+                onNavigate = {
+                    onPrivacyPolicyNavigate()
+                }
             )
         )
 
@@ -183,7 +202,8 @@ fun NavGraphBuilder.settingsScreen(
             modifier = modifier,
             user = profileUiState.user,
             uiState = profileUiState,
-            profileOptionTitleList = profileOptionTitleList
+            profileOptionTitleList = profileOptionTitleList,
+            onUserPolicyNavigate = onUserPolicyNavigate
         )
     }
 }
@@ -247,7 +267,7 @@ fun NavGraphBuilder.editProfileScreen(
             profileUiState = profileUiState,
             onAction = viewModel::onAction,
             list = list,
-            onHomeNavigate = onHomeNavigate
+            onHomeNavigate = onHomeNavigate,
         )
     }
 }
@@ -308,3 +328,22 @@ fun NavGraphBuilder.newsScreen(
     }
 }
 
+fun NavGraphBuilder.userPolicy(
+    modifier: Modifier = Modifier
+) {
+    composable(Destinations.UserPolicyDestination.route) {
+        UserPolicy(
+            modifier = modifier
+        )
+    }
+}
+
+fun NavGraphBuilder.privacyPolicy(
+    modifier: Modifier = Modifier
+) {
+    composable(Destinations.PrivacyPolicyDestination.route) {
+        PrivacyPolicy(
+            modifier = modifier
+        )
+    }
+}

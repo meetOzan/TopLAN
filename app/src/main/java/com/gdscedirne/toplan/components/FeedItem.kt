@@ -98,7 +98,7 @@ fun FeedItem(
                     feed.user.get(key = stringResource(id = R.string.small_surname))
                 }",
                 modifier = Modifier
-                    .padding(start = 24.dp)
+                    .padding(start = 12.dp)
                     .weight(1f)
                     .basicMarquee(
                         animationMode = MarqueeAnimationMode.WhileFocused,
@@ -110,7 +110,7 @@ fun FeedItem(
                 )
             )
             IconButton(
-                onClick = { /*TODO*/ },
+                onClick = { },
                 modifier = Modifier
                     .width(24.dp)
                     .height(32.dp)
@@ -125,8 +125,8 @@ fun FeedItem(
         CoilImage(
             data = feed.imageUrl,
             modifier = Modifier
-                .fillMaxWidth()
                 .height(200.dp)
+                .fillMaxWidth()
         )
         CustomText(
             text = feed.description,

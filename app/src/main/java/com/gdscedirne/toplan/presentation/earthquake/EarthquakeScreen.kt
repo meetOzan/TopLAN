@@ -6,7 +6,9 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.provider.Settings
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -26,6 +28,7 @@ import com.gdscedirne.toplan.common.SuppliesEquipment
 import com.gdscedirne.toplan.components.CustomAlertDialog
 import com.gdscedirne.toplan.components.CustomErrorDialog
 import com.gdscedirne.toplan.components.MapMarker
+import com.gdscedirne.toplan.components.TopBarItem
 import com.gdscedirne.toplan.ui.theme.MainRed
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.PermissionStatus
@@ -46,6 +49,13 @@ fun EarthQuakeScreen(
     onAction: (EarthquakeAction) -> Unit,
     earthquakeUiState: EarthquakeUiState
 ) {
+
+    val list = listOf(
+        TopBarMenuItem(image = R.drawable.transparent, "All",true),
+        TopBarMenuItem(image = R.drawable.structure, stringResource(R.string.demolished_building),false),
+        TopBarMenuItem(image = R.drawable.areas, stringResource(R.string.gathering_help),false),
+        TopBarMenuItem(image = R.drawable.supply_chain, stringResource(R.string.supplies),false)
+    )
 
     // Context
     val context = LocalContext.current
@@ -117,40 +127,51 @@ fun EarthQuakeScreen(
         }
     }
 
-    Box(
-        Modifier
-            .fillMaxSize()
-            .then(modifier)
+    Column(
+        modifier = modifier.fillMaxSize()
     ) {
-        GoogleMap(
-            modifier = Modifier.fillMaxSize(),
-            cameraPositionState = cameraPositionState,
-            googleMapOptionsFactory = {
-                GoogleMapOptions()
-                    .mapType(R.raw.map_style)
-                    .compassEnabled(true)
-                    .rotateGesturesEnabled(true)
-                    .tiltGesturesEnabled(true)
-                    .zoomControlsEnabled(true)
-            },
-        ) {
-            earthquakeUiState.markers.forEach { marker ->
-                MapMarker(
-                    position = LatLng(marker.latitude, marker.longitude),
-                    iconResourceId = when (marker.type) {
-                        MarkerType.EARTHQUAKE.name -> R.drawable.structure
-                        MarkerType.FLOOD.name -> R.drawable.flooded_house
-                        MarkerType.FIRE.name -> R.drawable.fire
-                        MarkerType.AVALANCHE.name -> R.drawable.snow_avalanche
-                        GatheringAid.GATHERING.name -> R.drawable.areas
-                        GatheringAid.AID.name -> R.drawable.first_aid
-                        SuppliesEquipment.entries.find { it.name == marker.type }?.name -> R.drawable.supply_chain
-                        stringResource(id = R.string.demolition) -> R.drawable.structure
-                        else -> R.drawable.alert
-                    },
-                    marker = marker,
-                    markerColor = MainRed
+        LazyRow(content = {
+            items(list.size) {
+                TopBarItem(
+                    image = list[it].image,
+                    text = list[it].text,
+                    isSelected = list[it].isSelected
                 )
+            }
+        })
+        Box(
+            Modifier.weight(1f)
+        ) {
+            GoogleMap(
+                modifier = Modifier.fillMaxSize(),
+                cameraPositionState = cameraPositionState,
+                googleMapOptionsFactory = {
+                    GoogleMapOptions()
+                        .mapType(R.raw.map_style)
+                        .compassEnabled(true)
+                        .rotateGesturesEnabled(true)
+                        .tiltGesturesEnabled(true)
+                        .zoomControlsEnabled(true)
+                },
+            ) {
+                earthquakeUiState.markers.forEach { marker ->
+                    MapMarker(
+                        position = LatLng(marker.latitude, marker.longitude),
+                        iconResourceId = when (marker.type) {
+                            MarkerType.EARTHQUAKE.name -> R.drawable.structure
+                            MarkerType.FLOOD.name -> R.drawable.flooded_house
+                            MarkerType.FIRE.name -> R.drawable.fire
+                            MarkerType.AVALANCHE.name -> R.drawable.snow_avalanche
+                            GatheringAid.GATHERING.name -> R.drawable.areas
+                            GatheringAid.AID.name -> R.drawable.first_aid
+                            SuppliesEquipment.entries.find { it.name == marker.type }?.name -> R.drawable.supply_chain
+                            stringResource(id = R.string.demolition) -> R.drawable.structure
+                            else -> R.drawable.alert
+                        },
+                        marker = marker,
+                        markerColor = MainRed
+                    )
+                }
             }
         }
     }
@@ -189,8 +210,13 @@ fun EarthQuakeScreen(
             }
         )
     }
-
 }
+
+data class TopBarMenuItem(
+    val image: Int,
+    val text: String,
+    val isSelected: Boolean
+)
 
 @Preview
 @Composable
