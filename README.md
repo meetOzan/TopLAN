@@ -1,6 +1,6 @@
 <h1 align="center">TopLAN</h1></br>
 <p align="center">  
-  Toplan is a natural disaster coordination mobile application for Google Solution Challenge
+  TopLAN is a mobile application for the Google Solution Challenge that helps with natural disaster coordination and mutual aid
 </p>
 </br>
 
@@ -39,7 +39,17 @@
 | --------- | ------- | ------- |
 |<img src="https://github.com/meetOzan/TopLAN/assets/99891928/7d1946b8-2847-49fa-9c25-a0ab6efce898" width="250" height="500"/>|<img src="https://github.com/meetOzan/TopLAN/assets/99891928/b3132884-faaf-4351-b8c0-51e076eec948)" width="250" height="500"/> | <img src="https://github.com/meetOzan/TopLAN/assets/99891928/22e3896e-45f8-447b-8aab-ff5fd5903094" width="250" height="500"/> |
 
-## What did I use?
+## How to launch project in your device
+1. Open **Android Studio** in your computer, if you don't have download from that **[link](https://developer.android.com/studio)**
+2. When opened Android Studio, click on the **"File"** menu and select **"New" > "Project from Version Control" > "Git"**.
+3. In the "Git Repository URL" field, enter the link of the project. **Link: [https://github.com/meetOzan/TopLAN](https://github.com/meetOzan/TopLAN)**
+4. Click on the "**Clone**" button.
+5. Android Studio will clone the repository and open it in a new project.
+6. When repository clonned and loaded, click **Launch** button.
+7. Log in when the application opens, create a user if you do not have an account, of course you can also log in as a guest.
+9. After that, you can use and examine **TopLAN**
+
+## What used in project?
 - Minimum SDK level 23
 - Only [Kotlin](https://kotlinlang.org/) based
 - [Android Architecture Components](https://developer.android.com/topic/libraries/architecture)
