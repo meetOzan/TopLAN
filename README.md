@@ -10,6 +10,9 @@
   <a href="https://github.com/meetOzan"><img alt="Profile" src="https://img.shields.io/badge/github-meetOzan-red"/></a> 
 </p>
 
+## App Demo
+https://github.com/meetOzan/TopLAN/assets/99891928/20bd598c-9843-4c5f-b085-e0ccbd5c09ab
+
 ## Screenshoots
 | Splash | Welcome | Sign Up |
 | ------ | ---- | ------ |
@@ -49,6 +52,8 @@
 7. Log in when the application opens, create a user if you do not have an account, of course you can also log in as a guest.
 9. After that, you can use and examine **TopLAN**
 
+<br></br>
+
 ## What used in project?
 - Minimum SDK level 23
 - Only [Kotlin](https://kotlinlang.org/) based
@@ -68,10 +73,26 @@
 - [Google Maps API](https://m3.material.io/) is an API that enables the use of the map feature
 - [Gemini AI](https://m3.material.io/) is Google's new artificial intelligence model
 
+<br></br>
+
 ## Architecture
 This app uses [***MVVM (Model View View-Model)***](https://developer.android.com/jetpack/docs/guide#recommended-app-arch) architecture structure.
 ![](https://i.stack.imgur.com/cr3Qk.png)
 
+<br></br>
+
+## Project Slide
+[<img width="360" alt="Screenshot 2024-02-21 at 19 27 55" src="https://github.com/meetOzan/TopLAN/assets/99891928/9e676755-481d-4299-af79-85fcf0107af2">](https://drive.google.com/drive/folders/16Aj0N0aHwF64IKplts-_vW_VD41N4lBz?usp=sharing)
+
+Click image to download 😄
+
+## Introduction Video
+[<img width="360" alt="Screenshot 2024-02-21 at 19 58 36" src="https://github.com/meetOzan/TopLAN/assets/99891928/421db1e6-7e2a-4532-8422-e4dacf5c7e45">
+](https://www.youtube.com/watch?v=C460VnK-UkA)
+
+Click to watch YouTube video 🎬
+
+<br></br>
 
 ## :heart: Are you liked that repository? 
 __[Follow Me!](https://github.com/meetOzan)__ for projects!
@@ -81,11 +102,11 @@ __[Follow Me!](https://github.com/meetOzan)__ for projects!
 ```xml
 Designed and developed by 2023 meetOzan (Mert Ozan Kahraman)
 
-Licensed under the Apache License, Version 2.0 (the "License");
+Licensed under the MIT License (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
-   http://www.apache.org/licenses/LICENSE-2.0
+   https://opensource.org/licenses/MIT
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
