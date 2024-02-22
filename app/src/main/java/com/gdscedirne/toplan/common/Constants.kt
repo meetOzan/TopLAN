@@ -1,6 +1,7 @@
 package com.gdscedirne.toplan.common
 
 import com.gdscedirne.toplan.components.Screen
+import com.gdscedirne.toplan.presentation.notification.NotificationItem
 
 object Constants {
 
@@ -21,5 +22,48 @@ object Constants {
 
     const val PRIVACY_POLICY =
         "TopLan Mobile Application Privacy Policy\n\nWelcome to TopLan!\n\nThis Privacy Policy describes how we collect, uses, and shares information about you when you use the TopLan mobile application. By using the Application, you consent to the practices described in this Privacy Policy.\n\n1.\u2060 \u2060Information We Collect\n\na. Information You Provide\n\nAccount Information: When you register for an account on the TopLan Application, we collect information such as your name, email address, and password.\n\nb. Information We Collect Automatically\n\nUsage Information: We collect information about your use of the TopLan Application, including the features you access and how you interact with the Application.\nDevice Information: We collect information about the device you use to access the TopLan Application, including the device type, operating system, and unique device identifiers.\n\n2.\u2060 \u2060How We Use Your Information\n\nWe may use the information we collect for various purposes, including to:\n\nProvide, maintain, and improve the TopLan Application;\nCommunicate with you about the TopLan Application;\nPersonalize your experience on the TopLan Application;\nAnalyze trends and user behavior on the TopLan Application;\nDetect, investigate, and prevent fraudulent or unauthorized activity on the TopLan Application;\nComply with legal obligations; and\nFulfill any other purpose disclosed to you at the time we collect your information or with your consent.\n\n3.\u2060 \u2060Information Sharing\n\nWe may share your information as follows:\n\nWith service providers who help us operate the TopLan Application and provide services related to the Application;\nWith third parties with whom you choose to share information through the TopLan Application;\nIn response to a request for information if we believe disclosure is in accordance with any applicable law, regulation, or legal process;\nIf we believe your actions are inconsistent with the spirit or language of our user agreements or policies, or to protect the rights, property, and safety of GDSC Edirne, our users, or others;\nIn connection with, or during negotiations of, any merger, sale of company assets, financing, or acquisition of all or a portion of our business by another company; and\nWith your consent or at your direction.\n\n4.\u2060 \u2060Data Security\n\nWe take reasonable measures to help protect your information from loss, theft, misuse, and unauthorized access, disclosure, alteration, and destruction.\n\n5.\u2060 \u2060Children's Privacy\n\nThe TopLan Application is not intended for use by children under the age of 8. We do not knowingly collect personal information from children under the age of 8. If you are under the age of 8, please do not use the TopLan Application or provide any information to us.\n\n6.\u2060 \u2060Your Choices\n\nYou may update or delete your account information at any time by accessing your account settings within the TopLan Application.\n\n7.\u2060 \u2060Changes to This Privacy Policy\n\nWe may update this Privacy Policy from time to time. If we make material changes to this Privacy Policy, we will notify you by posting a notice on the TopLan Application or by other means.\n\n8.\u2060 \u2060Contact Us\n\nIf you have any questions about this Privacy Policy, please contact us via \n\nmertozankahraman@gmail.com"
+
+    val notificationList: List<NotificationItem> = listOf(
+        NotificationItem(
+            id = "1",
+            title = "Remember the facts",
+            content = "Do you have an earthquake kit for earthquake hazard?"
+        ),
+        NotificationItem(
+            id = "2",
+            title = "Be careful!",
+            content = "Anything can happen at any time. Don't forget to take precautions"
+        ),
+        NotificationItem(
+            id = "3",
+            title = "Did you know?",
+            content = "Did you know that the first earthquake in the world was in China?"
+        ),
+        NotificationItem(
+            id = "4",
+            title = "Hurricane Safety",
+            content = "Review your hurricane preparedness plan. Stay safe and informed."
+        ),
+        NotificationItem(
+            id = "5",
+            title = "Wildfire Awareness",
+            content = "Check for wildfire alerts in your area. Follow evacuation guidelines if necessary."
+        ),
+        NotificationItem(
+            id = "6",
+            title = "Earthquake Preparedness",
+            content = "Ensure you have an earthquake kit with essential supplies."
+        ),
+        NotificationItem(
+            id = "7",
+            title = "Stay Alert!",
+            content = "Be vigilant! Unexpected events can occur. Take necessary precautions."
+        ),
+        NotificationItem(
+            id = "8",
+            title = "Facts About Earthquakes",
+            content = "Did you know that the Richter scale measures the magnitude of earthquakes?"
+        ),
+    )
 
 }

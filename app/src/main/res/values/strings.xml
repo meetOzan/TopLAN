@@ -129,4 +129,8 @@
     <string name="imageurl">imageUrl</string>
     <string name="aid">Aid</string>
     <string name="supplies">Supplies</string>
+    <string name="notification_extra">NOTIFICATION_EXTRA</string>
+    <string name="notification_id">NOTIFICATION_ID</string>
+    <string name="key">KEY</string>
+    <string name="value">VALUE</string>
 </resources>

@@ -8,7 +8,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -34,8 +34,7 @@ fun CustomLoading() {
         ), label = ""
     )
 
-    AlertDialog(
-        onDismissRequest = { }) {
+    BasicAlertDialog(onDismissRequest = { }) {
         Box(
             contentAlignment = Alignment.Center,
             modifier = Modifier.fillMaxSize()

@@ -13,7 +13,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Warning
-import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -44,9 +44,7 @@ fun CustomErrorDialog(
     onPositiveAction: () -> Unit,
 ) {
 
-    AlertDialog(
-        onDismissRequest = { onDismissClick() },
-    ) {
+    BasicAlertDialog(onDismissRequest = { onDismissClick() }) {
         Surface(
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(16.dp),
