@@ -68,6 +68,9 @@ https://github.com/meetOzan/TopLAN/assets/99891928/c7cd8b69-d486-456b-9a91-7fed7
 - [Language Localication](https://developer.android.com/guide/topics/resources/localization) to language localization.
 - [Coroutines](https://github.com/Kotlin/kotlinx.coroutines) for async. operations.
 - [Firebase Firestore](https://firebase.google.com/docs/firestore/quickstart) to user save operations.
+- [Firebase Auth.](https://firebase.google.com/docs/auth/android/start) to authtentication structure.
+- [Firebase Cloud Storage](https://firebase.google.com/docs/storage/android/start) to uploading images.
+- [Firebase Crashlytics](https://firebase.google.com/docs/crashlytics/get-started?platform=android) to crash management and monitoring.
 - [Coil Compose](https://coil-kt.github.io/coil/compose/) to load image what comes from API.
 - [Material Design 3](https://m3.material.io/) is the latest version of Google’s open-source design system.
 - [Google Maps API](https://m3.material.io/) is an API that enables the use of the map feature
