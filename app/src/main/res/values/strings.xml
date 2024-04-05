@@ -133,4 +133,9 @@
     <string name="notification_id">NOTIFICATION_ID</string>
     <string name="key">KEY</string>
     <string name="value">VALUE</string>
+    <string name="comments">Comments</string>
+    <string name="see_all">See all</string>
+    <string name="reported_detail">Reported %1$s</string>
+    <string name="profile_image">profile_image</string>
+    <string name="no_comments_yet">No comments yet</string>
 </resources>
