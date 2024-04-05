@@ -42,7 +42,7 @@ https://github.com/meetOzan/TopLAN/assets/99891928/c7cd8b69-d486-456b-9a91-7fed7
 | --------- | ------- | ------- |
 |<img src="https://github.com/meetOzan/TopLAN/assets/99891928/7d1946b8-2847-49fa-9c25-a0ab6efce898" width="250" height="500"/>|<img src="https://github.com/meetOzan/TopLAN/assets/99891928/b3132884-faaf-4351-b8c0-51e076eec948)" width="250" height="500"/> | <img src="https://github.com/meetOzan/TopLAN/assets/99891928/22e3896e-45f8-447b-8aab-ff5fd5903094" width="250" height="500"/> |
 
-## How to launch project in your device
+## How to launch project in your device 💻
 1. Open **Android Studio** in your computer, if you don't have download from that **[link](https://developer.android.com/studio)**
 2. When opened Android Studio, click on the **"File"** menu and select **"New" > "Project from Version Control" > "Git"**.
 3. In the "Git Repository URL" field, enter the link of the project. **Link: [https://github.com/meetOzan/TopLAN](https://github.com/meetOzan/TopLAN)**
@@ -78,18 +78,31 @@ https://github.com/meetOzan/TopLAN/assets/99891928/c7cd8b69-d486-456b-9a91-7fed7
 
 <br></br>
 
-## Architecture
+## Project file structure 🗂️
+
+Firstly open ***app/src/main*** file path, and you will see;
+
+- **common** package -> *Constants*, *Enum* and *ResponseState* classes and mapper functions.
+- **components** package -> All base, *custom components* and side components what we used in all project.
+- **data** package -> Where we make requests to the backend and get a response. It contains *Model*, *RepositoryImpl* and *SourceImpl* classes.
+- **domain** package -> That was a optional package. Where we prepare, responsed data to the UI layer. It contains *Repository* and *Source* interfaces.
+- **navigation** package -> Where navigation operations are controlled. It contains screen *Destinations* file and *NavGraph* class.
+- **presentation** package -> View layer of project, it contains the screens of the project and their *components*, *viewmodels* and *functions*. 
+
+<br></br>
+
+## Architecture 🏗️
 This app uses [***MVVM (Model View View-Model)***](https://developer.android.com/jetpack/docs/guide#recommended-app-arch) architecture structure.
 ![](https://media.licdn.com/dms/image/D4D12AQFDwqpaHf8Wyg/article-cover_image-shrink_600_2000/0/1653718093150?e=2147483647&v=beta&t=feA6XMeMbiA5dN24YrGD89bYZCcO4jQjt6AHd0mkobw)
 
 <br></br>
 
-## Project Slide
+## Project Slide 🌆
 [<img width="360" alt="Screenshot 2024-02-21 at 19 27 55" src="https://github.com/meetOzan/TopLAN/assets/99891928/9e676755-481d-4299-af79-85fcf0107af2">](https://drive.google.com/drive/folders/16Aj0N0aHwF64IKplts-_vW_VD41N4lBz?usp=sharing)
 
 Click the image to access to Google Drive link of the presentation. 🙂
 
-## Introduction Video
+## Introduction Video 🎥
 [<img width="360" alt="Screenshot 2024-02-21 at 19 58 36" src="https://github.com/meetOzan/TopLAN/assets/99891928/421db1e6-7e2a-4532-8422-e4dacf5c7e45">
 ](https://www.youtube.com/watch?v=C460VnK-UkA)
 
