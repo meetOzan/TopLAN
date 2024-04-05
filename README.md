@@ -87,7 +87,8 @@ Firstly open ***app/src/main*** file path, and you will see;
 - **data** package -> Where we make requests to the backend and get a response. It contains *Model*, *RepositoryImpl* and *SourceImpl* classes.
 - **domain** package -> That was a optional package. Where we prepare, responsed data to the UI layer. It contains *Repository* and *Source* interfaces.
 - **navigation** package -> Where navigation operations are controlled. It contains screen *Destinations* file and *NavGraph* class.
-- **presentation** package -> View layer of project, it contains the screens of the project and their *components*, *viewmodels* and *functions*. 
+- **presentation** package -> View layer of project, it contains the screens of the project and their *components*, *viewmodels* and *functions*.
+- **ui/theme** package -> The package what contains Theme, Color and Type. The default package created when the project is created.
 
 <br></br>
 
