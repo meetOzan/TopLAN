@@ -68,9 +68,9 @@ secrets {
 dependencies {
 
     val coreKtxVersion = "1.12.0"
-    val composeVersion = "1.6.2" // Güncel sürümü kontrol edin
-    val composeActivityVersion = "1.8.2" // Güncel sürümü kontrol edin
-    val composeMaterial3Version = "1.2.0" // Güncel sürümü kontrol edin
+    val composeVersion = "1.6.2"
+    val composeActivityVersion = "1.8.2"
+    val composeMaterial3Version = "1.2.0"
     val googleMapsVersion = "18.2.0"
     val materialVersion = "1.11.0"
     val navigationVersion = "2.7.7"

@@ -29,6 +29,6 @@ fun CustomText(
         fontSize = fontSize.sp,
         color = color,
         style = fontStyle,
-        modifier = modifier
+        modifier = modifier,
     )
 }
